@@ -1,5 +1,5 @@
 from werkzeug.security import generate_password_hash
-import csv
+import csv, random
 from faker import Faker
 
 num_users = 100
@@ -58,8 +58,9 @@ def gen_products(num_products, sellers):
                 available_pids.append(pid)
             description = fake.sentence(nb_words =12)[:-1]
             category = fake.random_element(elements=('food', 'clothes', 'sports', 'appliances', 'random'))
+            quantity = random.randint(1, 100)
             sellerId = fake.random_element(elements=sellers)
-            writer.writerow([pid, name, price, available, category, description, sellerId])
+            writer.writerow([pid, name, price, available, category, description, quantity, sellerId])
         print(f'{num_products} generated; {len(available_pids)} available')
     return available_pids
 
@@ -91,7 +92,7 @@ def gen_purchases(num_purchases, available_pids):
             pid = fake.random_element(elements=available_pids)
             quantity = fake.random_int(min=0, max=50)
             unit_price = fake.random_int(min=0, max=500)
-            writer.writerow([orderId, userId, pid, quantity, unit_price])
+            writer.writerow([id, orderId, userId, pid, quantity, unit_price])
         print(f'{num_purchases} generated')
     return
 
@@ -145,8 +146,8 @@ def gen_seller_reviews(num_seller_reviews, sellers):
 
 
 gen_users(num_users)
-available_pids = gen_products(num_products)
 sellers = gen_users(num_users)
+available_pids = gen_products(num_products, sellers)
 gen_orders(num_orders, available_pids)
 gen_purchases(num_purchases, available_pids)
 gen_carts(num_carts, available_pids)
