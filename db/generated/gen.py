@@ -20,7 +20,7 @@ def get_csv_writer(f):
 
 def gen_users(num_users):
     sellers = []
-    with open('users.csv', 'w') as f:
+    with open('db/data/users.csv', 'w') as f:
         writer = get_csv_writer(f)
         print('Users...', end=' ', flush=True)
         for uid in range(num_users):
@@ -45,7 +45,7 @@ def gen_users(num_users):
 
 def gen_products(num_products, sellers):
     available_pids = []
-    with open('products.csv', 'w') as f:
+    with open('db/data/products.csv', 'w') as f:
         writer = get_csv_writer(f)
         print('Products...', end=' ', flush=True)
         for pid in range(num_products):
@@ -66,9 +66,9 @@ def gen_products(num_products, sellers):
 
 
 def gen_orders(num_orders, available_pids):
-    with open('orders.csv', 'w') as f:
+    with open('db/data/orders.csv', 'w') as f:
         writer = get_csv_writer(f)
-        print('Purchases...', end=' ', flush=True)
+        print('Orders...', end=' ', flush=True)
         for id in range(num_orders):
             if id % 100 == 0:
                 print(f'{id}', end=' ', flush=True)
@@ -81,7 +81,7 @@ def gen_orders(num_orders, available_pids):
     return
 
 def gen_purchases(num_purchases, available_pids):
-    with open('purchases.csv', 'w') as f:
+    with open('db/data/purchases.csv', 'w') as f:
         writer = get_csv_writer(f)
         print('Purchases...', end=' ', flush=True)
         for id in range(num_purchases):
@@ -97,9 +97,9 @@ def gen_purchases(num_purchases, available_pids):
     return
 
 def gen_carts(num_carts, available_pids):
-    with open('carts.csv', 'w') as f:
+    with open('db/data/carts.csv', 'w') as f:
         writer = get_csv_writer(f)
-        print('Purchases...', end=' ', flush=True)
+        print('Carts...', end=' ', flush=True)
         for id in range(num_carts):
             if id % 100 == 0:
                 print(f'{id}', end=' ', flush=True)
@@ -113,9 +113,9 @@ def gen_carts(num_carts, available_pids):
 
 
 def gen_product_reviews(num_product_reviews, available_pids):
-    with open('productReviews.csv', 'w') as f:
+    with open('db/data/productReviews.csv', 'w') as f:
         writer = get_csv_writer(f)
-        print('Purchases...', end=' ', flush=True)
+        print('Product Reviews...', end=' ', flush=True)
         for id in range(num_product_reviews):
             if id % 100 == 0:
                 print(f'{id}', end=' ', flush=True)
@@ -129,9 +129,9 @@ def gen_product_reviews(num_product_reviews, available_pids):
     return 
 
 def gen_seller_reviews(num_seller_reviews, sellers):
-    with open('productReviews.csv', 'w') as f:
+    with open('db/data/sellerReviews.csv', 'w') as f:
         writer = get_csv_writer(f)
-        print('Purchases...', end=' ', flush=True)
+        print('Seller Reviews...', end=' ', flush=True)
         for id in range(num_seller_reviews):
             if id % 100 == 0:
                 print(f'{id}', end=' ', flush=True)
