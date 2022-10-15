@@ -1,3 +1,4 @@
+from xmlrpc.client import Boolean
 from flask import render_template, redirect, url_for, flash, request
 from werkzeug.urls import url_parse
 from flask_login import login_user, logout_user, current_user
@@ -46,6 +47,8 @@ class RegistrationForm(FlaskForm):
     password2 = PasswordField(
         'Repeat Password', validators=[DataRequired(),
                                        EqualTo('password')])
+    address = StringField('Address', validators=[DataRequired()])
+    isSeller = BooleanField('Add Seller Functionality')
     submit = SubmitField('Register')
 
     def validate_email(self, email):
@@ -62,7 +65,10 @@ def register():
         if User.register(form.email.data,
                          form.password.data,
                          form.firstname.data,
-                         form.lastname.data):
+                         form.lastname.data,
+                         form.address.data,
+                         form.isSeller.data
+                         ):
             flash('Congratulations, you are now a registered user!')
             return redirect(url_for('users.login'))
     return render_template('register.html', title='Register', form=form)

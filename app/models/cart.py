@@ -2,35 +2,18 @@ from flask import current_app as app
 
 
 class Cart:
-    """
-    This is just a TEMPLATE for Cart, you should change this by adding or 
-        replacing new columns, etc. for your design.
-    """
-    def __init__(self, id, uid, pid, time_added_to_cart):
-        self.id = id
-        self.uid = uid
+    def __init__(self, userId, pid, quantity):
+        self.userId = userId
         self.pid = pid
-        self.time_added_to_cart = time_added_to_cart
+        self.quantity = quantity
 
     @staticmethod
-    def get(id):
+    def get(userId):
         rows = app.db.execute('''
-SELECT id, uid, pid, time_added_to_cart
-FROM Cart
-WHERE id = :id
+SELECT userId, pid, quantity
+FROM Carts
+WHERE userId = :userId
 ''',
-                              id=id)
-        return Cart(*(rows[0])) if rows else None
-
-    @staticmethod
-    def get_all_by_uid_since(uid, since):
-        rows = app.db.execute('''
-SELECT id, uid, pid, time_added_to_cart
-FROM Cart
-WHERE uid = :uid
-AND time_added_to_cart >= :since
-ORDER BY time_added_to_cart DESC
-''',
-                              uid=uid,
-                              since=since)
+                              userId=userId)
         return [Cart(*row) for row in rows]
+ 
