@@ -20,7 +20,7 @@ SELECT pg_catalog.setval('public.purchases_id_seq',
                          (SELECT MAX(id)+1 FROM Purchases),
                          false);
 
-\COPY Carts FROM '/../data/carts.csv' WITH DELIMITER ',' NULL '' CSV;
+\COPY Carts FROM '../data/carts.csv' WITH DELIMITER ',' NULL '' CSV;
 
 \COPY ProductReviews FROM '../data/productReviews.csv' WITH DELIMITER ',' NULL '' CSV;
 
