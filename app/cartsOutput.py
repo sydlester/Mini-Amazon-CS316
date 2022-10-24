@@ -9,6 +9,7 @@ from .models.purchase import Purchase
 
 from .models.cart import Cart
 
+
 from flask import Blueprint
 bp = Blueprint('cartsOutput', __name__)
 
@@ -17,4 +18,5 @@ bp = Blueprint('cartsOutput', __name__)
 def cartsOutput():
     userId = request.form["uid"] 
     user_cart = Cart.get(userId)
+    
     return render_template('cartsOutput.html', userId=userId, user_cart = user_cart)

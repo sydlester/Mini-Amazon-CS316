@@ -4,10 +4,13 @@
 
 <h1>Welcome to Cart Page for Homework 4</h1>
 
-<form action="cartsOutput"  method = "post">
+<form action="cartsOutput"  method = "post" id = "cartForm">
     <label for="uid">USER ID</label>  
     <input type = 'text' name = "uid", uid ="uid">
     
 </form>
+
+<button type="submit" form="cartForm" value="Submit">Submit</button>
+
 
 {% endblock %}

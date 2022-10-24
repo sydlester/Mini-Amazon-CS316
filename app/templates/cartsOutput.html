@@ -8,15 +8,21 @@
 <table class='table table-hover table-bordered container'>
     <thead class="thead-dark">
       <tr>
-        <th scope="col">Product ID</th>
+        <th scope="col">User ID</th>
         <th scope="col">Quantity</th>
+        <th scope="col">Product ID</th>
+        <th scope="col">Product Name</th>
+        <th scope="col">Unit Price</th>
       </tr>
     </thead>
     <tbody>
       {% for cart in user_cart%}
         <tr>
-          <th scope="row">{{cart.pid}}</th>
+          <th scope="row">{{cart.userId}}</th>
           <td>{{cart.quantity}}</td>
+          <td>{{cart.pid}}</td>
+          <td>{{cart.productName}}</td>
+          <td>{{cart.unitPrice}}</td>
         </tr>
       {% endfor %}
     </tbody>

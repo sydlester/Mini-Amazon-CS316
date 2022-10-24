@@ -30,3 +30,26 @@ WHERE available = :available
 ''',
                               available=available)
         return [Product(*row) for row in rows]
+    
+
+    @staticmethod
+    def getKExpensive(k):
+        rows = app.db.execute('''
+SELECT id, name, price, available, category, theDescription, quantity, sellerId
+FROM Products
+ORDER BY price DESC
+LIMIT :k
+''',
+                              k=k)
+        return [Product(*row) for row in rows]
+
+    @staticmethod
+    def getBySeller(sellerId):
+        rows = app.db.execute('''
+SELECT id, name, price, available, category, theDescription, quantity, sellerId
+FROM Products
+WHERE sellerId = :sellerId
+ORDER BY price DESC
+''',
+                              sellerId = sellerId)
+        return [Product(*row) for row in rows]
