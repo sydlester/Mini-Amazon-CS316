@@ -1,0 +1,30 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<h2>Purchase History for user with UID={{userId}}</h2>
+<br></br>
+<table class='table table-hover table-bordered container'>
+  <thead class="thead-dark">
+    <tr>
+      <th scope="col">User ID</th>
+      <th scope="col">Order ID</th>
+      <th scope="col">Product ID</th>
+      <th scope="col">Quantity</th>
+      <th scope="col">Unit Price</th>
+    </tr>
+  </thead>
+  <tbody>
+    {% for purchase in user_purchases%}
+      <tr>
+        <th scope="row">{{purchase.userId}}</th>
+        <td>{{purchase.orderId}}</td>
+        <td>{{purchase.pid}}</td>
+        <td>{{purchase.quantity}}</td>
+        <td>{{purchase.unit_price}}</td>
+      </tr>
+    {% endfor %}
+  </tbody>
+</table>
+
+{% endblock %}
