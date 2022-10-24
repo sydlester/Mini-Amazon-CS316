@@ -1,0 +1,16 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<h1>Welcome to Product Page for Homework 4</h1>
+
+<form action="productOutput"  method = "post" id = "productForm">
+    <label for="k">CHOOSE K</label>  
+    <input type = 'text' name = "k", k ="k">
+    
+</form>
+
+<button type="submit" form="productForm" value="Submit">Submit</button>
+
+
+{% endblock %}
