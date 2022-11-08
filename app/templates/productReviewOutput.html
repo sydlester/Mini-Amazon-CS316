@@ -1,0 +1,42 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<h2>Reviews of Product {{productId}}</h2>
+    <br></br>
+    <div class = "sortButtonGroup"> 
+    <label><b>Select Sort Criteria</b></label>
+
+      {%if orderBy == 5 %}
+      <a id = "sortButton1" class = "btn btn-secondary" href="{{ url_for('productReviewOutput.productReviewOutput', productId = productId, orderBy = 3) }}" role = "button">By Ratings</a> 
+      <a style="background-color: hotpink;" id = "sortButton2" class = "btn btn-secondary" href="{{ url_for('productReviewOutput.productReviewOutput', productId = productId, orderBy = 5) }}" role = "button">By Date</a> 
+      {%elif orderBy == 3 %}
+      <a style="background-color: hotpink;" id = "sortButton1" class = "btn btn-secondary" href="{{ url_for('productReviewOutput.productReviewOutput', productId = productId, orderBy = 3) }}" role = "button">By Ratings </a> 
+      <a id = "sortButton2" class = "btn btn-secondary" href="{{ url_for('productReviewOutput.productReviewOutput', productId = productId, orderBy = 5) }}" role = "button">By Date</a> 
+      {%endif %}
+    </div>
+<table class='table table-hover table-bordered container'>
+  <thead class="thead-dark">
+    <tr>
+      <th scope="col">User ID</th>
+      <th scope="col">Product ID</th>
+      <th scope="col">Rating</th>
+      <th scope="col">Description</th>
+      <th scope="col">Date</th>
+    </tr>
+  </thead>
+  <tbody>
+    {% for review in product_reviews%}
+      <tr>
+        <th scope="row">{{review.userId}}</th>
+        <td>{{review.pid}}</td>
+        <td>{{review.rating}}</td>
+        <td>{{review.theDescription}}</td>
+        <td>{{review.theDate}}</td>
+      </tr>
+    {% endfor %}
+  </tbody>
+</table>
+
+{% endblock %}
+

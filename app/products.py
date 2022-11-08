@@ -11,4 +11,16 @@ bp = Blueprint('products', __name__)
 
 @bp.route('/products')
 def products():
-    return render_template('products.html')
+    # get all available products for sale:
+    products = Product.get_all(True)
+    # find the products current user has bought:
+    if current_user.is_authenticated:
+        purchases = Purchase.get(current_user.id)
+    else:
+        purchases = None
+    # render the page by adding information to the index.html file
+    return render_template('products.html',
+                           avail_products=products,
+                           purchase_history=purchases)
+
+    

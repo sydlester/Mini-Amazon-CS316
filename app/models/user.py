@@ -70,3 +70,13 @@ WHERE id = :id
 """,
                               id=id)
         return User(*(rows[0])) if rows else None
+
+    @staticmethod
+    def get_sellers():
+        rows = app.db.execute('''
+SELECT id, email, firstname, lastname, address, balance, isSeller
+FROM Users
+WHERE isSeller = True
+''',
+                              )
+        return [User(*row) for row in rows]

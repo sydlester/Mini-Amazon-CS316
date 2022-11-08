@@ -2,15 +2,56 @@
 
 {% block content %}
 
-<h1>Welcome to Product Page for Homework 4</h1>
+<br><br>
 
-<form action="productOutput"  method = "post" id = "productForm">
-    <label for="k">CHOOSE K</label>  
-    <input type = 'text' name = "k", k ="k">
-    
-</form>
+<h2>Products for sale:</h2>
+<table class='table table-hover table-bordered container'>
+  <thead class="thead-dark">
+    <tr>
+      <th scope="col">Product ID</th>
+      <th scope="col">Product Name</th>
+      <th scope="col">Price</th>
+      <th scope="col">Reviews</th>
+      <th scope="col">Detailed Page</th>
+    </tr>
+  </thead>
+  <tbody>
+    {% for product in avail_products%}
+      <tr>
+        <th scope="row">{{product.id}}</th>
+        <td>{{product.name}}</td>
+        <td>{{product.price}}</td>
+        <td><a class = "btn btn-secondary" href="{{ url_for('productReviewOutput.productReviewOutput', productId = product.id, orderBy = 5) }}" role = "button">Click for Reviews</a></td> 
+        <td><a class = "btn btn-secondary" href="{{ url_for('detailedProduct.detailedProduct', productId = product.id) }}" role = "button">Click for More Info</a></td> 
 
-<button type="submit" form="productForm" value="Submit">Submit</button>
+      </tr>
+    {% endfor %}
+  </tbody>
+</table>
 
+<br><br>
+{% if current_user.is_authenticated %}
+<h2>Your recent purchases:</h2>
+<table class='table table-hover table-bordered container'>
+  <thead class="thead-dark">
+    <tr>
+      <th scope="col">Purchase ID</th>
+      <th scope="col">Product Name</th>
+      <th scope="col">Price</th>
+    </tr>
+  </thead>
+  <tbody>
+    {% for purchase in purchase_history%}
+      <tr>
+        <th scope="row">{{purchase.id}}</th>
+        <td>{{purchase.pid}}</td>
+        <td>{{purchase.time_purchased}}</td>
+      </tr>
+    {% endfor %}
+  </tbody>
+</table>
+{% else %}
+<p><a href="{{ url_for('users.login') }}">Log in</a> to see your purchase history!</p>
+{% endif %}
 
 {% endblock %}

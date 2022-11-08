@@ -6,9 +6,12 @@ from .models.product import Product
 from .models.purchase import Purchase
 
 from flask import Blueprint
-bp = Blueprint('reviews', __name__)
+bp = Blueprint('detailedSeller', __name__)
 
 
-@bp.route('/reviews')
-def reviews():
-    return render_template('reviews.html')
+@bp.route('/detailedSeller/<int:sellerId>')
+def detailedSeller(sellerId):
+    return render_template('detailedSeller.html', sellerId = sellerId)
+
+
+

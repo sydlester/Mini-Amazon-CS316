@@ -4,11 +4,13 @@ import datetime
 
 from .models.product import Product
 from .models.purchase import Purchase
+from .models.user import User
 
 
 from flask import Blueprint
-bp = Blueprint('inventories', __name__)
+bp = Blueprint('account', __name__)
 
-@bp.route('/inventories')
-def inventories():
-    return render_template('inventories.html')
+
+@bp.route('/account')
+def account():
+    return render_template('account.html')

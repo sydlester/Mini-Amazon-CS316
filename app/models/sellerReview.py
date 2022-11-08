@@ -10,17 +10,32 @@ class SellerReview:
         self.theDate = theDate
 
     @staticmethod
-    def getFiveRecent(userId):
+    def getByUser(userId):
         rows = app.db.execute('''
 SELECT *
 FROM SellerReviews
-WHERE userId = :userId
-ORDER BY theDate DESC
-Limit 5
-''',
-                              userId=userId)
+Where userId = :userId
+''', userId = userId)
+        return [SellerReview(*row) for row in rows]
+
+    @staticmethod
+    def get_all(userId):
+        rows = app.db.execute('''
+SELECT *
+FROM SellerReviews
+''',)
+        return [SellerReview(*row) for row in rows]
+
+
+    @staticmethod
+    def get_by_sellerId(sellerId, orderMe):
+        rows = app.db.execute('''
+SELECT *
+FROM SellerReviews
+WHERE sellerId = :sellerId
+ORDER BY :orderMe DESC
+''',                sellerId = sellerId, orderMe = orderMe)
         return [SellerReview(*row) for row in rows]
 
 
 
-    

@@ -1,3 +1,67 @@
+#sortButton1 {
+    display: inline-block;
+    width: 200px;
+    height: 30px;
+    -webkit-appearance: none;
+    appearance: none;
+    margin-right: 0px;
+    margin-left: 0px;
+    display:inline-block;
+    *display: inline;     
+    zoom:1;             
+    vertical-align:middle;
+    padding: 0px;
+    border-radius: 0px;
+    border-top: 3px solid black;
+    border-bottom: 3px solid black;
+    border-left: 3px solid black;
+    border-right: 3px solid black;
+}
+#sortButton2 {
+    display: inline-block;
+    width: 200px;
+    height: 30px;
+    -webkit-appearance: none;
+    appearance: none;
+    margin-left: -5px;
+    display:inline-block;
+    *display: inline;     
+    zoom:1;             
+    vertical-align:middle;
+    padding: 0;
+    border-radius:0px;
+    border-top: 3px solid black;
+    border-bottom: 3px solid black;
+    border-right: 3px solid black;
+}
+
+.sortButtonGroup {
+    display: inline-block;
+    cursor: pointer;
+    -webkit-appearance: none;
+    appearance: none;
+    margin-bottom: 50px;
+    margin-right: 0px;
+    margin-left: 5px;
+    display:inline-block;
+    *display: inline;     
+    zoom:1;             
+    vertical-align:middle;
+    padding: 0;
+}
+
+label {
+    display:inline-block;
+    vertical-align:middle;
+    *display: inline;     /* for IE7*/
+    zoom:1;              /* for IE7*/
+    padding-top: 5px;
+    margin-right: 5px;
+    text-align: right;
+    width: 140px;
+    white-space: nowrap;
+}
+
 section {
 color: #fff;
 text-align: center;
@@ -8,16 +72,35 @@ display: table;
 width: 100%;
 }
 
-.left-half {
-background-color: #ff9e2c;
-position: absolute;
-left: 0px;
-width: 50%;
-}
+.btn{
+    background: #ccc;
+} 
 
-.right-half {
-background-color: #b6701e;
-position: absolute;
-right: 0px;
-width: 50%;
+br {
+    content: "";
+    line-height: 10px
 }
+.topnav {
+    overflow: hidden;
+    background-color: lightgrey;
+  }
+  
+  /* Style the links inside the navigation bar */
+  .topnav a {
+    float: left;
+    display: block;
+    color: black;
+    text-align: center;
+    padding: 14px 16px;
+    text-decoration: none;
+    font-size: 17px;
+  }
+  
+  .topnav a:hover {
+    background-color: darkgrey;
+    color: white;
+  }
+
+  .current {
+    background-color: hotpink;
+  }
