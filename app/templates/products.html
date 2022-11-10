@@ -20,6 +20,7 @@
       <th scope="col">Price</th>
       <th scope="col">Reviews</th>
       <th scope="col">Detailed Page</th>
+      <th scope="col">Add To Cart</th>
     </tr>
   </thead>
   <tbody>
@@ -30,7 +31,7 @@
         <td>{{product.price}}</td>
         <td><a class = "btn btn-secondary" href="{{ url_for('productReviewOutput.productReviewOutput', productId = product.id, orderBy = 5) }}" role = "button">Click for Reviews</a></td> 
         <td><a class = "btn btn-secondary" href="{{ url_for('detailedProduct.detailedProduct', productId = product.id) }}" role = "button">Click for More Info</a></td> 
-
+        <td><a class = "btn btn-secondary" href="{{ url_for('carts.addToCart', productId = product.id) }}" role = "button">Add To Cart</a></td> 
       </tr>
     {% endfor %}
   </tbody>
