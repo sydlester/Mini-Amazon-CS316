@@ -2,6 +2,39 @@
 
 {% block content %}
 
-<h1>Current Shopping Cart</h1>
+<br><br>
+{% if current_user.is_authenticated %}
+<h2>Your cart:</h2>
+<table class='table table-hover table-bordered container'>
+  <thead class="thead-dark">
+    <tr>
+      <th scope="col">User ID</th>
+      <th scope="col">Product ID</th>
+      <th scope="col">Quantity</th>
+      <th scope="col">Product Name</th>
+      <th scope="col">Unit Price</th>
+      <th scope="col">Add Quantity</th>
+      <th scope="col">Remove Quantity</th>
+      <th scope="col">Remove From Cart</th>
+    </tr>
+  </thead>
+  <tbody>
+    {% for cart in user_cart%}
+        <tr>
+          <th scope="row">{{cart.userId}}</th>
+          <td>{{cart.pid}}</td>
+          <td>{{cart.quantity}}</td>
+          <td>{{cart.productName}}</td>
+          <td>{{cart.unitPrice}}</td>
+          <td><a style="background-color: hotpink;" class = "btn btn-secondary" href="{{ url_for('carts.increaseQuantity', productId = cart.pid) }}" role = "button">Add 1</a></td> 
+          <td><a style="background-color: hotpink;" class = "btn btn-secondary" href="{{ url_for('carts.decreaseQuantity', productId = cart.pid) }}" role = "button">Remove 1</a></td> 
+          <td><a style="background-color: hotpink;" class = "btn btn-secondary" href="{{ url_for('carts.removeProduct', productId = cart.pid) }}" role = "button">Delete Product</a></td> 
+        </tr>
+      {% endfor %}
+  </tbody>
+</table>
+{% else %}
+<p><a href="{{ url_for('users.login') }}">Log in</a> to see your cart!</p>
+{% endif %}
 
 {% endblock %}
