@@ -1,4 +1,4 @@
-Skeleton code for the CompSci 316 undergraduate course project.
+Skeleton code for the CompSci 316 undergraduate course project
 This course project is intended as a 'standard option'.
 
 Originally created by [Rickard Stureborg](http://www.rickard.stureborg.com) and [Yihao Hu](https://www.linkedin.com/in/yihaoh/) for Fall 2021.
