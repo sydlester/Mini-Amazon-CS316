@@ -8,6 +8,8 @@ from .models.product import Product
 from .models.purchase import Purchase
 
 from .models.productReview import ProductReview
+from .models.summaryStats import SummaryStats
+
 
 from flask import Blueprint
 bp = Blueprint('productReviewOutput', __name__)
@@ -17,6 +19,6 @@ bp = Blueprint('productReviewOutput', __name__)
 def productReviewOutput(productId, orderBy):
     if orderBy == None:
         orderBy = 5
-    orderBy = int(orderBy)
+    summary_stats  = SummaryStats.getAvgProductRating(productId)
     product_reviews = ProductReview.get_by_productId(productId, orderBy)
-    return render_template('productReviewOutput.html', productId = productId, orderBy = orderBy, product_reviews = product_reviews)
+    return render_template('productReviewOutput.html', productId = productId, orderBy = orderBy, product_reviews = product_reviews, summary_stats= summary_stats)
