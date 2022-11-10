@@ -21,8 +21,8 @@
         <th scope="row">{{product.id}}</th>
         <td>{{product.name}}</td>
         <td>{{product.price}}</td>
-        <td><a class = "btn btn-secondary" href="{{ url_for('productReviewOutput.productReviewOutput', productId = product.id, orderBy = 5) }}" role = "button">Reviews</a></td> 
-        <td><a class = "btn btn-secondary" href="{{ url_for('detailedProduct.detailedProduct', productId = product.id) }}" role = "button">More Info</a></td> 
+        <td><a class = "btn btn-secondary" href="{{ url_for('productReviewOutput.productReviewOutput', productId = product.id, orderBy = 5) }}" role = "button">Click for Reviews</a></td> 
+        <td><a class = "btn btn-secondary" href="{{ url_for('detailedProduct.detailedProduct', productId = product.id) }}" role = "button">Click for More Info</a></td> 
 
       </tr>
     {% endfor %}

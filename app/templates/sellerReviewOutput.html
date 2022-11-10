@@ -18,8 +18,8 @@
 <table class='table table-hover table-bordered container'>
   <thead class="thead-dark">
     <tr>
-      <th scope="col">Seller ID</th>
       <th scope="col">User ID</th>
+      <th scope="col">Product ID</th>
       <th scope="col">Rating</th>
       <th scope="col">Description</th>
       <th scope="col">Date</th>
@@ -29,7 +29,7 @@
     {% for review in seller_reviews%}
       <tr>
         <th scope="row">{{review.sellerId}}</th>
-        <td>{{review.userId}}</td>
+        <td>{{review.userID}}</td>
         <td>{{review.rating}}</td>
         <td>{{review.theDescription}}</td>
         <td>{{review.theDate}}</td>

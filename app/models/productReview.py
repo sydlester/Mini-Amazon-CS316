@@ -39,7 +39,6 @@ FROM ProductReviews
 ''',)
         return [ProductReview(*row) for row in rows]
 
-
     @staticmethod
     def get_by_productId(productId, orderMe):
         rows = app.db.execute('''
@@ -50,5 +49,3 @@ ORDER BY :orderMe DESC
 ''',            productId = productId, orderMe = orderMe)
         return [ProductReview(*row) for row in rows]
 
-
- 

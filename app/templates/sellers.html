@@ -20,8 +20,8 @@
           <th scope="row">{{seller.id}}</th>
           <td>{{seller.firstname}}</td>
           <td>{{seller.lastname}}</td>
-          <td><a class = "btn btn-secondary" href="{{ url_for('sellerReviewOutput.sellerReviewOutput', sellerId = seller.id, orderBy = 5) }}" role = "button">Reviews</a></td> 
-          <td><a class = "btn btn-secondary" href="{{ url_for('detailedSeller.detailedSeller', sellerId = seller.id) }}" role = "button">More Info</a></td> 
+          <td><a class = "btn btn-secondary" href="{{ url_for('sellerReviewOutput.sellerReviewOutput', sellerId = seller.id, orderBy = 5) }}" role = "button">Click for Reviews</a></td> 
+          <td><a class = "btn btn-secondary" href="{{ url_for('detailedSeller.detailedSeller', sellerId = seller.id) }}" role = "button">Click for More Info</a></td> 
 
         </tr>
       {% endfor %}
