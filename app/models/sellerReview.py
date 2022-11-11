@@ -39,3 +39,10 @@ ORDER BY :orderMe DESC
 
 
 
+    @staticmethod
+    def submitSellerReview(userId, sellerId, rating, theDescription, theDate):
+        rows = app.db.execute('''
+INSERT INTO SellerReviews VALUES (:userId, :sellerId, :rating, :theDescription, :theDate)
+''',
+                              userId = userId, sellerId = sellerId, rating = rating, theDescription = theDescription, theDate=theDate)
+        return
