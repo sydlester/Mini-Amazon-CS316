@@ -53,3 +53,16 @@ ORDER BY price DESC
 ''',
                               sellerId = sellerId)
         return [Product(*row) for row in rows]
+
+
+    @staticmethod
+    def getInventoryBySeller(sellerId, orderMe):
+        rows = app.db.execute('''
+SELECT id, name, price, available, category, theDescription, quantity, sellerId
+FROM Products
+WHERE sellerId = :sellerId
+ORDER BY :orderMe DESC
+''',
+                              sellerId = sellerId, orderMe = orderMe)
+        return [Product(*row) for row in rows]
+
