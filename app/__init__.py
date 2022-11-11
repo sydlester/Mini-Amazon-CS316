@@ -51,4 +51,10 @@ def create_app():
     from .detailedSeller import bp as detailedSeller_bp
     app.register_blueprint(detailedSeller_bp)
 
+    from .submitProductReview import bp as submitProductReview_bp
+    app.register_blueprint(submitProductReview_bp)
+
+    from .newProductReview import bp as newProductReview_bp
+    app.register_blueprint(newProductReview_bp)
+
     return app

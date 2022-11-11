@@ -49,3 +49,11 @@ ORDER BY :orderMe DESC
 ''',            productId = productId, orderMe = orderMe)
         return [ProductReview(*row) for row in rows]
 
+
+    @staticmethod
+    def submitProductReview(userId, pid, rating, theDescription, theDate):
+        rows = app.db.execute('''
+INSERT INTO ProductReviews VALUES (:userId, :pid, :rating, :theDescription, :theDate)
+''',
+                              userId = userId, pid = pid, rating = rating, theDescription = theDescription, theDate=theDate)
+        return

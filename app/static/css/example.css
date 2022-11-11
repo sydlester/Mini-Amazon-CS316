@@ -104,3 +104,35 @@ br {
   .current {
     background-color: hotpink;
   }
+
+  .RatingSelector {
+    float: left;
+    align-self: left;
+    align-items: left;
+    justify-content: left;
+    margin: 0 auto;
+    height: 5vh;
+    width: 7vh;
+    background-color: #f1f1f1;
+  }
+
+  .ReviewDescription {
+      height: 15vh; 
+      width: 35vh;
+  }
+
+  .ReviewLabels {
+    display: block;
+    margin-top: 1em;
+    text-align: left;
+    text-emphasis-style: bold;
+  }
+
+  .ReviewSubmit {
+    background-color: hotpink;
+    border-style: solid;
+    border-radius: .5em;
+    border-color: black;
+    border-width: 3px
+    
+  }
