@@ -58,7 +58,7 @@ ORDER BY price DESC
     @staticmethod
     def getInventoryBySeller(sellerId, orderMe):
         rows = app.db.execute('''
-SELECT id, name, price, available, category, theDescription, quantity, sellerId
+SELECT id, name, price, available, category, theDescription, quantity
 FROM Products
 WHERE sellerId = :sellerId
 ORDER BY :orderMe DESC
@@ -66,3 +66,32 @@ ORDER BY :orderMe DESC
                               sellerId = sellerId, orderMe = orderMe)
         return [Product(*row) for row in rows]
 
+
+    @staticmethod
+    def add_quantity(sellerId, id):
+        rows = app.db.execute('''
+UPDATE Products
+    SET quantity = quantity + 1
+    WHERE sellerId = :sellerId and id = :id
+''',
+                              sellerId=sellerId, id = id)
+        return
+
+    @staticmethod
+    def decrease_quantity(sellerId, id):
+        rows = app.db.execute('''
+UPDATE Products
+    SET quantity = quantity - 1
+    WHERE sellerId = :sellerId and id = :id
+''',
+                              sellerId=sellerId, id = id)
+        return
+
+    @staticmethod
+    def removeFromInventory(sellerId, id):
+        rows = app.db.execute('''
+DELETE FROM Products
+    WHERE sellerId = :sellerId AND id = :id
+''',
+                              sellerId=sellerId, id = id)
+        return

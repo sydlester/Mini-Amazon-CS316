@@ -80,3 +80,13 @@ WHERE isSeller = True
 ''',
                               )
         return [User(*row) for row in rows]
+
+    @staticmethod
+    def isSeller(id):
+        rows = app.db.execute('''
+SELECT isSeller
+FROM Users
+WHERE id = :id
+''',
+                              )
+        return [User(*row) for row in rows]
