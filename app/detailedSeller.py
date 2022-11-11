@@ -11,7 +11,8 @@ bp = Blueprint('detailedSeller', __name__)
 
 @bp.route('/detailedSeller/<int:sellerId>')
 def detailedSeller(sellerId):
-    return render_template('detailedSeller.html', sellerId = sellerId)
+    seller_inventory = Product.getBySeller(sellerId)
+    return render_template('detailedSeller.html', sellerId = sellerId, seller_inventory = seller_inventory)
 
 
 
