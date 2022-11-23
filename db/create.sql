@@ -20,7 +20,10 @@ CREATE TABLE Products (
     category varchar(255),
     theDescription varchar(255),
     quantity INT NOT NULL,
-    sellerId INT NOT NULL REFERENCES USERS(id) 
+    sellerId INT NOT NULL REFERENCES USERS(id),
+    theImage VARCHAR(2048) NOT NULL
+
+
 );
 
 CREATE TABLE Orders (

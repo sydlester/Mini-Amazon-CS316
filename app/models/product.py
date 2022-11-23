@@ -1,7 +1,7 @@
 from flask import current_app as app
 
 class Product:
-    def __init__(self, id, name, price, available, category, theDescription, quantity, sellerId):
+    def __init__(self, id, name, price, available, category, theDescription, quantity, sellerId, theImage):
         self.id = id
         self.name = name
         self.price = price
@@ -10,11 +10,12 @@ class Product:
         self.theDescription = theDescription
         self.quantity = quantity
         self.sellerId = sellerId
+        self.theImage = theImage
 
     @staticmethod
     def get(id):
         rows = app.db.execute('''
-SELECT id, name, price, available, category, theDescription, quantity, sellerId
+SELECT id, name, price, available, category, theDescription, quantity, sellerId, theImage
 FROM Products
 WHERE id = :id
 ''',
@@ -24,7 +25,7 @@ WHERE id = :id
     @staticmethod
     def get_all(available=True):
         rows = app.db.execute('''
-SELECT id, name, price, available, category, theDescription, quantity, sellerId
+SELECT id, name, price, available, category, theDescription, quantity, sellerId, theImage
 FROM Products
 WHERE available = :available
 ''',
@@ -35,7 +36,7 @@ WHERE available = :available
     @staticmethod
     def getKExpensive(k):
         rows = app.db.execute('''
-SELECT id, name, price, available, category, theDescription, quantity, sellerId
+SELECT id, name, price, available, category, theDescription, quantity, sellerId, theImage
 FROM Products
 ORDER BY price DESC
 LIMIT :k
@@ -46,7 +47,7 @@ LIMIT :k
     @staticmethod
     def getBySeller(sellerId):
         rows = app.db.execute('''
-SELECT id, name, price, available, category, theDescription, quantity, sellerId
+SELECT id, name, price, available, category, theDescription, quantity, sellerId, theImage
 FROM Products
 WHERE sellerId = :sellerId
 ORDER BY price DESC
@@ -58,7 +59,7 @@ ORDER BY price DESC
     @staticmethod
     def getInventoryBySeller(sellerId, orderMe):
         rows = app.db.execute('''
-SELECT id, name, price, available, category, theDescription, quantity
+SELECT id, name, price, available, category, theDescription, quantity, theImage
 FROM Products
 WHERE sellerId = :sellerId
 ORDER BY :orderMe DESC
