@@ -6,6 +6,8 @@ from flask_wtf import FlaskForm
 from wtforms import StringField, PasswordField, BooleanField, SubmitField
 from wtforms.validators import ValidationError, DataRequired, Email, EqualTo
 from datetime import datetime
+from imaplib import Int2AP
+
 
 from .models.user import User
 from .models.sellerReview import SellerReview
@@ -19,7 +21,8 @@ def newSellerReview(sellerId, userId):
     description = request.form["description"]
     theDate = datetime.now()
     SellerReview.submitSellerReview(userId, sellerId, rating, description, theDate)
-    
-    return render_template('newSellerReview.html', sellerId = sellerId, userId=userId)
+    seller_reviews = SellerReview.get_by_sellerId(sellerId, 5)
+    return render_template('sellerReviewOutput.html', sellerId = sellerId, orderBy = 5, seller_reviews = seller_reviews)
+
 
 

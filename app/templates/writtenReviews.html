@@ -1,0 +1,14 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<h1>Welcome to Written Reviews Page</h1>
+<div class = "sortButtonGroup"> 
+    <label><b>Select Review Type</b></label>
+      <a id = "sortButton1" class = "btn btn-secondary" href="{{ url_for('receivedReviews.receivedReviews') }}"role = "button">Received</a> 
+      <a style="background-color: hotpink;" id = "sortButton2" class = "btn btn-secondary" role = "button">Written</a> 
+</div>
+
+<p>This will provide a summary of the reviews you have written!</p> 
+
+{% endblock %}

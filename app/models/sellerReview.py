@@ -46,3 +46,21 @@ INSERT INTO SellerReviews VALUES (:userId, :sellerId, :rating, :theDescription, 
 ''',
                               userId = userId, sellerId = sellerId, rating = rating, theDescription = theDescription, theDate=theDate)
         return
+
+    @staticmethod
+    def getAverageRating(sellerId):
+        rows = app.db.execute('''
+SELECT ROUND(avg(rating), 1) 
+FROM SellerReviews
+WHERE sellerId = :sellerId
+''', sellerId = sellerId)
+        return rows[0][0]
+
+    @staticmethod
+    def getNumberRatings(sellerId):
+        rows = app.db.execute('''
+SELECT COUNT(rating)
+FROM SellerReviews
+WHERE sellerId = :sellerId
+''', sellerId = sellerId)
+        return rows[0][0]

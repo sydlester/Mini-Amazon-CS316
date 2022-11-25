@@ -1,0 +1,82 @@
+{% extends "base.html" %}
+
+{% block content %}
+<h1>Welcome to your Received Reviews</h1>
+<div class = "sortButtonGroup"> 
+    <label font-size: 50px><b>Select Review Type  </b></label>
+      <a style="background-color: hotpink;" id = "sortButton1" class = "btn btn-secondary" role = "button">Received</a> 
+      <a id = "sortButton2" class = "btn btn-secondary" href="{{ url_for('writtenReviews.writtenReviews') }}" role = "button">Written</a> 
+</div>
+
+<style>
+    .checked {
+    color: hotpink;
+    }
+    .stars {
+    left: 2%;
+    position: absolute;
+    top: 40%;
+    }
+
+    .ex1 {
+        text-align: center;   
+        font-size: 50px;     
+        position: relative;
+        margin-bottom: 0px;
+    }
+    .number {
+        text-align: center;
+        color: grey;
+        font-size: 20px;
+        position: relative;
+    }
+</style>
+
+<container class = "stars"> 
+ <p class="ex1">{{avgRating}}</p>
+{% if avgRating == 5 %}
+<span class="fa fa-star checked fa-3x"></span>
+<span class="fa fa-star checked fa-3x"></span>
+<span class="fa fa-star checked fa-3x"></span>
+<span class="fa fa-star checked fa-3x"></span>
+<span class="fa fa-star checked fa-3x"></span>
+{% elif avgRating >=4 %}
+<span class="fa fa-star checked fa-3x"></span>
+<span class="fa fa-star checked fa-3x"></span>
+<span class="fa fa-star checked fa-3x"></span>
+<span class="fa fa-star checked fa-3x"></span>
+<span class="fa fa-star fa-3x"></span>
+{% elif avgRating >=3 %}
+<span class="fa fa-star checked fa-3x"></span>
+<span class="fa fa-star checked fa-3x"></span>
+<span class="fa fa-star checked fa-3x"></span>
+<span class="fa fa-star fa-3x"></span>
+<span class="fa fa-star fa-3x"></span>
+{% elif avgRating >=2 %}
+<span class="fa fa-star checked fa-3x"></span>
+<span class="fa fa-star checked fa-3x"></span>
+<span class="fa fa-star fa-3x"></span>
+<span class="fa fa-star fa-3x"></span>
+<span class="fa fa-star fa-3x"></span>
+{% elif avgRating >=1 %}
+<span class="fa fa-star checked fa-3x"></span>
+<span class="fa fa-star fa-3x"></span>
+<span class="fa fa-star fa-3x"></span>
+<span class="fa fa-star fa-3x"></span>
+<span class="fa fa-star fa-3x"></span>
+{% else %}
+<span class="fa fa-star fa-3x"></span>
+<span class="fa fa-star fa-3x"></span>
+<span class="fa fa-star fa-3x"></span>
+<span class="fa fa-star fa-3x"></span>
+<span class="fa fa-star fa-3x"></span>
+{% endif %}
+{% if numRating == 1%}
+<p class="number">Based on {{numRating}} Rating</p>
+{% else %}
+<p class="number">Based on {{numRating}} Ratings</p>
+{%endif%}
+
+</container>
+
+{% endblock %}

@@ -13,7 +13,7 @@ bp = Blueprint('sellerInventory', __name__)
 @bp.route('/sellerInventory/<int:sellerId>/<int:orderBy>', methods=["GET", "POST"])
 def sellerInventory(sellerId, orderBy):
     if orderBy == None:
-        orderBy = 
+        orderBy = 5
     orderBy = int(orderBy)
     seller_inventory = Product.getInventoryBySeller(sellerId, orderBy)
     return render_template('sellerInventory.html', sellerId = sellerId, orderBy = orderBy, seller_inventory = seller_inventory)

@@ -63,4 +63,16 @@ def create_app():
     from .newSellerReview import bp as newSellerReview_bp
     app.register_blueprint(newSellerReview_bp)
 
+    from .pastPurchases import bp as pastPurchases_bp
+    app.register_blueprint(pastPurchases_bp)
+
+    from .manageInventory import bp as manageInventory_bp
+    app.register_blueprint(manageInventory_bp)
+
+    from .receivedReviews import bp as receivedReviews_bp
+    app.register_blueprint(receivedReviews_bp)
+
+    from .writtenReviews import bp as writtenReviews_bp
+    app.register_blueprint(writtenReviews_bp)
+
     return app

@@ -19,7 +19,7 @@ def newProductReview(productId, userId):
     description = request.form["description"]
     theDate = datetime.now()
     ProductReview.submitProductReview(userId, productId, rating, description, theDate)
-    
-    return render_template('newProductReview.html', productId = productId, userId=userId)
+    product_reviews = ProductReview.get_by_productId(productId, 5)
+    return render_template('productReviewOutput.html', productId = productId, orderBy = 5, product_reviews=product_reviews)
 
 

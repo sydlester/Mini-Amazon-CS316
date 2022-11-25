@@ -5,6 +5,7 @@
   <title>Mini Amazon</title>
   <script src="//code.jquery.com/jquery-1.11.1.min.js"></script>
   <link href="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
   <script src="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
   <link rel="stylesheet" href="{{ url_for('static', filename='css/example.css') }}">
   <style>
@@ -60,64 +61,102 @@
   </div>
 
   {% if request.path == "/" %}
-  <div class = "topnav">
-    <a class = "current" href="/">Home</a>
-    <a href="/products">Products</a>
-    <a href="/sellers">Sellers</a>
-    <a href="/carts">Cart</a>
-    <a href="/account">Account</a>
-    <a href="/sellerInventory">My Inventory</a>
+  <div class = "topnav d-flex myNav">
+    <a class = "current" href="/"><i class="fa fa-fw fa-home"></i>Home</a>
+    <a href="/products"><i class="fa fa-fw fa-search"></i>Shop Products</a>
+    <a href="/sellers"><i class="fa fa-fw fa-users"></i>Browse Sellers</a>
+    <a href="/pastPurchases"><i class="fa fa-fw fa-history"></i>Past Purchases</a>
+    <a href="/manageInventory"><i class="fa fa-fw fa-cubes"></i>Manage Inventory</a>
+    <a href="/receivedReviews"><i class="fa fa-fw fa-comments"></i>Reviews</a>
+    <a href="/account"><i class="fa fa-fw fa-user"></i>Account</a>
+    <a href="/carts"><i class="fa fa-fw fa-shopping-cart"></i>Cart</a>
   </div>
   {% elif request.path == "/products" %}
-  <div class = "topnav">
-    <a href="/">Home</a>
-    <a class = "current" href="/products">Products</a>
-    <a href="/sellers">Sellers</a>
-    <a href="/carts">Cart</a>
-    <a href="/account">Account</a>
-    <a href="/sellerInventory">My Inventory</a>
+  <div class = "topnav d-flex myNav">
+    <a href="/"><i class="fa fa-fw fa-home"></i>Home</a>
+    <a class = "current" href="/products"><i class="fa fa-fw fa-search"></i>Shop Products</a>
+    <a href="/sellers"><i class="fa fa-fw fa-users"></i>Browse Sellers</a>
+    <a href="/pastPurchases"><i class="fa fa-fw fa-history"></i>Past Purchases</a>
+    <a href="/manageInventory"><i class="fa fa-fw fa-cubes"></i>Manage Inventory</a>
+    <a href="/receivedReviews"><i class="fa fa-fw fa-comments"></i>Reviews</a>
+    <a href="/account"><i class="fa fa-fw fa-user"></i>Account</a>
+    <a href="/carts"><i class="fa fa-fw fa-shopping-cart"></i>Cart</a>
   </div>
   {% elif request.path == "/sellers" %}
-  <div class = "topnav">
-    <a href="/">Home</a>
-    <a href="/products">Products</a>
-    <a class = "current" href="/sellers">Sellers</a>
-    <a href="/carts">Cart</a>
-    <a href="/account">Account</a>
-    <a href="/sellerInventory">My Inventory</a>
+  <div class = "topnav d-flex myNav">
+    <a href="/"><i class="fa fa-fw fa-home"></i>Home</a>
+    <a href="/products"><i class="fa fa-fw fa-search"></i>Shop Products</a>
+    <a class = "current" href="/sellers"><i class="fa fa-fw fa-users"></i>Browse Sellers</a>
+    <a href="/pastPurchases"><i class="fa fa-fw fa-history"></i>Past Purchases</a>
+    <a href="/manageInventory"><i class="fa fa-fw fa-cubes"></i>Manage Inventory</a>
+    <a href="/receivedReviews"><i class="fa fa-fw fa-comments"></i>Reviews</a>
+    <a href="/account"><i class="fa fa-fw fa-user"></i>Account</a>
+    <a href="/carts"><i class="fa fa-fw fa-shopping-cart"></i>Cart</a>
+
   </div>
   {% elif request.path == "/carts" %}
-  <div class = "topnav">
-    <a href="/">Home</a>
-    <a href="/products">Products</a>
-    <a href="/sellers">Sellers</a>
-    <a class = "current"href="/carts">Cart</a>
-    <a href="/account">Account</a>
-    <a href="/sellerInventory">My Inventory</a>
+  <div class = "topnav d-flex myNav">
+    <a href="/"><i class="fa fa-fw fa-home"></i>Home</a>
+    <a href="/products"><i class="fa fa-fw fa-search"></i>Shop Products</a>
+    <a href="/sellers"><i class="fa fa-fw fa-users"></i>Browse Sellers</a>
+    <a href="/pastPurchases"><i class="fa fa-fw fa-history"></i>Past Purchases</a>
+    <a href="/manageInventory"><i class="fa fa-fw fa-cubes"></i>Manage Inventory</a>
+    <a href="/receivedReviews"><i class="fa fa-fw fa-comments"></i>Reviews</a>
+    <a href="/account"><i class="fa fa-fw fa-user"></i>Account</a>
+    <a class = "current"href="/carts"><i class="fa fa-fw fa-shopping-cart"></i>Cart</a>
   </div>
   {% elif request.path == "/account" %}
-  <div class = "topnav">
-    <a href="/">Home</a>
-    <a href="/products">Products</a>
-    <a href="/sellers">Sellers</a>
-    <a href="/carts">Cart</a>
-    <a class = "current"href="/acount">Account</a>
-    <a href="/sellerInventory">My Inventory</a>
-  {% elif request.path == "/sellerInventory" %}
-  <div class = "topnav">
-    <a href="/">Home</a>
-    <a href="/products">Products</a>
-    <a href="/sellers">Sellers</a>
-    <a href="/carts">Cart</a>
-    <a href="/account">Account</a>
-    <a class = "current"href="/sellerInventory">My Inventory</a>  
+  <div class = "topnav d-flex myNav">
+    <a href="/"><i class="fa fa-fw fa-home"></i>Home</a>
+    <a href="/products"><i class="fa fa-fw fa-search"></i>Shop Products</a>
+    <a href="/sellers"><i class="fa fa-fw fa-users"></i>Browse Sellers</a>
+    <a href="/pastPurchases"><i class="fa fa-fw fa-history"></i>Past Purchases</a>
+    <a href="/manageInventory"><i class="fa fa-fw fa-cubes"></i>Manage Inventory</a>
+    <a href="/receivedReviews"><i class="fa fa-fw fa-comments"></i>Reviews</a>
+    <a class = "current"href="/acount"><i class="fa fa-fw fa-user"></i>Account</a>
+    <a href="/carts"><i class="fa fa-fw fa-shopping-cart"></i>Cart</a>
+    </div>
+  {% elif request.path == "/manageInventory" %}
+  <div class = "topnav d-flex myNav">
+    <a href="/"><i class="fa fa-fw fa-home"></i>Home</a>
+    <a href="/products"><i class="fa fa-fw fa-search"></i>Shop Products</a>
+    <a href="/sellers"><i class="fa fa-fw fa-users"></i>Browse Sellers</a>
+    <a href="/pastPurchases"><i class="fa fa-fw fa-history"></i>Past Purchases</a>
+    <a class = "current"href="/manageInventory"><i class="fa fa-fw fa-cubes"></i>Manage Inventory</a>  
+    <a href="/receivedReviews"><i class="fa fa-fw fa-comments"></i>Reviews</a>
+    <a href="/account"><i class="fa fa-fw fa-user"></i>Account</a>
+    <a href="/carts"><i class="fa fa-fw fa-shopping-cart"></i>Cart</a>
   </div>
-
+  {% elif request.path == "/pastPurchases" %}
+  <div class = "topnav d-flex myNav">
+    <a href="/"><i class="fa fa-fw fa-home"></i>Home</a>
+    <a href="/products"><i class="fa fa-fw fa-search"></i>Shop Products</a>
+    <a href="/sellers"><i class="fa fa-fw fa-users"></i>Browse Sellers</a>
+    <a class = "current" href="/pastPurchases"><i class="fa fa-fw fa-history"></i>Past Purchases</a>
+    <a href="/manageInventory"><i class="fa fa-fw fa-cubes"></i>Manage Inventory</a>
+    <a href="/receivedReviews"><i class="fa fa-fw fa-comments"></i>Reviews</a>
+    <a href="/account"><i class="fa fa-fw fa-user"></i>Account</a>  
+    <a href="/carts"><i class="fa fa-fw fa-shopping-cart"></i>Cart</a>
+  </div>
+  {% elif request.path == "/receivedReviews" or request.path == "/writtenReviews"%}
+  <div class = "topnav d-flex myNav">
+    <a href="/"><i class="fa fa-fw fa-home"></i>Home</a>
+    <a href="/products"><i class="fa fa-fw fa-search"></i>Shop Products</a>
+    <a href="/sellers"><i class="fa fa-fw fa-users"></i>Browse Sellers</a>
+    <a href="/pastPurchases"><i class="fa fa-fw fa-history"></i>Past Purchases</a>
+    <a href="/manageInventory"><i class="fa fa-fw fa-cubes"></i>Manage Inventory</a>
+    <a class = "current" href="/receivedReviews"><i class="fa fa-fw fa-comments"></i>Reviews</a>
+    <a href="/account"><i class="fa fa-fw fa-user"></i>Account</a>  
+    <a href="/carts"><i class="fa fa-fw fa-shopping-cart"></i>Cart</a>
+  </div>
   {% endif %}
 
+  <br></br>
   <div class="main">
-    {% block content %}{% endblock %}
+    {% block content %}
+    {% endblock %}
   </div>
+
 </body>
 
 </html>

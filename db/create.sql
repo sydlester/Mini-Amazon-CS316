@@ -52,7 +52,7 @@ CREATE TABLE Carts (
 CREATE TABLE ProductReviews(
     userId INT NOT NULL REFERENCES Users(id),
     pid INT NOT NULL REFERENCES Products(id),
-    rating INT NOT NULL CHECK(rating>=0 AND rating <= 5),
+    rating FLOAT NOT NULL CHECK(rating>=0 AND rating <= 5),
     theDescription varchar(512),
     theDate timestamp without time zone NOT NULL DEFAULT (current_timestamp AT TIME ZONE 'UTC'),
     primary key (userId, pid)
@@ -61,7 +61,7 @@ CREATE TABLE ProductReviews(
 CREATE TABLE SellerReviews(
     userId INT NOT NULL REFERENCES Users(id),
     sellerId INT NOT NULL REFERENCES Users(id),
-    rating INT NOT NULL CHECK(rating>=0 AND rating <= 5),
+    rating FLOAT NOT NULL CHECK(rating>=0 AND rating <= 5),
     theDescription varchar(512),
     theDate timestamp without time zone NOT NULL DEFAULT (current_timestamp AT TIME ZONE 'UTC'),
     primary key (userId, sellerId)
