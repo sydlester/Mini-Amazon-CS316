@@ -15,4 +15,10 @@ def receivedReviews():
     sellerId = current_user.id
     avg = SellerReview.getAverageRating(sellerId)
     num = SellerReview.getNumberRatings(sellerId)
-    return render_template('receivedReviews.html', sellerId = sellerId, reviewType = "received", avgRating = avg, numRating= num)
+    numOnes = SellerReview.getOnes(sellerId)
+    numTwos = SellerReview.getTwos(sellerId)
+    numThrees = SellerReview.getThrees(sellerId)
+    numFours = SellerReview.getFours(sellerId)
+    numFives = SellerReview.getFives(sellerId)
+
+    return render_template('receivedReviews.html', sellerId = sellerId, reviewType = "received", avgRating = avg, numRating= num, numOnes = numOnes, numTwos = numTwos, numThrees = numThrees, numFours = numFours, numFives= numFives)

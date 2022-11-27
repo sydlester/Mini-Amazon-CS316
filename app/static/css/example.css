@@ -38,6 +38,7 @@
 .sortButtonGroup {
     display: inline-block;
     cursor: pointer;
+    justify-content: center;
     -webkit-appearance: none;
     appearance: none;
     margin-bottom: 50px;

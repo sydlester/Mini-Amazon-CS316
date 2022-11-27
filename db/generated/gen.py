@@ -136,7 +136,7 @@ def gen_product_reviews(num_product_reviews, available_pids, users):
             userId = selected[0]
             pid = selected[1]
             temp.remove(selected)
-            rating = fake.random_int(min=0, max=5)
+            rating = fake.random_int(min=1, max=5)
             description = fake.sentence(nb_words =12)[:-1]
             theDate = fake.date_time()
             writer.writerow([userId, pid, rating, description, theDate])
@@ -166,7 +166,7 @@ def gen_seller_reviews(num_seller_reviews, sellers, users):
             userId = selected[0]
             sellerId = selected[1]
             temp.remove(selected)
-            rating = fake.random_int(min=0, max=5)
+            rating = fake.random_int(min=1, max=5)
             description = fake.sentence(nb_words =12)[:-1]
             theDate = fake.date_time()
             writer.writerow([userId, sellerId, rating, description, theDate])

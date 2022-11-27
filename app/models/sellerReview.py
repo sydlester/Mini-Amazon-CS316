@@ -50,7 +50,7 @@ INSERT INTO SellerReviews VALUES (:userId, :sellerId, :rating, :theDescription, 
     @staticmethod
     def getAverageRating(sellerId):
         rows = app.db.execute('''
-SELECT ROUND(avg(rating), 1) 
+SELECT ROUND(CAST(rating AS numeric),1) 
 FROM SellerReviews
 WHERE sellerId = :sellerId
 ''', sellerId = sellerId)
@@ -62,5 +62,59 @@ WHERE sellerId = :sellerId
 SELECT COUNT(rating)
 FROM SellerReviews
 WHERE sellerId = :sellerId
+''', sellerId = sellerId)
+        return rows[0][0]
+
+    @staticmethod
+    def getZeros(sellerId):
+        rows = app.db.execute('''
+SELECT COUNT(rating)
+FROM SellerReviews
+WHERE sellerId = :sellerId and rating = 0
+''', sellerId = sellerId)
+        return rows[0][0]
+
+    @staticmethod
+    def getOnes(sellerId):
+        rows = app.db.execute('''
+SELECT COUNT(rating)
+FROM SellerReviews
+WHERE sellerId = :sellerId and rating = 1
+''', sellerId = sellerId)
+        return rows[0][0]
+
+    @staticmethod
+    def getTwos(sellerId):
+        rows = app.db.execute('''
+SELECT COUNT(rating)
+FROM SellerReviews
+WHERE sellerId = :sellerId and rating = 2
+''', sellerId = sellerId)
+        return rows[0][0]
+
+    @staticmethod
+    def getThrees(sellerId):
+        rows = app.db.execute('''
+SELECT COUNT(rating)
+FROM SellerReviews
+WHERE sellerId = :sellerId and rating = 3
+''', sellerId = sellerId)
+        return rows[0][0]
+
+    @staticmethod
+    def getFours(sellerId):
+        rows = app.db.execute('''
+SELECT COUNT(rating)
+FROM SellerReviews
+WHERE sellerId = :sellerId and rating = 4
+''', sellerId = sellerId)
+        return rows[0][0]
+
+    @staticmethod
+    def getFives(sellerId):
+        rows = app.db.execute('''
+SELECT COUNT(rating)
+FROM SellerReviews
+WHERE sellerId = :sellerId and rating = 5
 ''', sellerId = sellerId)
         return rows[0][0]
