@@ -2,13 +2,268 @@
 
 {% block content %}
 
-<br><br>
+<style>
+/* === range theme and appearance === */
+input[type="range"] {
+	font-size: 1.5rem;
+	width: 15em;
+}
 
-<h2>Products for sale:</h2>
+input[type="range"] {
+	color: hotpink;
+	--thumb-height: 1.1em;
+	--track-height: 0.4em;
+	--track-color: rgba(0, 0, 0, 0.2);
+	--brightness-hover: 180%;
+	--brightness-down: 105%;
+	--clip-edges: 0.125em;
+}
+
+input[type="range"].win10-thumb {
+	color: #2b2d42;
+	--thumb-height: 1.375em;
+	--thumb-width: 0.5em;
+	--clip-edges: 0.0125em;
+}
+
+/* === range commons === */
+input[type="range"] {
+	position: relative;
+	background: #fff0;
+	overflow: hidden;
+}
+
+input[type="range"]:active {
+	cursor: grabbing;
+}
+
+input[type="range"]:disabled {
+	filter: grayscale(1);
+	opacity: 0.3;
+	cursor: not-allowed;
+}
+
+/* === WebKit specific styles === */
+input[type="range"],
+input[type="range"]::-webkit-slider-runnable-track,
+input[type="range"]::-webkit-slider-thumb {
+	-webkit-appearance: none;
+	transition: all ease 100ms;
+	height: var(--thumb-height);
+}
+
+input[type="range"]::-webkit-slider-runnable-track,
+input[type="range"]::-webkit-slider-thumb {
+	position: relative;
+}
+
+input[type="range"]::-webkit-slider-thumb {
+	--thumb-radius: calc((var(--thumb-height) * 0.5) - 1px);
+	--clip-top: calc((var(--thumb-height) - var(--track-height)) * 0.5 - 0.5px);
+	--clip-bottom: calc(var(--thumb-height) - var(--clip-top));
+	--clip-further: calc(100% + 1px);
+	--box-fill: calc(-100vmax - var(--thumb-width, var(--thumb-height))) 0 0
+		100vmax currentColor;
+
+	width: var(--thumb-width, var(--thumb-height));
+	background: linear-gradient(currentColor 0 0) scroll no-repeat left center /
+		50% calc(var(--track-height) + 1px);
+	background-color: currentColor;
+	box-shadow: var(--box-fill);
+	border-radius: var(--thumb-width, var(--thumb-height));
+
+	filter: brightness(100%);
+	clip-path: polygon(
+		100% -1px,
+		var(--clip-edges) -1px,
+		0 var(--clip-top),
+		-100vmax var(--clip-top),
+		-100vmax var(--clip-bottom),
+		0 var(--clip-bottom),
+		var(--clip-edges) 100%,
+		var(--clip-further) var(--clip-further)
+	);
+}
+
+input[type="range"]:hover::-webkit-slider-thumb {
+	filter: brightness(var(--brightness-hover));
+	cursor: grab;
+}
+
+input[type="range"]:active::-webkit-slider-thumb {
+	filter: brightness(var(--brightness-down));
+	cursor: grabbing;
+}
+
+input[type="range"]::-webkit-slider-runnable-track {
+	background: linear-gradient(var(--track-color) 0 0) scroll no-repeat center /
+		100% calc(var(--track-height) + 1px);
+}
+
+input[type="range"]:disabled::-webkit-slider-thumb {
+	cursor: not-allowed;
+}
+
+.top {
+  display: inline;
+  vertical-align: middle;
+}
+.slight-padding {
+  margin-left: 50px;
+  vertical-align: middle;
+}
+.top-padding {
+  margin-top: 12px;
+}
+.alignMe {
+  vertical-align: middle;
+}
+#chooseCategory {
+	margin-left: 30px;
+	font-size: 18px;
+	height: 35px;
+    text-align: center;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+.simpleSlider {
+  margin-top: 20px;
+  -webkit-appearance: none;
+  appearance: none;
+  width: 350px !important;
+  height: 10px;
+  background: #D3D3D3;
+  opacity: 0.7;
+  -webkit-transition: .2s;
+  transition: opacity .2s;
+}
+
+.simpleSlider:hover {
+  opacity: 1;
+}
+
+.simpleSlider::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 25px;
+  height: 25px;
+  cursor: pointer;
+}
+
+.sliderticks {
+  display: flex;
+  justify-content: space-between;
+  padding: 0 10px;
+}
+
+.sliderticks p {
+  position: relative;
+  display: flex;
+  justify-content: center;
+  text-align: center;
+  width: 1px;
+  background: #D3D3D3;
+  height: 0px;
+  line-height: 5px;
+  margin: 0 0 20px 0;
+}
+.negMargin {
+	margin-top: -20px;
+}
+</style>
+<br><br>
+<h2>Customize your Search:</h2> 
+<div style="display:flex; flex-direction: row; justify-content: left; vertical-align: middle;">
+  <form class = "form-inline my-2 my-lg-Q alignMe" method="POST">
+	<div class="range alignMe" style="margin-left: 20px" >
+		<p><b>Minimum Acceptable Rating</b></p>
+		<input type="range" min="1" max="5" value = {{theMin}} class="simpleSlider negMargin" name = "minRating">
+		<div class="sliderticks">
+		  <p>1</p>
+		  <p>2</p>
+		  <p>3</p>
+		  <p>4</p>
+		  <p>5</p>
+		</div>
+	  </div>
+  <div class="range alignMe slight-padding">
+	<p style="text-align: center"><b>Price Range</b></p>
+	<input type="range" min="1" max="500" value = {{theMax}} class="simpleSlider negMargin" step = .8 name = "maxPrice">
+	<div class="sliderticks">
+	  <p>0</p>
+	  <p>100</p>
+	  <p>200</p>
+	  <p>300</p>
+	  <p>400</p>
+	  <p>500</p>
+	</div>
+  </div>
+  <div style="margin-left: 20px"> 
+  <select id="chooseCategory" name="category">
+	{%if category == "Food"%}
+	<option value="Food">Food</option>
+	<option value="Clothes">Clothes</option>
+	<option value="Sports">Sports</option>
+	<option value="Appliances">Appliances</option>
+	<option value="Random">Random</option>
+	<option value="Select">All Categories</option>
+	{%elif category == "Clothes"%}
+	<option value="Clothes">Clothes</option>
+	<option value="Food">Food</option>
+	<option value="Sports">Sports</option>
+	<option value="Appliances">Appliances</option>
+	<option value="Random">Random</option>
+	<option value="Select">All Categories</option>
+	{%elif category == "Sports"%}
+	<option value="Sports">Sports</option>
+	<option value="Food">Food</option>
+	<option value="Clothes">Clothes</option>
+	<option value="Appliances">Appliances</option>
+	<option value="Random">Random</option>
+	<option value="Select">All Categories</option>
+	{%elif category == "Appliances"%}
+	<option value="Appliances">Appliances</option>
+	<option value="Sports">Sports</option>
+	<option value="Food">Food</option>
+	<option value="Clothes">Clothes</option>
+	<option value="Random">Random</option>
+	<option value="Select">All Categories</option>
+	{%elif category == "Other"%}
+	<option value="Random">Random</option>
+	<option value="Appliances">Appliances</option>
+	<option value="Sports">Sports</option>
+	<option value="Food">Food</option>
+	<option value="Clothes">Clothes</option>
+	<option value="Select">All Categories</option>
+	{%else%}
+	<option value="Select">Select Category</option>
+	<option value="Appliances">Appliances</option>
+	<option value="Sports">Sports</option>
+	<option value="Food">Food</option>
+	<option value="Clothes">Clothes</option>
+	<option value="Random">Random</option>
+	{%endif%}
+
+
+
+  </select>
+</div>
+  <input class = "form-control mr-sm-2 slight-padding" type = "search" placeholder="Keyword" aria-label="Search" name = "searchField">
+  <button class ="btn btn-outline my-2 my-sm-0" type ="submit">Apply Criteria</button> 
+</form> 
+
+
+</div>
+<hr></hr>
+
 <table class='table table-hover table-bordered container'>
   <thead class="thead-dark">
     <tr>
       <th scope="col">Product ID</th>
+	  <th scope="col">Category</th>
       <th scope="col">Image</th>
       <th scope="col">Seller ID</th>
       <th scope="col">Product Name</th>
@@ -23,6 +278,7 @@
     {% for product in avail_products%}
       <tr>
         <th scope="row">{{product.id}}</th>
+		<td>{{product.category}}</td>
         <td><img src={{product.theImage}} width = "100" height = "100"></td>
         <td>{{product.sellerId}}</td>
         <td>{{product.name}}</td>
@@ -35,30 +291,5 @@
     {% endfor %}
   </tbody>
 </table>
-
-<br><br>
-{% if current_user.is_authenticated %}
-<h2>Your recent purchases:</h2>
-<table class='table table-hover table-bordered container'>
-  <thead class="thead-dark">
-    <tr>
-      <th scope="col">Purchase ID</th>
-      <th scope="col">Product Name</th>
-      <th scope="col">Price</th>
-    </tr>
-  </thead>
-  <tbody>
-    {% for purchase in purchase_history%}
-      <tr>
-        <th scope="row">{{purchase.id}}</th>
-        <td>{{purchase.pid}}</td>
-        <td>{{purchase.time_purchased}}</td>
-      </tr>
-    {% endfor %}
-  </tbody>
-</table>
-{% else %}
-<p><a href="{{ url_for('users.login') }}">Log in</a> to see your purchase history!</p>
-{% endif %}
 
 {% endblock %}

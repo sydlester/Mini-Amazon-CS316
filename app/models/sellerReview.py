@@ -54,7 +54,10 @@ SELECT ROUND(CAST(rating AS numeric),1)
 FROM SellerReviews
 WHERE sellerId = :sellerId
 ''', sellerId = sellerId)
-        return rows[0][0]
+        if rows: 
+            return rows[0][0]
+        else: 
+            return None
 
     @staticmethod
     def getNumberRatings(sellerId):

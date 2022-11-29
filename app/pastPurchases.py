@@ -13,4 +13,8 @@ bp = Blueprint('pastPurchases', __name__)
 
 @bp.route('/pastPurchases', methods=["GET", "POST"])
 def pastPurchases():
-    return render_template('pastPurchases.html')
+    if current_user.is_authenticated:
+        purchases = Purchase.get(current_user.id)
+    else:
+        purchases = None
+    return render_template('pastPurchases.html', purchases=purchases)

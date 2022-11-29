@@ -1,5 +1,7 @@
 from flask import render_template
 from flask_login import current_user
+from flask import request
+
 import datetime
 
 from .models.product import Product
@@ -9,18 +11,22 @@ from .models.purchase import Purchase
 from flask import Blueprint
 bp = Blueprint('products', __name__)
 
-@bp.route('/products')
+@bp.route('/products', methods=['GET', 'POST'])
 def products():
-    # get all available products for sale:
-    products = Product.get_all(True)
-    # find the products current user has bought:
-    if current_user.is_authenticated:
-        purchases = Purchase.get(current_user.id)
-    else:
-        purchases = None
-    # render the page by adding information to the index.html file
-    return render_template('products.html',
-                           avail_products=products,
-                           purchase_history=purchases)
+    if request.method == "GET":
+        products = Product.get_all(True)
+        return render_template('products.html',
+                           avail_products=products, theMax = 500, theMin = 1)
+    elif request.method == "POST":
+        keyWord = request.form["searchField"]
+        myMax = request.form["maxPrice"]
+        minRating = request.form["minRating"]
+        category = request.form["category"]
+        if category == "Select":
+            products = Product.noCat(keyWord, myMax, minRating)
+        else:
+            products = Product.getByKeyWord(keyWord, myMax, minRating, category)
+        return render_template('products.html',
+                           avail_products=products, category = category, theMax = myMax, theMin = minRating, length = len(products))
 
     

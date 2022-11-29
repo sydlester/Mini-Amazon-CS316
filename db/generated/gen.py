@@ -20,7 +20,6 @@ urls = urls = ["https://m.media-amazon.com/images/I/71SWOImq2-L._AC_UL640_QL65_.
 def get_csv_writer(f):
     return csv.writer(f, dialect='unix')
 
-
 def gen_users(num_users):
     sellers = []
     users = [] 
@@ -51,19 +50,22 @@ def gen_users(num_users):
 
 def gen_products(num_products, sellers):
     available_pids = []
+    names = []
     with open('db/data/products.csv', 'w') as f:
         writer = get_csv_writer(f)
         print('Products...', end=' ', flush=True)
+        for x in range(int(num_products/4)):
+            names.append(fake.sentence(nb_words=4)[:-1])
         for pid in range(num_products):
             if pid % 100 == 0:
                 print(f'{pid}', end=' ', flush=True)
-            name = fake.sentence(nb_words=4)[:-1]
+            name = fake.random_element(elements=names)
             price = f'{str(fake.random_int(max=500))}.{fake.random_int(max=99):02}'
             available = fake.random_element(elements=('true', 'false'))
             if available == 'true':
                 available_pids.append(pid)
             description = fake.sentence(nb_words =12)[:-1]
-            category = fake.random_element(elements=('food', 'clothes', 'sports', 'appliances', 'random'))
+            category = fake.random_element(elements=('Food', 'Clothes', 'Sports', 'Appliances', 'Random'))
             quantity = random.randint(1, 100)
             sellerId = fake.random_element(elements=sellers)
             theImage = fake.random_element(elements=urls)
@@ -148,12 +150,12 @@ def gen_seller_reviews(num_seller_reviews, sellers, users):
         writer = get_csv_writer(f)
         print('Seller Reviews...', end=' ', flush=True)
         
-        temp = []
+        temp2 = []
         for x in users:
-            for y in available_pids:
-                temp.append([x, y])
+            for y in sellers:
+                temp2.append([x, y])
 
-        for id in range(num_product_reviews):
+        for id in range(num_seller_reviews):
             if id % 100 == 0:
                 print(f'{id}', end=' ', flush=True)
         
@@ -162,10 +164,10 @@ def gen_seller_reviews(num_seller_reviews, sellers, users):
             if id % 100 == 0:
                 print(f'{id}', end=' ', flush=True)
             
-            selected = fake.random_element(elements=temp)
+            selected = fake.random_element(elements=temp2)
             userId = selected[0]
             sellerId = selected[1]
-            temp.remove(selected)
+            temp2.remove(selected)
             rating = fake.random_int(min=1, max=5)
             description = fake.sentence(nb_words =12)[:-1]
             theDate = fake.date_time()

@@ -153,7 +153,10 @@
 }
 
 </style>
+{% if num == 0 %}
+<h2 style="text-align: center">No Reviews Yet!</h2>
 
+{% else %}
 <div class = "myOuter">
   <div class = "inner"> 
     <p class="theAvg">{{avgRating}}</p>
@@ -379,8 +382,6 @@
       <div>{{numOnes}}</div>
     </div>
 
-
-
   </div>
 </div> 
 
@@ -392,5 +393,5 @@
 
 
 </div> 
-
-  {% endblock %}
+{% endif %}
+{% endblock %}

@@ -75,4 +75,7 @@ def create_app():
     from .writtenReviews import bp as writtenReviews_bp
     app.register_blueprint(writtenReviews_bp)
 
+    from .error import bp as error_bp
+    app.register_blueprint(error_bp)
+    
     return app

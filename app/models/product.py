@@ -96,3 +96,28 @@ DELETE FROM Products
 ''',
                               sellerId=sellerId, id = id)
         return
+
+
+    @staticmethod
+    def getByKeyWord(keyWord, myMax, minRating, category):     
+
+        rows = app.db.execute('''
+SELECT id, name, price, available, category, Products.theDescription, quantity, sellerId, theImage
+FROM Products
+WHERE name ILIKE '%' || :keyWord || '%' AND price <= :myMax and category  = :category AND (Select avg(rating) from ProductReviews WHERE id = pid) >= :minRating
+ORDER BY price DESC
+''',
+                              keyWord=keyWord, myMax = myMax, minRating = minRating, category = category) 
+        return [Product(*row) for row in rows]
+
+
+    @staticmethod
+    def noCat(keyWord, myMax, minRating):     
+        rows = app.db.execute('''
+SELECT id, name, price, available, category, Products.theDescription, quantity, sellerId, theImage
+FROM Products
+WHERE name ILIKE '%' || :keyWord || '%' AND price <= :myMax AND (Select avg(rating) from ProductReviews WHERE id = pid) >= :minRating
+ORDER BY price DESC
+''',
+                              keyWord=keyWord, myMax = myMax, minRating = minRating) 
+        return [Product(*row) for row in rows]
