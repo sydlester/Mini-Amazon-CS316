@@ -57,3 +57,80 @@ INSERT INTO ProductReviews VALUES (:userId, :pid, :rating, :theDescription, :the
 ''',
                               userId = userId, pid = pid, rating = rating, theDescription = theDescription, theDate=theDate)
         return
+
+
+    @staticmethod
+    def getRatingAverage(productId):
+        rows = app.db.execute('''
+SELECT ROUND(CAST(rating AS numeric),1) 
+FROM ProductReviews
+WHERE pid = :productId
+''', productId = productId)
+        if rows: 
+            return rows[0][0]
+        else: 
+            return None
+
+
+    @staticmethod
+    def getNumberRatings(productId):
+        rows = app.db.execute('''
+SELECT COUNT(rating)
+FROM ProductReviews
+WHERE pid = :productId
+''', productId = productId)
+        return rows[0][0]
+
+    @staticmethod
+    def getZeros(productId):
+        rows = app.db.execute('''
+SELECT COUNT(rating)
+FROM ProductReviews
+WHERE pid = :productId and rating = 0
+''', productId = productId)
+        return rows[0][0]
+
+    @staticmethod
+    def getOnes(productId):
+        rows = app.db.execute('''
+SELECT COUNT(rating)
+FROM ProductReviews
+WHERE pid = :productId and rating = 1
+''', productId = productId)
+        return rows[0][0]
+
+    @staticmethod
+    def getTwos(productId):
+        rows = app.db.execute('''
+SELECT COUNT(rating)
+FROM ProductReviews
+WHERE pid = :productId and rating = 2
+''', productId = productId)
+        return rows[0][0]
+
+    @staticmethod
+    def getThrees(productId):
+        rows = app.db.execute('''
+SELECT COUNT(rating)
+FROM ProductReviews
+WHERE pid = :productId and rating = 3
+''', productId = productId)
+        return rows[0][0]
+
+    @staticmethod
+    def getFours(productId):
+        rows = app.db.execute('''
+SELECT COUNT(rating)
+FROM ProductReviews
+WHERE pid = :productId and rating = 4
+''', productId = productId)
+        return rows[0][0]
+
+    @staticmethod
+    def getFives(productId):
+        rows = app.db.execute('''
+SELECT COUNT(rating)
+FROM ProductReviews
+WHERE pid = :productId and rating = 5
+''', productId = productId)
+        return rows[0][0]

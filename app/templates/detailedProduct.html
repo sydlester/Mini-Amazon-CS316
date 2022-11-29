@@ -2,18 +2,406 @@
 
 {% block content %}
 
-<div class="topnav">
-    <a class="active" href="/">Home</a>
-    <a href="/products">Products</a>
-    <a href="/sellers">Sellers</a>
-    <a href="/carts">Cart</a>
-    <a href="/account">Account</a>
+<style>
+  .checked {
+  color: hotpink;
+  }
+  .theAvg {
+      text-align: center;   
+      font-size: 50px;     
+      position: relative;
+      margin-bottom: 0px;
+  }
+  .number {
+      text-align: center;
+      color: grey;
+      font-size: 20px;
+      position: relative;
+  }
+
+  .container {
+      display: flex;
+      justify-content: left;
+  }
+
+  * {
+box-sizing: border-box;
+}
+
+/* Three column layout */
+.side {
+margin-left: 20px;
+float: left;
+width: 10%;
+margin-top:10px;
+}
+
+.middle {
+margin-top:10px;
+float: left;
+width: 70%;
+}
+
+/* Place text to the right */
+.right {
+  width: -10px;
+}
+
+/* Clear floats after the columns */
+.row:after {
+content: "";
+display: flex;
+clear: both;
+}
+.row {
+overflow: hidden;
+white-space: nowrap;
+}
+
+/* The bar container */
+.bar-container {
+overflow: hidden;
+flex-shrink: 2;
+width: 60%;
+margin-left: 10px;
+background-color: white;
+text-align: center;
+color: white;
+display: flex;
+}
+
+/* Individual bars */
+.bar-10 {width: 100%; height: 12px; background-color: hotpink; flex-shrink: 2;}
+.bar-9-10 {width: 95%; height: 12px; background-color: hotpink; flex-shrink: 2;}
+.bar-8-9 {width: 85%; height: 12px; background-color: hotpink; flex-shrink: 2;}
+.bar-7-8 {width: 75%; height: 12px; background-color: hotpink; flex-shrink: 2;}
+.bar-6-7 {width: 65%; height: 12px; background-color: hotpink; flex-shrink: 2;}
+.bar-5-6 {width: 55%; height: 12px; background-color: hotpink; flex-shrink: 2;}
+.bar-4-5 {width: 45%; height: 12px; background-color: hotpink; flex-shrink: 2;}
+.bar-3-4 {width: 35%; height: 12px; background-color: hotpink; flex-shrink: 2;}
+.bar-2-3 {width: 25%; height: 12px; background-color: hotpink; flex-shrink: 2;}
+.bar-1-2 {width: 15%; height: 12px; background-color: hotpink; flex-shrink: 2;}
+.bar-0-1 {width: 5%; height: 12px; background-color: hotpink; flex-shrink: 2;}
+.bar-0 {width: 0%; height: 12px; background-color: hotpink; flex-shrink: 2;}
+
+/* Responsive layout - make the columns stack on top of each other instead of next to each other */
+@media (max-width: 1200px) {
+.side, .middle {
+  width: 100%;
+}
+.right {
+  display: none;
+}
+}
+
+.myOuter {
+margin-right: -10px;
+height: 350px;
+display: grid;
+grid-template-columns: repeat(10, 1fr);
+grid-auto-rows: 100px;
+overflow: hidden;
+white-space: nowrap;
+border-bottom-style: solid;
+}
+.inner1 {
+grid-column-start: 1;
+grid-column-end: 6;
+grid-row-start: 1;
+grid-row-end: 6;
+text-align: center;
+overflow: hidden;
+white-space: nowrap;
+}
+
+.inner {
+grid-column-start: 7;
+grid-column-end: 13;
+grid-row-start: 1;
+grid-row-end: 3;
+text-align: center;
+background-color: #F0ECEB;
+overflow: hidden;
+white-space: nowrap;
+}
+
+.inner2 {
+margin-top: -30px;
+grid-column-start: 7;
+grid-column-end: 13;
+grid-row-start: 3;
+grid-row-end: 5;
+overflow: hidden;
+white-space: nowrap;
+background-color: #F0ECEB;
+}
+
+.inner3 {
+grid-column-start: 2;
+grid-column-end: 5;
+grid-row-start: 1;
+grid-row-end: 3;
+overflow: hidden;
+white-space: nowrap;
+text-align: left;
+}
+
+</style>
+
+{% if num == 0 %}
+<h2 style="text-align: center">No Reviews Yet!</h2>
+
+{% else %}
+<div class = "myOuter">
+  <div class = "inner1"> 
+  
+    <div style="max-width: 350px; justify-content: left;"> 
+    <h2 style="text-align:left;">{{product.name}}</h2> 
+    
+    <h5 style="text-align: left;"><b>Category: </b>{{product.category}}</h5> 
+    
+    <p style="text-align:left;"><b>Description: </b>{{product.theDescription}}</p> 
+    </div>
+    <img src={{product.theImage}} width = "200" height = "200" style="align-self: left;">
+      
   </div>
+  <div class = "inner"> 
+    <p class="theAvg">{{avgRating}}</p>
+    {% if avgRating == 5 %}
+    <span class="fa fa-star checked fa-3x"></span>
+    <span class="fa fa-star checked fa-3x"></span>
+    <span class="fa fa-star checked fa-3x"></span>
+    <span class="fa fa-star checked fa-3x"></span>
+    <span class="fa fa-star checked fa-3x"></span>
+    {% elif avgRating >=4 %}
+    <span class="fa fa-star checked fa-3x"></span>
+    <span class="fa fa-star checked fa-3x"></span>
+    <span class="fa fa-star checked fa-3x"></span>
+    <span class="fa fa-star checked fa-3x"></span>
+    <span class="fa fa-star fa-3x"></span>
+    {% elif avgRating >=3 %}
+    <span class="fa fa-star checked fa-3x"></span>
+    <span class="fa fa-star checked fa-3x"></span>
+    <span class="fa fa-star checked fa-3x"></span>
+    <span class="fa fa-star fa-3x"></span>
+    <span class="fa fa-star fa-3x"></span>
+    {% elif avgRating >=2 %}
+    <span class="fa fa-star checked fa-3x"></span>
+    <span class="fa fa-star checked fa-3x"></span>
+    <span class="fa fa-star fa-3x"></span>
+    <span class="fa fa-star fa-3x"></span>
+    <span class="fa fa-star fa-3x"></span>
+    {% elif avgRating >=1 %}
+    <span class="fa fa-star checked fa-3x"></span>
+    <span class="fa fa-star fa-3x"></span>
+    <span class="fa fa-star fa-3x"></span>
+    <span class="fa fa-star fa-3x"></span>
+    <span class="fa fa-star fa-3x"></span>
+    {% else %}
+    <span class="fa fa-star fa-3x"></span>
+    <span class="fa fa-star fa-3x"></span>
+    <span class="fa fa-star fa-3x"></span>
+    <span class="fa fa-star fa-3x"></span>
+    <span class="fa fa-star fa-3x"></span>
+    {% endif %}
+    {% if numRating == 1%}
+    <p class="number">Based on {{numRating}} Rating</p>
+    {% else %}
+    <p class="number">Based on {{numRating}} Ratings</p>
+    {%endif%}
+  </div> 
 
-<h1>Detailed Product Page for product {{productId}}</h1>
+<div class = "inner2"> 
+  <div class="row">
+    <div class="side">
+      <div>5 Stars</div>
+    </div>
+    <div class="middle">
+      <div class="bar-container">
+        {% if numFives == numRating %}
+          <div class="bar-10"></div>
+        {% elif ((numFives/numRating)*100)|round >= 90%}
+          <div class="bar-9-10"></div>
+        {% elif ((numFives/numRating)*100)|round >= 80%}
+          <div class="bar-8-9"></div>
+        {% elif ((numFives/numRating)*100)|round >= 70%}
+          <div class="bar-7-8"></div>
+        {% elif ((numFives/numRating)*100)|round >= 60%}
+          <div class="bar-6-7"></div>
+        {% elif ((numFives/numRating)*100)|round >= 50%}
+          <div class="bar-5-6"></div>
+        {% elif ((numFives/numRating)*100)|round >= 40%}
+          <div class="bar-4-5"></div>
+        {% elif ((numFives/numRating)*100)|round >= 30%}
+          <div class="bar-3-4"></div>
+        {% elif ((numFives/numRating)*100)|round >= 20%}
+          <div class="bar-2-3"></div>
+        {% elif ((numFives/numRating)*100)|round >= 10%}
+          <div class="bar-1-2"></div>
+        {% elif ((numFives/numRating)*100)|round >= 1%}
+          <div class="bar-0-1"></div>
+        {% else %}
+         <div class="bar-0"></div>
+         {% endif%}
+      </div>
+    </div>
+    <div class="side right">
+      <div>{{numFives}}</div>
+    </div>
+    <div class="side">
+      <div>4 Stars</div>
+    </div>
+    <div class="middle">
+      <div class="bar-container">
+        {% if numFours == numRating %}
+          <div class="bar-10"></div>
+        {% elif ((numFours/numRating)*100)|round >= 90%}
+          <div class="bar-9-10"></div>
+        {% elif ((numFours/numRating)*100)|round >= 80%}
+          <div class="bar-8-9"></div>
+        {% elif ((numFours/numRating)*100)|round >= 70%}
+          <div class="bar-7-8"></div>
+        {% elif ((numFours/numRating)*100)|round >= 60%}
+          <div class="bar-6-7"></div>
+        {% elif ((numFours/numRating)*100)|round >= 50%}
+          <div class="bar-5-6"></div>
+        {% elif ((numFours/numRating)*100)|round >= 40%}
+          <div class="bar-4-5"></div>
+        {% elif ((numFours/numRating)*100)|round >= 30%}
+          <div class="bar-3-4"></div>
+        {% elif ((numFours/numRating)*100)|round >= 20%}
+          <div class="bar-2-3"></div>
+        {% elif ((numFours/numRating)*100)|round >= 10%}
+          <div class="bar-1-2"></div>
+        {% elif ((numFours/numRating)*100)|round >= 1%}
+          <div class="bar-0-1"></div>
+        {% else %}
+         <div class="bar-0"></div>
+         {% endif%}
+      </div>
+    </div>
+    <div class="side right">
+      <div>{{numFours}}</div>
+    </div>
+    <div class="side">
+      <div>3 Stars</div>
+    </div>
+    <div class="middle">
+      <div class="bar-container">
+        {% if numThrees == numRating %}
+          <div class="bar-10"></div>
+        {% elif ((numThrees/numRating)*100)|round >= 90%}
+          <div class="bar-9-10"></div>
+        {% elif ((numThrees/numRating)*100)|round >= 80%}
+          <div class="bar-8-9"></div>
+        {% elif ((numThrees/numRating)*100)|round >= 70%}
+          <div class="bar-7-8"></div>
+        {% elif ((numThrees/numRating)*100)|round >= 60%}
+          <div class="bar-6-7"></div>
+        {% elif ((numThrees/numRating)*100)|round >= 50%}
+          <div class="bar-5-6"></div>
+        {% elif ((numThrees/numRating)*100)|round >= 40%}
+          <div class="bar-4-5"></div>
+        {% elif ((numThrees/numRating)*100)|round >= 30%}
+          <div class="bar-3-4"></div>
+        {% elif ((numThrees/numRating)*100)|round >= 20%}
+          <div class="bar-2-3"></div>
+        {% elif ((numThrees/numRating)*100)|round >= 10%}
+          <div class="bar-1-2"></div>
+        {% elif ((numThrees/numRating)*100)|round >= 1%}
+          <div class="bar-0-1"></div>
+        {% else %}
+         <div class="bar-0"></div>
+         {% endif%}
+      </div>
+    </div>
+    <div class="side right">
+      <div>{{numThrees}}</div>
+    </div>
+    <div class="side">
+      <div>2 Stars</div>
+    </div>
+    <div class="middle">
+      <div class="bar-container">
+        {% if numTwos == numRating %}
+          <div class="bar-10"></div>
+        {% elif ((numTwos/numRating)*100)|round >= 90%}
+          <div class="bar-9-10"></div>
+        {% elif ((numTwos/numRating)*100)|round >= 80%}
+          <div class="bar-8-9"></div>
+        {% elif ((numTwos/numRating)*100)|round >= 70%}
+          <div class="bar-7-8"></div>
+        {% elif ((numTwos/numRating)*100)|round >= 60%}
+          <div class="bar-6-7"></div>
+        {% elif ((numTwos/numRating)*100)|round >= 50%}
+          <div class="bar-5-6"></div>
+        {% elif ((numTwos/numRating)*100)|round >= 40%}
+          <div class="bar-4-5"></div>
+        {% elif ((numTwos/numRating)*100)|round >= 30%}
+          <div class="bar-3-4"></div>
+        {% elif ((numTwos/numRating)*100)|round >= 20%}
+          <div class="bar-2-3"></div>
+        {% elif ((numTwos/numRating)*100)|round >= 10%}
+          <div class="bar-1-2"></div>
+        {% elif ((numTwos/numRating)*100)|round >= 1%}
+          <div class="bar-0-1"></div>
+        {% else %}
+         <div class="bar-0"></div>
+         {% endif%}
+      </div>
+    </div>
+    <div class="side right">
+      <div>{{numTwos}}</div>
+    </div>
+    <div class="side">
+      <div>1 Star</div>
+    </div>
+    <div class="middle">
+      <div class="bar-container">
+        {% if numOnes == numRating %}
+          <div class="bar-10"></div>
+        {% elif ((numOnes/numRating)*100)|round >= 90%}
+          <div class="bar-9-10"></div>
+        {% elif ((numOnes/numRating)*100)|round >= 80%}
+          <div class="bar-8-9"></div>
+        {% elif ((numOnes/numRating)*100)|round >= 70%}
+          <div class="bar-7-8"></div>
+        {% elif ((numOnes/numRating)*100)|round >= 60%}
+          <div class="bar-6-7"></div>
+        {% elif ((numOnes/numRating)*100)|round >= 50%}
+          <div class="bar-5-6"></div>
+        {% elif ((numOnes/numRating)*100)|round >= 40%}
+          <div class="bar-4-5"></div>
+        {% elif ((numOnes/numRating)*100)|round >= 30%}
+          <div class="bar-3-4"></div>
+        {% elif ((numOnes/numRating)*100)|round >= 20%}
+          <div class="bar-2-3"></div>
+        {% elif ((numOnes/numRating)*100)|round >= 10%}
+          <div class="bar-1-2"></div>
+        {% elif ((numOnes/numRating)*100)|round >= 1%}
+          <div class="bar-0-1"></div>
+        {% else %}
+         <div class="bar-0"></div>
+         {% endif%}
+      </div>
+    </div>
+    <div class="side right">
+      <div>{{numOnes}}</div>
+    </div>
+  </div>
+</div> 
+</div> 
+{% endif %}
 
-<b>Product Name:</b>
-<b>Product Description:</b>
-<b>Price:</b>
+
+
+
+<div> 
+<p>price, quantity, sellerId</p>
+
+<td><a class = "btn btn-secondary" href="{{ url_for('productReviewOutput.productReviewOutput', productId = productId, orderBy = 5) }}" role = "button">See Reviews</a></td> 
+<td><a class = "btn btn-secondary" href="{{ url_for('submitProductReview.submitProductReview', productId = productId, userId = current_user.id) }}" role = "button">Write Review</a></td> 
+<td><a class = "btn btn-secondary" href="{{ url_for('carts.addToCart', productId = productId) }}" role = "button">Add To Cart</a></td> 
+</div>
 
 {% endblock %}
