@@ -121,3 +121,24 @@ ORDER BY price DESC
 ''',
                               keyWord=keyWord, myMax = myMax, minRating = minRating) 
         return [Product(*row) for row in rows]
+
+
+    @staticmethod
+    def getName(productId):     
+        rows = app.db.execute('''
+SELECT id, name, price, available, category, Products.theDescription, quantity, sellerId, theImage
+FROM Products
+WHERE id = :productId
+''',
+                              productId=productId) 
+        return Product(*(rows[0])) if rows is not None else None
+
+    @staticmethod
+    def getByName(name):     
+        rows = app.db.execute('''
+SELECT id, name, price, available, category, Products.theDescription, quantity, sellerId, theImage
+FROM Products
+WHERE name = :name
+''',
+                              name=name) 
+        return [Product(*row) for row in rows]

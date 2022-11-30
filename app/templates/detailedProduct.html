@@ -8,9 +8,9 @@
   }
   .theAvg {
       text-align: center;   
-      font-size: 50px;     
+      font-size: 40px;     
       position: relative;
-      margin-bottom: 0px;
+      margin-top: -10px;
   }
   .number {
       text-align: center;
@@ -115,8 +115,8 @@ white-space: nowrap;
 }
 
 .inner {
-grid-column-start: 7;
-grid-column-end: 13;
+grid-column-start: 8;
+grid-column-end: 11;
 grid-row-start: 1;
 grid-row-end: 3;
 text-align: center;
@@ -127,8 +127,8 @@ white-space: nowrap;
 
 .inner2 {
 margin-top: -30px;
-grid-column-start: 7;
-grid-column-end: 13;
+grid-column-start: 8;
+grid-column-end: 11;
 grid-row-start: 3;
 grid-row-end: 5;
 overflow: hidden;
@@ -137,13 +137,47 @@ background-color: #F0ECEB;
 }
 
 .inner3 {
-grid-column-start: 2;
-grid-column-end: 5;
+grid-column-start: 11;
+grid-column-end: 12;
 grid-row-start: 1;
-grid-row-end: 3;
+grid-row-end: 5;
 overflow: hidden;
 white-space: nowrap;
 text-align: left;
+background-color: #F0ECEB;
+}
+
+.myBtn {
+  position: relative; 
+  top: 0; 
+  float: right; 
+  background-color: darkslategrey; 
+  border-color: hotpink; 
+  border-width: 3px;
+  font-size: 23px;
+  height: 50px;
+}
+.cartButton {
+  background-color: darkslategrey; 
+  border-color: hotpink; 
+  border-width: 3px;
+}
+
+.myBtn:hover {
+  background-color: lightgrey;
+  border-color: hotpink;
+  border-width: 5px;
+}
+
+.cartButton:hover {
+  background-color: lightgrey;
+  border-color: hotpink;
+  border-width: 5px;
+}
+.headingBottom {
+  font-size: 35px;
+  font-style: bold;
+  text-align: center;
 }
 
 </style>
@@ -154,19 +188,18 @@ text-align: left;
 {% else %}
 <div class = "myOuter">
   <div class = "inner1"> 
-  
     <div style="max-width: 350px; justify-content: left;"> 
     <h2 style="text-align:left;">{{product.name}}</h2> 
-    
     <h5 style="text-align: left;"><b>Category: </b>{{product.category}}</h5> 
-    
     <p style="text-align:left;"><b>Description: </b>{{product.theDescription}}</p> 
     </div>
-    <img src={{product.theImage}} width = "200" height = "200" style="align-self: left;">
+    <img src={{product.theImage}} width = "200" height = "200" style="align-content: left; margin-left: -400px;">
       
   </div>
   <div class = "inner"> 
+    <div> 
     <p class="theAvg">{{avgRating}}</p>
+    </div> 
     {% if avgRating == 5 %}
     <span class="fa fa-star checked fa-3x"></span>
     <span class="fa fa-star checked fa-3x"></span>
@@ -209,6 +242,7 @@ text-align: left;
     {% else %}
     <p class="number">Based on {{numRating}} Ratings</p>
     {%endif%}
+
   </div> 
 
 <div class = "inner2"> 
@@ -390,18 +424,36 @@ text-align: left;
     </div>
   </div>
 </div> 
+
+<div class = "inner3"> 
+<a class = "btn btn-secondary myBtn" href="{{ url_for('productReviewOutput.productReviewOutput', productId = productId, orderBy = 5) }}" role = "button">See Reviews</a>
+</div>
+
 </div> 
 {% endif %}
 
-
-
-
 <div> 
-<p>price, quantity, sellerId</p>
-
-<td><a class = "btn btn-secondary" href="{{ url_for('productReviewOutput.productReviewOutput', productId = productId, orderBy = 5) }}" role = "button">See Reviews</a></td> 
-<td><a class = "btn btn-secondary" href="{{ url_for('submitProductReview.submitProductReview', productId = productId, userId = current_user.id) }}" role = "button">Write Review</a></td> 
-<td><a class = "btn btn-secondary" href="{{ url_for('carts.addToCart', productId = productId) }}" role = "button">Add To Cart</a></td> 
+  <p class = "headingBottom">Other Vendor Options</p>
 </div>
+<table style="width: 90%; margin-left: 5%;" class='table table-hover'>
+  <thead class="thead-dark">
+  <tr>
+    <th scope="col">Account Number</th>
+    <th scope="col">Quantity In Stock</th>
+    <th scope="col">Price</th>
+    <th scope="col">Add to Cart</th>
+  </tr>
+  </thead>
+  <tbody>
+    {% for seller in sellers%}
+      <tr>
+    <td>{{seller.sellerId}}</td>
+    <td>{{seller.quantity}}</td>
+    <td>{{seller.price}}</td>
+    <td><a class = "btn btn-secondary cartButton" href="{{ url_for('carts.cartAddToCart', productId = productId) }}" role = "button">Add To Cart</a></td> 
+      </tr>
+    {% endfor %}
+  </tbody>
+</table>
 
 {% endblock %}

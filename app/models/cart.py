@@ -55,3 +55,31 @@ DELETE FROM Carts
 ''',
                               userId=userId, productId = productId)
         return
+
+    @staticmethod
+    def check(userId, productId):
+        rows = app.db.execute('''
+SELECT *
+FROM Carts 
+WHERE userId = :userId and pid = :productId
+''',
+                              userId=userId, productId = productId)
+        if rows: 
+            return True
+        else:
+            return False       
+                
+    @staticmethod
+    def getQuantity(userId, productId):
+        rows = app.db.execute('''
+SELECT quantity
+FROM Carts 
+WHERE userId = :userId and pid = :productId
+''',
+                              userId=userId, productId = productId)
+        if rows == None: 
+            return None
+        else:
+            return rows[0][0]
+
+                

@@ -19,10 +19,13 @@ def detailedProduct(productId):
     numFours = ProductReview.getFours(productId)
     numFives = ProductReview.getFives(productId)
 
+    name = Product.getName(productId).name
+    sellers = Product.getByName(name) 
+
     product = Product.get(productId)
     if product != None:
         return render_template('detailedProduct.html', productId = productId, product = product, avgRating = avg, numRating = num, numOnes = numOnes, 
-        numTwos = numTwos, numThrees= numThrees, numFours = numFours, numFives = numFives)
+        numTwos = numTwos, numThrees= numThrees, numFours = numFours, numFives = numFives, sellers = sellers)
 
 
        

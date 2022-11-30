@@ -94,7 +94,7 @@
     <a href="/carts"><i class="fa fa-fw fa-shopping-cart"></i>Cart</a>
 
   </div>
-  {% elif request.path == "/carts" %}
+  {% elif request.path == "/carts" or "cart" in request.path %}
   <div class = "topnav d-flex myNav">
     <a href="/"><i class="fa fa-fw fa-home"></i>Home</a>
     <a href="/products"><i class="fa fa-fw fa-search"></i>Shop Products</a>
@@ -113,7 +113,7 @@
     <a href="/pastPurchases"><i class="fa fa-fw fa-history"></i>Past Purchases</a>
     <a href="/manageInventory"><i class="fa fa-fw fa-cubes"></i>Manage Inventory</a>
     <a href="/receivedReviews"><i class="fa fa-fw fa-comments"></i>Reviews</a>
-    <a class = "current"href="/acount"><i class="fa fa-fw fa-user"></i>Account</a>
+    <a class = "current"href="/account"><i class="fa fa-fw fa-user"></i>Account</a>
     <a href="/carts"><i class="fa fa-fw fa-shopping-cart"></i>Cart</a>
     </div>
   {% elif request.path == "/manageInventory" %}
@@ -138,7 +138,7 @@
     <a href="/account"><i class="fa fa-fw fa-user"></i>Account</a>  
     <a href="/carts"><i class="fa fa-fw fa-shopping-cart"></i>Cart</a>
   </div>
-  {% elif request.path == "/receivedReviews" or request.path == "/writtenReviews"%}
+  {% elif request.path == "/receivedReviews" or request.path == "/writtenReviews" or "Review" in request.path%}
   <div class = "topnav d-flex myNav">
     <a href="/"><i class="fa fa-fw fa-home"></i>Home</a>
     <a href="/products"><i class="fa fa-fw fa-search"></i>Shop Products</a>

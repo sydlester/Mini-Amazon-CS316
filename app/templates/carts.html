@@ -26,9 +26,9 @@
           <td>{{cart.quantity}}</td>
           <td>{{cart.productName}}</td>
           <td>{{cart.unitPrice}}</td>
-          <td><a style="background-color: hotpink;" class = "btn btn-secondary" href="{{ url_for('carts.increaseQuantity', productId = cart.pid) }}" role = "button">Add 1</a></td> 
-          <td><a style="background-color: hotpink;" class = "btn btn-secondary" href="{{ url_for('carts.decreaseQuantity', productId = cart.pid) }}" role = "button">Remove 1</a></td> 
-          <td><a style="background-color: hotpink;"class = "btn btn-secondary" href="{{ url_for('carts.removeProduct', productId = cart.pid) }}" role = "button">Remove from Cart</a></td> 
+          <td><a style="background-color: hotpink;" class = "btn btn-secondary" href="{{ url_for('carts.cartIncreaseQuantity', productId = cart.pid) }}" role = "button">Add 1</a></td> 
+          <td><a style="background-color: hotpink;" class = "btn btn-secondary" href="{{ url_for('carts.cartDecreaseQuantity', productId = cart.pid) }}" role = "button">Remove 1</a></td> 
+          <td><a style="background-color: hotpink;"class = "btn btn-secondary" href="{{ url_for('carts.cartRemoveProduct', productId = cart.pid) }}" role = "button">Remove from Cart</a></td> 
         </tr>
       {% endfor %}
   </tbody>
