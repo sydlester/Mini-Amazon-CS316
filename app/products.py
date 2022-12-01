@@ -1,7 +1,6 @@
 from flask import render_template
 from flask_login import current_user
 from flask import request
-from flask_paginate import Pagination, get_page_parameter
 import math 
 import datetime
 
