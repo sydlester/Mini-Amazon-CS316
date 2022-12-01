@@ -24,7 +24,6 @@
   <thead class="thead-dark">
     <tr>
       <th scope="col">User ID</th>
-      <th scope="col">Product ID</th>
       <th scope="col">Rating</th>
       <th scope="col">Description</th>
       <th scope="col">Date</th>
@@ -34,7 +33,6 @@
     {% for review in product_reviews%}
       <tr>
         <th scope="row">{{review.userId}}</th>
-        <td>{{review.pid}}</td>
         <td>{{review.rating}}</td>
         <td>{{review.theDescription}}</td>
         <td>{{review.theDate}}</td>

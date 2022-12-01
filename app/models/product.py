@@ -23,7 +23,7 @@ WHERE id = :id
         return Product(*(rows[0])) if rows is not None else None
 
     @staticmethod
-    def get_all(available=True):
+    def get_all(available):
         rows = app.db.execute('''
 SELECT id, name, price, available, category, theDescription, quantity, sellerId, theImage
 FROM Products
@@ -32,6 +32,18 @@ WHERE available = :available
                               available=available)
         return [Product(*row) for row in rows]
     
+    @staticmethod
+    def getOff(available, os):
+        rows = app.db.execute('''
+SELECT id, name, price, available, category, theDescription, quantity, sellerId, theImage
+FROM Products
+WHERE available = :available
+LIMIT 5
+OFFSET :os
+''',
+                              available=available, os = os)
+        return [Product(*row) for row in rows]
+
 
     @staticmethod
     def getKExpensive(k):
@@ -99,27 +111,31 @@ DELETE FROM Products
 
 
     @staticmethod
-    def getByKeyWord(keyWord, myMax, minRating, category):     
+    def getByKeyWord(keyWord, myMax, minRating, category, lim, offset):     
 
         rows = app.db.execute('''
 SELECT id, name, price, available, category, Products.theDescription, quantity, sellerId, theImage
 FROM Products
 WHERE name ILIKE '%' || :keyWord || '%' AND price <= :myMax and category  = :category AND (Select avg(rating) from ProductReviews WHERE id = pid) >= :minRating
 ORDER BY price DESC
+LIMIT :lim
+Offset :offset
 ''',
-                              keyWord=keyWord, myMax = myMax, minRating = minRating, category = category) 
+                              keyWord=keyWord, myMax = myMax, minRating = minRating, category = category, lim = lim, offset=offset) 
         return [Product(*row) for row in rows]
 
 
     @staticmethod
-    def noCat(keyWord, myMax, minRating):     
+    def noCat(keyWord, myMax, minRating, lim, offset):     
         rows = app.db.execute('''
 SELECT id, name, price, available, category, Products.theDescription, quantity, sellerId, theImage
 FROM Products
 WHERE name ILIKE '%' || :keyWord || '%' AND price <= :myMax AND (Select avg(rating) from ProductReviews WHERE id = pid) >= :minRating
 ORDER BY price DESC
+LIMIT :lim
+Offset :offset
 ''',
-                              keyWord=keyWord, myMax = myMax, minRating = minRating) 
+                              keyWord=keyWord, myMax = myMax, minRating = minRating, lim = lim, offset = offset) 
         return [Product(*row) for row in rows]
 
 
@@ -141,4 +157,17 @@ FROM Products
 WHERE name = :name
 ''',
                               name=name) 
+        return [Product(*row) for row in rows]
+
+
+    @staticmethod
+    def getLimOffset(lim, offset):     
+        rows = app.db.execute('''
+SELECT id, name, price, available, category, theDescription, quantity, sellerId, theImage
+FROM Products
+Order By 1
+LIMIT :lim
+Offset :offset
+''',
+                              lim=lim, offset=offset) 
         return [Product(*row) for row in rows]
