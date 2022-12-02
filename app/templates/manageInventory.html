@@ -2,5 +2,9 @@
 
 {% block content %}
 <h1>Welcome to your Inventory Page</h1>
+{% if current_user.is_authenticated %}
 
+{% else %}
+<p><a href="{{ url_for('users.login') }}">Log in</a> to see your seller inventory!</p>
+{% endif %}
 {% endblock %}

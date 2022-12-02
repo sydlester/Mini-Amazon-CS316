@@ -10,8 +10,12 @@ bp = Blueprint('carts', __name__)
 
 @bp.route('/carts')
 def carts():
-    userId = current_user.id
-    user_cart = Cart.get(userId)
+    if current_user.is_authenticated:
+        userId = current_user.id
+        user_cart = Cart.get(userId)
+    else:
+        userId = None
+        user_cart = None
     return render_template('carts.html', userId=userId, user_cart = user_cart)
 
 @bp.route('/cartAddToCart/<int:productId>', methods=["GET", "POST"])
