@@ -194,6 +194,7 @@ background-color: #F0ECEB;
     <p style="text-align:left;"><b>Description: </b>{{product.theDescription}}</p> 
     </div>
     <image src={{picture}} width = 200px height = 200px>
+    <td><a style="height: 40px" class = "btn btn-secondary cartButton" href="{{ url_for('carts.cartAddToCart', productId = productId) }}" role = "button">Add To Cart</a></td> 
 
     
   </div>
@@ -426,6 +427,7 @@ background-color: #F0ECEB;
   </div>
 </div> 
 
+
 <div class = "inner3"> 
 <a class = "btn btn-secondary myBtn" href="{{ url_for('productReviewOutput.productReviewOutput', productId = productId, orderBy = 5) }}" role = "button">See Reviews</a>
 </div>
@@ -436,7 +438,7 @@ background-color: #F0ECEB;
 <div> 
   <p class = "headingBottom">Other Vendor Options</p>
 </div>
-<table style="width: 90%; margin-left: 5%;" class='table table-hover'>
+<table style="width: 95%; margin-left: .5%;" class='table table-hover'>
   <thead class="thead-dark">
   <tr>
     <th scope="col">Account Number</th>

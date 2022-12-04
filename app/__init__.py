@@ -85,6 +85,9 @@ def create_app():
     from .createProduct import bp as createProduct_bp
     app.register_blueprint(createProduct_bp)
     
+    from .messageChain import bp as messageChain_bp
+    app.register_blueprint(messageChain_bp)
+    
     return app
 
 

@@ -22,7 +22,11 @@
         <th scope="col">Category</th>
         <th scope="col">Product Name</th>
         <th scope="col">Price</th>
+        <th scope="col">Quantity</th>
         <th scope="col">Detailed Page</th>
+        <th scope="col">Add Quantity</th>
+        <th scope="col">Remove Quantity</th>
+        <th scope="col">Remove From Inventory</th>
       </tr>
     </thead>
     <tbody>
@@ -32,7 +36,12 @@
           <td>{{product.category}}</td>
           <td>{{product.name}}</td>
           <td>{{product.price}}</td>
+          <td>{{product.quantity}}</td>
           <td><a class = "btn btn-secondary" href="{{ url_for('detailedProduct.detailedProduct', productId = product.id, name = product.name, price = product.price, available = product.available, description = product.description, sellerId = product.sellerId, image = product.theImage) }}" role = "button">More Info</a></td> 	
+          <td><a style="background-color: hotpink;" class = "btn btn-secondary" href="{{ url_for('manageInventory.increaseInventoryQuantity', productId = product.id) }}" role = "button">Add 1</a></td> 
+          <td><a style="background-color: hotpink;" class = "btn btn-secondary" href="{{ url_for('manageInventory.decreaseInventoryQuantity', productId = product.id) }}" role = "button">Remove 1</a></td> 
+          <td><a style="background-color: hotpink;"class = "btn btn-secondary" href="{{ url_for('manageInventory.removeFromInventory', productId = product.id) }}" role = "button">Remove from Inventory</a></td> 
+        </tr>
         </tr>
       </tr>
       {% endfor %}

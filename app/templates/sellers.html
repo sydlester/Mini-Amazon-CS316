@@ -13,6 +13,8 @@
         <th scope="col">See Reviews</th>
         <th scope="col">Write Review</th>
         <th scope="col">Detailed Page</th>
+        <th scope="col">Chat Room</th>
+
       </tr>
     </thead>
     <tbody>
@@ -24,6 +26,7 @@
           <td><a class = "btn btn-secondary" href="{{ url_for('sellerReviewOutput.sellerReviewOutput', sellerId = seller.id, orderBy = 5) }}" role = "button">Click for Reviews</a></td> 
           <td><a class = "btn btn-secondary" href="{{ url_for('submitSellerReview.submitSellerReview', sellerId = seller.id, userId = current_user.id) }}" role = "button">Write Review</a></td> 
           <td><a class = "btn btn-secondary" href="{{ url_for('detailedSeller.detailedSeller', sellerId = seller.id) }}" role = "button">Click for More Info</a></td> 
+          <td><a class = "btn btn-secondary" href="{{ url_for('messageChain.messageChain', recipient = seller.id)}}" role = "button">Start Convo!</a></td> 
         </tr>
       {% endfor %}
     </tbody>

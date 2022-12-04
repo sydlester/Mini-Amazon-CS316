@@ -15,6 +15,7 @@ from werkzeug.utils import secure_filename
 from .models.user import User
 from .models.sellerReview import SellerReview
 from .config import Config
+
 from flask import Blueprint
 bp = Blueprint('createProduct', __name__)
 
