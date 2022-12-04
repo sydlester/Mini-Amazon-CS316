@@ -268,29 +268,28 @@ input[type="range"]:disabled::-webkit-slider-thumb {
 
 </div>
 <hr></hr>
-
 <table class='table table-hover table-bordered container'>
-  <thead class="thead-dark">
-    <tr>
-	  <th scope="col">Image</th>
-	  <th scope="col">Category</th>
-      <th scope="col">Product Name</th>
-      <th scope="col">Price</th>
-      <th scope="col">Detailed Page</th>
-    </tr>
-  </thead>
-  <tbody>
-    {% for product in avail_products%}
+    <thead class="thead-dark">
       <tr>
-		<td><img src={{product.theImage}} width = "100" height = "100"></td>
-		<td>{{product.category}}</td>
-        <td>{{product.name}}</td>
-        <td>{{product.price}}</td>
-        <td><a class = "btn btn-secondary" href="{{ url_for('detailedProduct.detailedProduct', productId = product.id, name = product.name, price = product.price, available = product.available, description = product.description, sellerId = product.sellerId, image = product.theImage) }}" role = "button">More Info</a></td> 	
-	</tr>
-    {% endfor %}
-  </tbody>
-</table>
+        <th scope="col">Image</th>
+        <th scope="col">Category</th>
+        <th scope="col">Product Name</th>
+        <th scope="col">Price</th>
+        <th scope="col">Detailed Page</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for product in avail_products%}
+        <tr>
+			<td><img src={{productDict[product.id]}} width = "100" height = "100"></td>
+        	<td>{{product.category}}</td>
+        	<td>{{product.name}}</td>
+        	<td>{{product.price}}</td>
+        	<td><a class = "btn btn-secondary" href="{{ url_for('detailedProduct.detailedProduct', productId = product.id, name = product.name, price = product.price, available = product.available, description = product.description, sellerId = product.sellerId, image = product.theImage) }}" role = "button">More Info</a></td> 	
+    	</tr>
+      {% endfor %}
+    </tbody>
+  </table>
 
 
 <p>{{activePage}}</p>

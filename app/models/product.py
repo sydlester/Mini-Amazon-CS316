@@ -171,3 +171,20 @@ Offset :offset
 ''',
                               lim=lim, offset=offset) 
         return [Product(*row) for row in rows]
+
+
+    @staticmethod
+    def createProduct(name, description, category, price, quantity, available, sellerId, image):
+        try:
+            rows = app.db.execute("""
+INSERT INTO Products(name, theDescription, category, price, quantity, available, sellerId, theImage)
+VALUES(:name, :description, :category, :price, :quantity, :available, :sellerId, :image)
+RETURNING id
+""",name = name, description = description, category = category, price = price, quantity = quantity, available=available, sellerId = sellerId, image = image)
+            id = rows[0][0]
+            return Product.get(id)
+        except Exception as e:
+            # likely email already in use; better error checking and reporting needed;
+            # the following simply prints the error to the console:
+            return str(e)
+     

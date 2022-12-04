@@ -1,10 +1,49 @@
 {% extends "base.html" %}
 
 {% block content %}
-<h1>Welcome to your Inventory Page</h1>
+
 {% if current_user.is_authenticated %}
 
+{% if current_user.isSeller == False %}
+<h1>Oh No! You must be a seller to see this page!</h1>
+
 {% else %}
-<p><a href="{{ url_for('users.login') }}">Log in</a> to see your seller inventory!</p>
+<h1>Manage Inventory</h1>
+
+
+<td><a class = "btn btn-secondary" href="{{ url_for('createProduct.createProduct') }}" role = "button">Create New Product</a></td> 
+
+<hr> 
+
+<table class='table table-hover table-bordered container'>
+    <thead class="thead-dark">
+      <tr>
+        <th scope="col">Image</th>
+        <th scope="col">Category</th>
+        <th scope="col">Product Name</th>
+        <th scope="col">Price</th>
+        <th scope="col">Detailed Page</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for product in products%}
+        <tr>
+          <td><img src={{productDict[product.id]}} width = "100" height = "100"></td>
+          <td>{{product.category}}</td>
+          <td>{{product.name}}</td>
+          <td>{{product.price}}</td>
+          <td><a class = "btn btn-secondary" href="{{ url_for('detailedProduct.detailedProduct', productId = product.id, name = product.name, price = product.price, available = product.available, description = product.description, sellerId = product.sellerId, image = product.theImage) }}" role = "button">More Info</a></td> 	
+        </tr>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+
 {% endif %}
+
+{% else %}
+<p><a href="{{ url_for('users.login') }}">Log in</a> to see your purchase history!</p>
+{% endif %}
+
+
 {% endblock %}

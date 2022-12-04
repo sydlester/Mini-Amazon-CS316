@@ -2,18 +2,22 @@ from flask import Flask
 from flask_login import LoginManager
 from .config import Config
 from .db import DB
-
+import os
 
 login = LoginManager()
 login.login_view = 'users.login'
 
-
 def create_app():
+
     app = Flask(__name__)
     app.config.from_object(Config)
 
     app.db = DB(app)
     login.init_app(app)
+
+    APP_ROOT = os.path.dirname(os.path.abspath(__file__))
+    UPLOAD_FOLDER = os.path.join(APP_ROOT, 'static/photos')
+    app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 
     from .index import bp as index_bp
     app.register_blueprint(index_bp)
@@ -77,5 +81,10 @@ def create_app():
 
     from .error import bp as error_bp
     app.register_blueprint(error_bp)
+
+    from .createProduct import bp as createProduct_bp
+    app.register_blueprint(createProduct_bp)
     
     return app
+
+

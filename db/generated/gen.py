@@ -13,9 +13,7 @@ num_carts = 100
 Faker.seed(0)
 fake = Faker()
 
-urls = urls = ["https://m.media-amazon.com/images/I/71SWOImq2-L._AC_UL640_QL65_.jpg",  "https://m.media-amazon.com/images/I/712T6e6RbeL._AC_SX695._SX._UX._SY._UY_.jpg", "https://m.media-amazon.com/images/I/61fuX+v9BOL._AC_UL640_FMwebp_QL65_.jpg", "https://m.media-amazon.com/images/I/61qJ-i2a+0L._AC_UL640_FMwebp_QL65_.jpg", "https://m.media-amazon.com/images/I/51qzSTd-1BL._AC_UY436_FMwebp_QL65_.jpg",
-"https://m.media-amazon.com/images/I/71ktJFTqsgL._AC_UL640_FMwebp_QL65_.jpg", "https://m.media-amazon.com/images/I/71XtW0R8L5L._AC_UL640_FMwebp_QL65_.jpg", "https://m.media-amazon.com/images/I/81qITxaFR+L._AC_UL640_FMwebp_QL65_.jpg", "https://m.media-amazon.com/images/I/81FeDm6aqML._AC_UL640_FMwebp_QL65_.jpg", "https://m.media-amazon.com/images/I/51srToMz+YS._AC_UL640_FMwebp_QL65_.jpg", "https://m.media-amazon.com/images/I/61rdBpUW7aL._AC_UL640_FMwebp_QL65_.jpg"]
-
+images = ['apple.png', 'banana.png', 'detergent.png', 'gloves.png', 'keurig.png', 'legos.png', 'soccer.png', 'sweater.png', 'sweatshirt.png', 'tennis.png']
 
 def get_csv_writer(f):
     return csv.writer(f, dialect='unix')
@@ -68,7 +66,7 @@ def gen_products(num_products, sellers):
             category = fake.random_element(elements=('Food', 'Clothes', 'Sports', 'Appliances', 'Random'))
             quantity = random.randint(1, 100)
             sellerId = fake.random_element(elements=sellers)
-            theImage = fake.random_element(elements=urls)
+            theImage = fake.random_element(elements=images)
             writer.writerow([pid, name, price, available, category, description, quantity, sellerId, theImage])
         print(f'{num_products} generated; {len(available_pids)} available')
     return available_pids

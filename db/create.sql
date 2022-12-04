@@ -21,9 +21,7 @@ CREATE TABLE Products (
     theDescription varchar(255),
     quantity INT NOT NULL,
     sellerId INT NOT NULL REFERENCES USERS(id),
-    theImage VARCHAR(2048) NOT NULL
-
-
+    theImage VARCHAR(2048) 
 );
 
 CREATE TABLE Orders (

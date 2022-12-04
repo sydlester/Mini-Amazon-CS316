@@ -12,5 +12,11 @@ bp = Blueprint('manageInventory', __name__)
 
 @bp.route('/manageInventory', methods=["GET", "POST"])
 def manageInventory():
-    return render_template('manageInventory.html')
+    products = Product.getBySeller(current_user.id) 
+
+    productDict = {} 
+    for product in products: 
+        productDict[product.id] = 'static/photos/'+product.theImage
+
+    return render_template('manageInventory.html', products = products, productDict=productDict)
 
