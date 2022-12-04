@@ -7,7 +7,6 @@ from itertools import product
 num_users = 100
 num_products = 100
 num_purchases = 100
-num_orders = 100 
 num_carts = 100
 
 Faker.seed(0)
@@ -75,7 +74,7 @@ def gen_purchases(num_purcahses, available_pids):
     with open('db/data/purchases.csv', 'w') as f:
         writer = get_csv_writer(f)
         print('Purchases...', end=' ', flush=True)
-        for id in range(num_orders):
+        for id in range(num_purcahses):
             if id % 100 == 0:
                 print(f'{id}', end=' ', flush=True)
             uid = fake.random_int(min=0, max=num_users-1)

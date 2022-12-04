@@ -69,15 +69,19 @@ def submitOrder():
             #flash('Insufficient Balance Remaining')
             #return redirect(url_for('carts.carts')) 
     
+    id = Purchase.getMax()+1
+
     for cart_item in user_cart: 
         theProduct = Product.get(cart_item.pid)
         Product.decrease_quantity(theProduct.id, cart_item.quantity)
         User.decrease_balance(userId, Cart.getTotalCost(userId))
-        errorMessage = Purchase.createPurchase(userId, theProduct.id, cart_item.quantity, theProduct.price, datetime.now(), False, None)
+        Purchase.createPurchase(id, userId, theProduct.id, cart_item.quantity, theProduct.price, datetime.now(), False, None)
+        #Need to actually insert it into the purchases table!!
 
     Cart.clearUserCart(userId) 
 
     orders = Purchase.get(current_user.id, False)
     purchases = Purchase.get(current_user.id, True)
+    
     l = len(orders)
-    return render_template('pastPurchases.html', userId=userId, orders = orders, purchases = purchases, l = l, error = errorMessage)
+    return render_template('pastPurchases.html', userId=userId, orders = orders, purchases = purchases, l = l)

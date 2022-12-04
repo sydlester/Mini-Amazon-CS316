@@ -22,17 +22,24 @@ WHERE userId = :userId and fulfilled = :status
         return [Purchase(*row) for row in rows]
 
     @staticmethod
-    def createPurchase(userId, pid, quantity, unit_price, time_ordered, fulfilled, time_fulfilled):
+    def createPurchase(id, userId, pid, quantity, unit_price, time_ordered, fulfilled, time_fulfilled):
         try:
             rows = app.db.execute("""
-INSERT INTO Purchases(userId, pid, quantity, unit_price, time_ordered, fulfilled, time_fulfilled)
-VALUES(:userId, :pid, :quantity, :unit_price, :time_ordered, :fulfilled, :time_fulfilled)
-RETURNING id
-""",userId=userId, pid = pid, quantity = quantity, unit_price = unit_price, time_ordered = time_ordered, fulfilled=fulfilled, time_fulfilled = time_fulfilled)
+INSERT INTO Purchases(id, userId, pid, quantity, unit_price, time_ordered, fulfilled, time_fulfilled)
+VALUES(:id, :userId, :pid, :quantity, :unit_price, :time_ordered, :fulfilled, :time_fulfilled)
+""",id = id, userId=userId, pid = pid, quantity = quantity, unit_price = unit_price, time_ordered = time_ordered, fulfilled=fulfilled, time_fulfilled = time_fulfilled)
             id = rows[0][0]
             return Purchase.get(id)
         except Exception as e:
             # likely email already in use; better error checking and reporting needed;
             # the following simply prints the error to the console:
             return str(e)
-     
+
+    @staticmethod
+    def getMax():
+        rows = app.db.execute('''
+SELECT max(id)
+FROM Purchases
+''',)
+        if rows:
+            return rows[0][0]
