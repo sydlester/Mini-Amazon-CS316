@@ -90,3 +90,14 @@ WHERE id = :id
 ''',
                               )
         return [User(*row) for row in rows]
+
+
+    @staticmethod
+    def decrease_balance(id, decrementBy):
+        rows = app.db.execute('''
+UPDATE Products
+    SET quantity = quantity - :decrementBy
+    WHERE id = :id
+''',
+                              id = id, decrementBy=decrementBy)
+        return

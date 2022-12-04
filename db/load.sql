@@ -11,15 +11,10 @@ SELECT pg_catalog.setval('public.products_id_seq',
                          (SELECT MAX(id)+1 FROM Products),
                          false);
                         
-\COPY Orders FROM '../data/orders.csv' WITH DELIMITER ',' NULL '' CSV
-SELECT pg_catalog.setval('public.orders_orderId_seq',
-                         (SELECT MAX(orderId)+1 FROM Orders),
-                         false);                                           
-
 \COPY Purchases FROM '../data/purchases.csv' WITH DELIMITER ',' NULL '' CSV
 SELECT pg_catalog.setval('public.purchases_id_seq',
                          (SELECT MAX(id)+1 FROM Purchases),
-                         false);
+                         false);                                           
 
 \COPY Carts FROM '../data/carts.csv' WITH DELIMITER ',' NULL '' CSV;
 

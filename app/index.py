@@ -15,7 +15,7 @@ def index():
     products = Product.get_all(True)
     # find the products current user has bought:
     if current_user.is_authenticated:
-        purchases = Purchase.get(current_user.id)
+        purchases = Purchase.get(current_user.id, True)
     else:
         purchases = None
     # render the page by adding information to the index.html file

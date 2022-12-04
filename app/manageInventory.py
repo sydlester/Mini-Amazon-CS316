@@ -15,7 +15,7 @@ bp = Blueprint('manageInventory', __name__)
 @bp.route('/increaseInventoryQuantity/<int:productId>', methods=["GET", "POST"])
 def increaseInventoryQuantity(productId):
     userId = current_user.id
-    Product.add_quantity(userId, productId)
+    Product.add_quantity(productId, 1)
     products = Product.getBySeller(userId)
     productDict = {} 
     for product in products: 
@@ -25,7 +25,7 @@ def increaseInventoryQuantity(productId):
 @bp.route('/decreaseInventoryQuantity/<int:productId>', methods=["GET", "POST"])
 def decreaseInventoryQuantity(productId):
     userId = current_user.id
-    Product.decrease_quantity(userId, productId)
+    Product.decrease_quantity(productId, 1)
     products = Product.getBySeller(userId)
     productDict = {} 
     for product in products: 

@@ -34,9 +34,6 @@ def create_app():
     from .sellers import bp as sellers_bp
     app.register_blueprint(sellers_bp)
 
-    from .purchase import bp as purchase_bp
-    app.register_blueprint(purchase_bp)
-
     from .purchasesOutput import bp as purchasesOutput_bp
     app.register_blueprint(purchasesOutput_bp)
 

@@ -82,4 +82,30 @@ WHERE userId = :userId and pid = :productId
         else:
             return rows[0][0]
 
-                
+    @staticmethod
+    def getTotalCost(userId):
+        rows = app.db.execute('''
+SELECT SUM(lineCost)
+FROM 
+    (
+        SELECT Carts.userId, Carts.quantity*Products.price as lineCost
+        FROM Carts, Products
+        WHERE Carts.pid = Products.id
+     ) as temp  
+WHERE userId = :userId
+''',
+                              userId=userId)
+        if rows == None: 
+            return None
+        else:
+            return rows[0][0]
+
+    @staticmethod
+    def clearUserCart(userId):
+        rows = app.db.execute('''
+DELETE FROM Carts
+    WHERE userId = :userId 
+''',
+                              userId=userId)
+        return
+

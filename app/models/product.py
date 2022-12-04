@@ -81,23 +81,23 @@ ORDER BY :orderMe DESC
 
 
     @staticmethod
-    def add_quantity(sellerId, id):
+    def add_quantity(id, decrementBy):
         rows = app.db.execute('''
 UPDATE Products
-    SET quantity = quantity + 1
-    WHERE sellerId = :sellerId and id = :id
+    SET quantity = quantity + :decrementBy
+    WHERE id = :id
 ''',
-                              sellerId=sellerId, id = id)
+                              id = id, decrementBy=decrementBy)
         return
 
     @staticmethod
-    def decrease_quantity(sellerId, id):
+    def decrease_quantity(id, decrementBy):
         rows = app.db.execute('''
 UPDATE Products
-    SET quantity = quantity - 1
-    WHERE sellerId = :sellerId and id = :id
+    SET quantity = quantity - :decrementBy
+    WHERE id = :id
 ''',
-                              sellerId=sellerId, id = id)
+                              id = id, decrementBy=decrementBy)
         return
 
     @staticmethod
@@ -184,7 +184,5 @@ RETURNING id
             id = rows[0][0]
             return Product.get(id)
         except Exception as e:
-            # likely email already in use; better error checking and reporting needed;
-            # the following simply prints the error to the console:
             return str(e)
      
