@@ -14,6 +14,12 @@ class User(UserMixin):
         self.address = address
         self.balance = balance
         self.isSeller = isSeller 
+        self.user_details = {
+            'User ID': ['id', self.id],
+            'First Name': ['name_first', self.firstname],
+            'Last Name': ['name_last', self.lastname],
+            'Email': ['email', self.email]
+        }
 
     @staticmethod
     def get_by_auth(email, password):
@@ -90,3 +96,87 @@ WHERE id = :id
 ''',
                               )
         return [User(*row) for row in rows]
+
+    @staticmethod
+    def withdraw(amount):
+        if amount == '':
+            return False
+        
+        curr_balance = app.db.execute("""
+SELECT balance FROM Users WHERE id = :uid
+""",
+                        uid = id)
+        curr_bal = curr_balance[0][0]
+        new_bal = curr_bal - float(amount)
+        if new_bal < 0:
+            return None
+        else:
+            self.balance = new_bal
+            rows = app.db.execute("""
+UPDATE Users
+SET balance = :new_bal
+WHERE id = :uid
+RETURNING id
+""",
+                            new_bal = new_bal,
+                            uid = id)
+            return True
+        
+    @staticmethod
+    def deposit(amount):
+        if amount == '':
+            return False
+        curr_balance = app.db.execute("""
+SELECT balance FROM Users WHERE id = :uid
+""",
+                        uid = id)
+        curr_bal = curr_balance[0][0]
+        new_bal = curr_bal + float(amount)
+        self.balance = new_bal
+        rows = app.db.execute("""
+UPDATE Users
+SET balance = :new_bal
+WHERE id = :uid
+RETURNING id
+""",
+                            new_bal = new_bal,
+                            uid = id)
+        return True
+
+    @staticmethod
+    def update_information(self, email, firstname, lastname):
+        uid = self.id
+        if email is not None:
+            if self.email_exists(email):
+                return False
+            self.email = email
+            app.db.execute("""
+UPDATE Users 
+SET email = :email
+WHERE id = :id
+RETURNING id;
+""",
+                            email = email,
+                            id = uid)
+        if firstname is not None:
+            self.firstname = firstname
+            app.db.execute("""
+UPDATE Users 
+SET firstname = :firstname
+WHERE id = :id
+RETURNING id;
+""",
+                            firstname = firstname,
+                            id = uid)
+            
+        if lastname is not None:
+            self.lastname = lastname
+            app.db.execute("""
+UPDATE Users 
+SET lastname = :lastname
+WHERE id = :id
+RETURNING id;
+""",
+                            lastname = lastname,
+                            id = uid)
+        return True

@@ -78,3 +78,60 @@ def register():
 def logout():
     logout_user()
     return redirect(url_for('index.index'))
+
+
+class ManageBalance(FlaskForm):
+    amount = StringField('Amount to Withdraw', validators=[DataRequired()])
+    amount2 = StringField('Amount to Deposit', validators=[DataRequired()])
+    submit = SubmitField('Complete Transaction')
+
+
+@bp.route('/manage_balance', methods=['GET', 'POST'])
+def manage_balance():
+    if current_user.is_authenticated:
+        curr_id = current_user.id
+        form = ManageBalance()
+        if form.validate_on_submit:
+            amount_to_withdraw = form.amount.data
+            amount_to_deposit = form.amount2.data
+            if amount_to_withdraw is not None:
+                out = current_user.withdraw(amount_to_withdraw)
+                if out is None:
+                    flash('You do not have sufficient funds in your account to withdraw this amount!')
+                    return redirect(url_for('users.manage_balance'))
+                elif out:
+                    flash('Congratulations, your transaction was successful!')
+                    return render_template('account.html', current_user=current_user)   
+            if amount_to_deposit is not None:
+                out = current_user.deposit(amount_to_deposit)
+                if out:
+                    flash('Congratulations, your transaction was successful!')
+                    return render_template('account.html', current_user=current_user)           
+    return render_template('manageBalance.html', form=form)
+
+@bp.route('/update_account', methods=['GET', 'POST'])
+def update_account_details():
+    if current_user.is_authenticated:
+        user_details = current_user.user_details
+        print(user_details)
+        if request.method == 'POST':
+            updated_values_dict = request.form.to_dict()
+            print(updated_values_dict)
+            for k, v in updated_values_dict.items():
+                if k == 'update_name_first':
+                    new_first = v.rstrip()
+                    if new_first == '':
+                        new_first = None
+                if k == 'update_name_last':
+                    new_last = v.rstrip()
+                    if new_last == '':
+                        new_last = None
+                if k == 'update_email':
+                    new_email = v.rstrip()
+                    if new_email == '':
+                        new_email = None
+            if User.update_information(current_user, new_email, new_first, new_last):
+                return render_template('account.html', current_user=current_user)
+            else:
+                return render_template('updateInfo.html', user_details=user_details)
+    return render_template('updateInfo.html', user_details=user_details)

@@ -105,7 +105,7 @@
     <a href="/account"><i class="fa fa-fw fa-user"></i>Account</a>
     <a class = "current"href="/carts"><i class="fa fa-fw fa-shopping-cart"></i>Cart</a>
   </div>
-  {% elif request.path == "/account" %}
+  {% elif request.path == "/account" or request.path == "/manage_balance" or request.path == "/update_account"%}
   <div class = "topnav d-flex myNav">
     <a href="/"><i class="fa fa-fw fa-home"></i>Home</a>
     <a href="/products"><i class="fa fa-fw fa-search"></i>Shop Products</a>
