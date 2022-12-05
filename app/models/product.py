@@ -81,23 +81,23 @@ ORDER BY :orderMe DESC
 
 
     @staticmethod
-    def add_quantity(sellerId, id):
+    def add_quantity(id, decrementBy):
         rows = app.db.execute('''
 UPDATE Products
-    SET quantity = quantity + 1
-    WHERE sellerId = :sellerId and id = :id
+    SET quantity = quantity + :decrementBy
+    WHERE id = :id
 ''',
-                              sellerId=sellerId, id = id)
+                              id = id, decrementBy=decrementBy)
         return
 
     @staticmethod
-    def decrease_quantity(sellerId, id):
+    def decrease_quantity(id, decrementBy):
         rows = app.db.execute('''
 UPDATE Products
-    SET quantity = quantity - 1
-    WHERE sellerId = :sellerId and id = :id
+    SET quantity = quantity - :decrementBy
+    WHERE id = :id
 ''',
-                              sellerId=sellerId, id = id)
+                              id = id, decrementBy=decrementBy)
         return
 
     @staticmethod
@@ -171,3 +171,18 @@ Offset :offset
 ''',
                               lim=lim, offset=offset) 
         return [Product(*row) for row in rows]
+
+
+    @staticmethod
+    def createProduct(name, description, category, price, quantity, available, sellerId, image):
+        try:
+            rows = app.db.execute("""
+INSERT INTO Products(name, theDescription, category, price, quantity, available, sellerId, theImage)
+VALUES(:name, :description, :category, :price, :quantity, :available, :sellerId, :image)
+RETURNING id
+""",name = name, description = description, category = category, price = price, quantity = quantity, available=available, sellerId = sellerId, image = image)
+            id = rows[0][0]
+            return Product.get(id)
+        except Exception as e:
+            return str(e)
+     

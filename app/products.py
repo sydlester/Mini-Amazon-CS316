@@ -3,6 +3,7 @@ from flask_login import current_user
 from flask import request
 import math 
 import datetime
+from flask import Flask, flash, request, redirect, url_for
 
 from .models.product import Product
 from .models.purchase import Purchase
@@ -31,7 +32,11 @@ def products():
 
         products = Product.getOff(True, offset)
         pages = math.ceil(total/5)
-        return render_template('products.html', avail_products=products, theMax = 500, theMin = 1, pages = pages, activePage = activePage)
+
+        productDict = {} 
+        for product in allProducts: 
+            productDict[product.id] = url_for('static', filename = 'photos/'+product.theImage)
+        return render_template('products.html', avail_products=products, theMax = 500, theMin = 1, pages = pages, activePage = activePage, productDict = productDict)
 
 
     elif request.method == "POST":
@@ -51,6 +56,11 @@ def products():
         total = len(allProducts)
         pages = math.ceil(total/5)
 
+        productDict = {} 
+        for product in allProducts: 
+            productDict[product.id] = url_for('static', filename = 'photos/'+product.theImage)
+
+
         return render_template('products.html',
-                           avail_products=products, category = category, theMax = myMax, theMin = minRating, activePage = activePage, pages = pages)
+                           avail_products=products, category = category, theMax = myMax, theMin = minRating, activePage = activePage, pages = pages, productDict = productDict)
 

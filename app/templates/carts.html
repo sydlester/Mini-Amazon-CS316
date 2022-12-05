@@ -5,6 +5,19 @@
 <br><br>
 <h1>Your cart:</h1>
 {% if current_user.is_authenticated %}
+<td><a style="background-color: hotpink;"class = "btn btn-secondary" href="{{ url_for('carts.submitOrder') }}" role = "button">Submit Order</a></td> 
+<p>
+  {% with messages = get_flashed_messages() %}
+  {% if messages %}
+  <ul>
+    {% for message in messages %}
+    <li>{{ message }}</li>
+    {% endfor %}
+  </ul>
+  {% endif %}
+  {% endwith %}
+</p>
+
 <table class='table table-hover table-bordered container'>
   <thead class="thead-dark">
     <tr>

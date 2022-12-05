@@ -57,7 +57,7 @@ RETURNING id
 """,
                                   email=email,
                                   password=generate_password_hash(password),
-                                  firstname=firstname, lastname=lastname, address= address, balance = 0, isSeller=isSeller)
+                                  firstname=firstname, lastname=lastname, address= address, balance = 1000, isSeller=isSeller)
             id = rows[0][0]
             return User.get(id)
         except Exception as e:
@@ -169,6 +169,7 @@ RETURNING id;
                             firstname = firstname,
                             id = uid)
             
+
         if lastname is not None:
             self.lastname = lastname
             app.db.execute("""
@@ -180,3 +181,24 @@ RETURNING id;
                             lastname = lastname,
                             id = uid)
         return True
+
+
+    @staticmethod
+    def decrease_balance(id, decrementBy):
+        rows = app.db.execute('''
+UPDATE USERS
+    SET balance = balance - :decrementBy
+    WHERE id = :id
+''',
+                              id = id, decrementBy=decrementBy)
+        return
+
+    @staticmethod
+    def get(id):
+        rows = app.db.execute('''
+SELECT id, email, firstname, lastname, address, balance, isSeller
+FROM Users
+WHERE id = :id
+''',
+                              id=id)
+        return User(*(rows[0])) if rows is not None else None
