@@ -100,13 +100,11 @@ def manage_balance():
                     flash('You do not have sufficient funds in your account to withdraw this amount!')
                     return redirect(url_for('users.manage_balance'))
                 elif out:
-                    flash('Congratulations, your transaction was successful!')
-                    return render_template('account.html', current_user=current_user)   
+                    return render_template('account.html', current_user=current_user) 
             if amount_to_deposit is not None:
                 out = current_user.deposit(curr_id, amount_to_deposit)
                 if out:
-                    flash('Congratulations, your transaction was successful!')
-                    return render_template('account.html', current_user=current_user)           
+                    return render_template('account.html', current_user=current_user)          
     return render_template('manageBalance.html', form=form)
 
 @bp.route('/update_account', methods=['GET', 'POST'])
