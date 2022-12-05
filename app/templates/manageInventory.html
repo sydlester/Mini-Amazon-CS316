@@ -1,5 +1,4 @@
 {% extends "base.html" %}
-
 {% block content %}
 
 {% if current_user.is_authenticated %}
@@ -10,8 +9,8 @@
 {% else %}
 <h1>Manage Inventory</h1>
 
-
 <td><a class = "btn btn-secondary" href="{{ url_for('createProduct.createProduct') }}" role = "button">Create New Product</a></td> 
+<td><a class = "btn btn-secondary" href="{{ url_for('viewOrders.viewOrders') }}" role = "button">View Orders Involving your Prodcuts</a></td> 
 
 <hr> 
 

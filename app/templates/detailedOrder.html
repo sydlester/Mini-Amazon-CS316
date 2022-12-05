@@ -1,0 +1,45 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<br><br>
+<h1>Detailed Order Page:</h1>
+{% if current_user.is_authenticated %}
+
+<table class='table table-hover table-bordered container'>
+  <thead class="thead-dark">
+    <tr>
+      <th scope="col">Order ID</th>
+      <th scope="col">Product Id</th>
+      <th scope="col">Quantity</th>
+      <th scope="col">Unit Price (Final)</th>
+      <th scope="col">Time Ordered</th>
+      <th scope="col">Was Fulfilled</th>
+      <th scope="col">Time Fulfilled</th>
+    </tr>
+  </thead>
+  <tbody>
+    {% for order in lines %}
+    <tr>
+        <th scope="row">{{order.id}}</th>
+        <td>{{order.pid}}</td>
+        <td>{{order.quantity}}</td>
+        <td>{{order.unit_price}}</td>
+        <td>{{order.time_ordered}}</td>
+        <td>{{order.fulfilled}}</td>
+        {% if order.time_fulfilled == None %}
+        <td>N/A</td>
+        {% else %}
+        <td>{{order.time_fulfilled}}</td>
+        {% endif %}
+    </tr>
+    {% endfor %}
+
+  </tbody>
+</table>
+
+{% else %}
+<p><a href="{{ url_for('users.login') }}">Log in</a> to see your cart!</p>
+{% endif %}
+
+{% endblock %}

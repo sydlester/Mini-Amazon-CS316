@@ -23,3 +23,5 @@ SELECT pg_catalog.setval('public.products_id_seq',
 SELECT pg_catalog.setval('public.messages_id_seq',
                          (SELECT MAX(id)+1 FROM Messages),
                          false);
+
+\COPY FulFilledPurchases FROM '../data/fulfilledPurchases.csv' WITH DELIMITER ',' NULL '' CSV;

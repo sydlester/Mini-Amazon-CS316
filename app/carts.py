@@ -59,29 +59,55 @@ def cartRemoveProduct(productId):
 def submitOrder():
     userId = current_user.id
     user_cart = Cart.get(userId)
-
+    recentOrderCost = Cart.getTotalCost(userId)
     for cart_item in user_cart: 
         tempProduct = Product.get(cart_item.pid)
         if tempProduct.quantity < cart_item.quantity:
             flash('Insufficient Inventory Remaining')
             return redirect(url_for('carts.carts')) 
-        #if current_user.balance < Cart.getTotalCost(userId):
-            #flash('Insufficient Balance Remaining')
-            #return redirect(url_for('carts.carts')) 
-    
-    id = Purchase.getMax()+1
+        if current_user.balance < Cart.getTotalCost(userId):
+            flash('Insufficient Balance Remaining' + str(current_user.balance) +  "HELLO" + str(Cart.getTotalCost(userId)))
+            return redirect(url_for('carts.carts')) 
 
+    error = None
+    id = Purchase.getMax()+1
+    timeOrdered = datetime.now()
     for cart_item in user_cart: 
         theProduct = Product.get(cart_item.pid)
         Product.decrease_quantity(theProduct.id, cart_item.quantity)
-        User.decrease_balance(userId, Cart.getTotalCost(userId))
-        Purchase.createPurchase(id, userId, theProduct.id, cart_item.quantity, theProduct.price, datetime.now(), False, None)
-        #Need to actually insert it into the purchases table!!
-
+        error = Purchase.createPurchase(id, userId, theProduct.id, cart_item.quantity, theProduct.price, timeOrdered, False, None)
+    
+    User.decrease_balance(userId, Cart.getTotalCost(userId))
     Cart.clearUserCart(userId) 
 
-    orders = Purchase.get(current_user.id, False)
-    purchases = Purchase.get(current_user.id, True)
-    
-    l = len(orders)
-    return render_template('pastPurchases.html', userId=userId, orders = orders, purchases = purchases, l = l)
+    orders = Purchase.getByUser(current_user.id, False)
+    purchases = Purchase.getByUser(current_user.id, True)
+
+    orderSummaries = []
+    purchaseSummaries = []
+    usedOrders = []
+    usedPurchases = []
+
+    for order in orders: 
+        if order.id not in usedOrders:
+            id = order.id
+            usedOrders.append(id)
+            totalItems = Purchase.getTotalQuantity(id)
+            totalCost = Purchase.getTotalCost(id)
+            timeOrdered = order.time_ordered
+            fulfillmentStatus = order.fulfilled
+            fulfillTime = order.time_fulfilled
+            orderSummaries.append([id, totalItems, totalCost, timeOrdered, fulfillmentStatus, fulfillTime])
+    for purchase in purchases: 
+        if purchase.id not in usedPurchases:
+            id = purchase.id
+            usedPurchases.append(id)
+            totalItems = Purchase.getTotalQuantity(id)
+            totalCost = Purchase.getTotalCost(id)
+            timeOrdered = purchase.time_ordered
+            fulfillmentStatus = purchase.fulfilled
+            fulfillTime = purchase.time_fulfilled
+            purchaseSummaries.append([id, totalItems, totalCost, timeOrdered, fulfillmentStatus, fulfillTime])
+    return render_template('pastPurchases.html', purchaseSummaries=purchaseSummaries, orderSummaries = orderSummaries, recentOrderCost=recentOrderCost)
+
+

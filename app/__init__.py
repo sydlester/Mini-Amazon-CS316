@@ -84,6 +84,12 @@ def create_app():
     
     from .messageChain import bp as messageChain_bp
     app.register_blueprint(messageChain_bp)
+
+    from .viewOrders import bp as viewOrders_bp
+    app.register_blueprint(viewOrders_bp)
+
+    from .sellerDetailedOrder import bp as sellerDetailedOrder_bp
+    app.register_blueprint(sellerDetailedOrder_bp)
     
     return app
 

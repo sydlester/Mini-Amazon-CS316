@@ -51,7 +51,7 @@ RETURNING id
 """,
                                   email=email,
                                   password=generate_password_hash(password),
-                                  firstname=firstname, lastname=lastname, address= address, balance = 0, isSeller=isSeller)
+                                  firstname=firstname, lastname=lastname, address= address, balance = 1000, isSeller=isSeller)
             id = rows[0][0]
             return User.get(id)
         except Exception as e:
@@ -95,9 +95,19 @@ WHERE id = :id
     @staticmethod
     def decrease_balance(id, decrementBy):
         rows = app.db.execute('''
-UPDATE Products
-    SET quantity = quantity - :decrementBy
+UPDATE USERS
+    SET balance = balance - :decrementBy
     WHERE id = :id
 ''',
                               id = id, decrementBy=decrementBy)
         return
+
+    @staticmethod
+    def get(id):
+        rows = app.db.execute('''
+SELECT id, email, firstname, lastname, address, balance, isSeller
+FROM Users
+WHERE id = :id
+''',
+                              id=id)
+        return User(*(rows[0])) if rows is not None else None
