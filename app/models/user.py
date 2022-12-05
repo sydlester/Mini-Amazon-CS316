@@ -98,50 +98,44 @@ WHERE id = :id
         return [User(*row) for row in rows]
 
     @staticmethod
-    def withdraw(amount):
+    def withdraw(id, amount):
         if amount == '':
             return False
         
         curr_balance = app.db.execute("""
-SELECT balance FROM Users WHERE id = :uid
+SELECT balance FROM Users WHERE id = :id
 """,
-                        uid = id)
+                        id = id)
         curr_bal = curr_balance[0][0]
         new_bal = curr_bal - float(amount)
         if new_bal < 0:
             return None
         else:
-            self.balance = new_bal
+            new_bal = curr_bal - float(amount)
             rows = app.db.execute("""
 UPDATE Users
-SET balance = :new_bal
-WHERE id = :uid
-RETURNING id
+    SET balance = :new_bal
+    WHERE id = :id
+    RETURNING id
 """,
                             new_bal = new_bal,
-                            uid = id)
+                            id = id)
             return True
         
     @staticmethod
-    def deposit(amount):
+    def deposit(id, amount):
         if amount == '':
             return False
-        curr_balance = app.db.execute("""
-SELECT balance FROM Users WHERE id = :uid
-""",
-                        uid = id)
-        curr_bal = curr_balance[0][0]
-        new_bal = curr_bal + float(amount)
-        self.balance = new_bal
         rows = app.db.execute("""
 UPDATE Users
-SET balance = :new_bal
-WHERE id = :uid
-RETURNING id
+    SET balance = balance + :amount
+    WHERE id = :id
+    RETURNING id
 """,
-                            new_bal = new_bal,
-                            uid = id)
+                            amount = amount,
+                            id = id)
         return True
+
 
     @staticmethod
     def update_information(self, email, firstname, lastname):

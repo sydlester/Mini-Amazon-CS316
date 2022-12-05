@@ -95,7 +95,7 @@ def manage_balance():
             amount_to_withdraw = form.amount.data
             amount_to_deposit = form.amount2.data
             if amount_to_withdraw is not None:
-                out = current_user.withdraw(amount_to_withdraw)
+                out = current_user.withdraw(curr_id, amount_to_withdraw)
                 if out is None:
                     flash('You do not have sufficient funds in your account to withdraw this amount!')
                     return redirect(url_for('users.manage_balance'))
@@ -103,7 +103,7 @@ def manage_balance():
                     flash('Congratulations, your transaction was successful!')
                     return render_template('account.html', current_user=current_user)   
             if amount_to_deposit is not None:
-                out = current_user.deposit(amount_to_deposit)
+                out = current_user.deposit(curr_id, amount_to_deposit)
                 if out:
                     flash('Congratulations, your transaction was successful!')
                     return render_template('account.html', current_user=current_user)           
