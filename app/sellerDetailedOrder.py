@@ -9,5 +9,5 @@ bp = Blueprint('sellerDetailedOrder', __name__)
 
 @bp.route('/sellerDetailedOrder<int:id>', methods=["GET", "POST"])
 def sellerDetailedOrder(id):
-    lines = Purchase.getByOrder(id)
+    lines = Purchase.getByOrderSeller(id, current_user.id)
     return render_template('sellerDetailedOrder.html', lines = lines)

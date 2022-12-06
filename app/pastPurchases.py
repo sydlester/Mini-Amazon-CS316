@@ -14,32 +14,25 @@ bp = Blueprint('pastPurchases', __name__)
 @bp.route('/pastPurchases', methods=["GET", "POST"])
 def pastPurchases():
     if current_user.is_authenticated:
-        orders = Purchase.getByUser(current_user.id, False)
-        purchases = Purchase.getByUser(current_user.id, True)
+        all = Purchase.getByUser(current_user.id)
 
         orderSummaries = []
         purchaseSummaries = []
-        usedOrders = []
-        usedPurchases = []
+        used = []
 
-        for order in orders: 
+        for order in all: 
             id = order.id
-            usedOrders.append(id)
-            totalItems = Purchase.getTotalQuantity(id)
-            totalCost = Purchase.getTotalCost(id)
-            timeOrdered = order.time_ordered
-            fulfillmentStatus = FulfilledPurchase.isIn(id)
-            fulfillTime = order.time_fulfilled
-            orderSummaries.append([id, totalItems, totalCost, timeOrdered, fulfillmentStatus, fulfillTime])
-        for purchase in purchases: 
-            id = purchase.id
-            usedPurchases.append(id)
-            totalItems = Purchase.getTotalQuantity(id)
-            totalCost = Purchase.getTotalCost(id)
-            timeOrdered = purchase.time_ordered
-            fulfillmentStatus = FulfilledPurchase.isIn(id)
-            fulfillTime = purchase.time_fulfilled
-            purchaseSummaries.append([id, totalItems, totalCost, timeOrdered, fulfillmentStatus, fulfillTime])
+            if order.id not in used:
+                used.append(id)
+                totalItems = Purchase.getTotalQuantity(id)
+                totalCost = Purchase.getTotalCost(id)
+                timeOrdered = order.time_ordered
+                fulfillmentStatus = FulfilledPurchase.isIn(id)
+                fulfillTime = order.time_fulfilled
+                if fulfillmentStatus == False:
+                    orderSummaries.append([id, totalItems, totalCost, timeOrdered, fulfillmentStatus, fulfillTime])
+                else:
+                    purchaseSummaries.append([id, totalItems, totalCost, timeOrdered, fulfillmentStatus, fulfillTime])
 
         return render_template('pastPurchases.html', purchaseSummaries=purchaseSummaries, orderSummaries = orderSummaries)
     else:

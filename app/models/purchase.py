@@ -12,14 +12,14 @@ class Purchase:
         self.time_fulfilled = time_fulfilled
 
     @staticmethod
-    def getByUser(userId, status):
+    def getByUser(userId):
         rows = app.db.execute('''
 SELECT *
 FROM Purchases
-WHERE userId = :userId and fulfilled = :status
+WHERE userId = :userId
 ORDER BY 6 DESC
 ''',
-                              userId=userId, status=status)
+                              userId=userId)
         return [Purchase(*row) for row in rows]
 
     @staticmethod
@@ -124,3 +124,39 @@ UPDATE Purchases
             # likely email already in use; better error checking and reporting needed;
             # the following simply prints the error to the console:
             return str(e)
+    
+    @staticmethod
+    def getTotalCostSeller(id, sellerId):
+        rows = app.db.execute('''
+SELECT Sum(cost) as total
+FROM 
+    (
+        Select Purchases.id, unit_price*Purchases.quantity as cost
+        From Purchases, products
+        Where Purchases.id = :id and sellerId = :sellerId and purchases.pid = products.id 
+    ) as TEMP
+''', id=id, sellerId=sellerId)
+        if rows:
+            return rows[0][0]
+    
+    @staticmethod
+    def getTotalQuantitySeller(id, sellerId):
+        rows = app.db.execute('''
+SELECT Sum(Purchases.quantity) as total
+FROM Purchases, Products
+WHERE Purchases.id = :id and sellerId = :sellerId and purchases.pid = products.id 
+''', id=id, sellerId=sellerId)
+        if rows:
+            return rows[0][0]
+    
+
+    @staticmethod
+    def getByOrderSeller(id, sellerId):
+        rows = app.db.execute('''
+SELECT purchases.id, purchases.userId, Purchases.pid, Purchases.quantity, Purchases.unit_price, Purchases.time_ordered, Purchases.fulfilled, Purchases.time_fulfilled
+FROM Purchases, Products
+WHERE Purchases.id = :id and sellerId = :sellerId and Products.id = Purchases.pid
+ORDER BY 3
+''', id=id, sellerId = sellerId)
+        if rows:
+            return [Purchase(*row) for row in rows]

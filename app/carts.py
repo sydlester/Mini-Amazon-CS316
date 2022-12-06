@@ -7,6 +7,7 @@ from .models.product import Product
 from .models.cart import Cart
 from .models.user import User
 from .models.purchase import Purchase
+from .models.fulfilledPurchase import FulfilledPurchase
 
 from flask import Blueprint
 bp = Blueprint('carts', __name__)
@@ -80,34 +81,28 @@ def submitOrder():
     User.decrease_balance(userId, Cart.getTotalCost(userId))
     Cart.clearUserCart(userId) 
 
-    orders = Purchase.getByUser(current_user.id, False)
-    purchases = Purchase.getByUser(current_user.id, True)
+    if current_user.is_authenticated:
+        all = Purchase.getByUser(current_user.id)
 
-    orderSummaries = []
-    purchaseSummaries = []
-    usedOrders = []
-    usedPurchases = []
+        orderSummaries = []
+        purchaseSummaries = []
+        used = []
 
-    for order in orders: 
-        if order.id not in usedOrders:
+        for order in all: 
             id = order.id
-            usedOrders.append(id)
-            totalItems = Purchase.getTotalQuantity(id)
-            totalCost = Purchase.getTotalCost(id)
-            timeOrdered = order.time_ordered
-            fulfillmentStatus = order.fulfilled
-            fulfillTime = order.time_fulfilled
-            orderSummaries.append([id, totalItems, totalCost, timeOrdered, fulfillmentStatus, fulfillTime])
-    for purchase in purchases: 
-        if purchase.id not in usedPurchases:
-            id = purchase.id
-            usedPurchases.append(id)
-            totalItems = Purchase.getTotalQuantity(id)
-            totalCost = Purchase.getTotalCost(id)
-            timeOrdered = purchase.time_ordered
-            fulfillmentStatus = purchase.fulfilled
-            fulfillTime = purchase.time_fulfilled
-            purchaseSummaries.append([id, totalItems, totalCost, timeOrdered, fulfillmentStatus, fulfillTime])
-    return render_template('pastPurchases.html', purchaseSummaries=purchaseSummaries, orderSummaries = orderSummaries, recentOrderCost=recentOrderCost)
+            if order.id not in used:
+                used.append(id)
+                totalItems = Purchase.getTotalQuantity(id)
+                totalCost = Purchase.getTotalCost(id)
+                timeOrdered = order.time_ordered
+                fulfillmentStatus = FulfilledPurchase.isIn(id)
+                fulfillTime = order.time_fulfilled
+                if fulfillmentStatus == False:
+                    orderSummaries.append([id, totalItems, totalCost, timeOrdered, fulfillmentStatus, fulfillTime])
+                else:
+                    purchaseSummaries.append([id, totalItems, totalCost, timeOrdered, fulfillmentStatus, fulfillTime])
 
+        return render_template('pastPurchases.html', purchaseSummaries=purchaseSummaries, orderSummaries = orderSummaries)
+    else:
+        return render_template('pastPurchases.html', purchases=None, orders = None)
 
