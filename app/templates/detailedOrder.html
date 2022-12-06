@@ -1,5 +1,4 @@
 {% extends "base.html" %}
-
 {% block content %}
 
 <br><br>
@@ -11,8 +10,10 @@
     <tr>
       <th scope="col">Order ID</th>
       <th scope="col">Product Id</th>
+      <th scope="col">Product Name</th>
       <th scope="col">Quantity</th>
       <th scope="col">Unit Price (Final)</th>
+      <th scope="col">Total Line Cost</th>
       <th scope="col">Time Ordered</th>
       <th scope="col">Was Fulfilled</th>
       <th scope="col">Time Fulfilled</th>
@@ -21,16 +22,18 @@
   <tbody>
     {% for order in lines %}
     <tr>
-        <th scope="row">{{order.id}}</th>
-        <td>{{order.pid}}</td>
-        <td>{{order.quantity}}</td>
-        <td>{{order.unit_price}}</td>
-        <td>{{order.time_ordered}}</td>
-        <td>{{order.fulfilled}}</td>
-        {% if order.time_fulfilled == None %}
-        <td>N/A</td>
+        <td>{{order[0]}}</td>
+        <td>{{order[1]}}</td>
+        <td>{{order[2]}}</td>
+        <td>{{order[3]}}</td>
+        <td>{{order[4]}}</td>
+        <td>{{order[5]}}</td>
+        <td>{{order[6]}}</td>
+        <td>{{order[7]}}</td>
+        {% if order[7] == false%}
+          <td><p>N/A</p></td>
         {% else %}
-        <td>{{order.time_fulfilled}}</td>
+        <td>{{order[8]}}</td>
         {% endif %}
     </tr>
     {% endfor %}

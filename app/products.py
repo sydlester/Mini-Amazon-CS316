@@ -4,7 +4,6 @@ from flask import request
 import math 
 import datetime
 from flask import Flask, flash, request, redirect, url_for
-
 from .models.product import Product
 from .models.purchase import Purchase
 

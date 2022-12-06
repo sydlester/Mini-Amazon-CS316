@@ -188,6 +188,19 @@ UPDATE USERS
         return
 
     @staticmethod
+    def increase_balance(id, incrementBy):
+        rows = app.db.execute('''
+UPDATE USERS
+    SET balance = balance + :incrementBy
+    WHERE id = :id
+''',
+                              id = id, incrementBy=incrementBy)
+        return
+
+
+
+
+    @staticmethod
     def get(id):
         rows = app.db.execute('''
 SELECT id, email, firstname, lastname, address, balance, isSeller

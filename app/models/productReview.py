@@ -62,7 +62,7 @@ INSERT INTO ProductReviews VALUES (:userId, :pid, :rating, :theDescription, :the
     @staticmethod
     def getRatingAverage(productId):
         rows = app.db.execute('''
-SELECT ROUND(CAST(rating AS numeric),1) 
+SELECT ROUND(AVG(CAST(rating AS numeric)), 1)
 FROM ProductReviews
 WHERE pid = :productId
 ''', productId = productId)

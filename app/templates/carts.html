@@ -17,7 +17,6 @@
   {% endif %}
   {% endwith %}
 </p>
-
 <table class='table table-hover table-bordered container'>
   <thead class="thead-dark">
     <tr>
@@ -26,6 +25,7 @@
       <th scope="col">Quantity</th>
       <th scope="col">Product Name</th>
       <th scope="col">Unit Price</th>
+      <th scope="col">Total Cost</th>
       <th scope="col">Add Quantity</th>
       <th scope="col">Remove Quantity</th>
       <th scope="col">Remove From Cart</th>
@@ -39,6 +39,7 @@
           <td>{{cart.quantity}}</td>
           <td>{{cart.productName}}</td>
           <td>{{cart.unitPrice}}</td>
+          <td>{{totalCost}}</td>
           <td><a style="background-color: hotpink;" class = "btn btn-secondary" href="{{ url_for('carts.cartIncreaseQuantity', productId = cart.pid) }}" role = "button">Add 1</a></td> 
           <td><a style="background-color: hotpink;" class = "btn btn-secondary" href="{{ url_for('carts.cartDecreaseQuantity', productId = cart.pid) }}" role = "button">Remove 1</a></td> 
           <td><a style="background-color: hotpink;"class = "btn btn-secondary" href="{{ url_for('carts.cartRemoveProduct', productId = cart.pid) }}" role = "button">Remove from Cart</a></td> 

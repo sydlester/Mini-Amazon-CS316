@@ -20,7 +20,7 @@ def carts():
     else:
         userId = None
         user_cart = None
-    return render_template('carts.html', userId=userId, user_cart = user_cart)
+    return render_template('carts.html', userId=userId, user_cart = user_cart, totalCost=Cart.getTotalCost(current_user.id))
 
 @bp.route('/cartAddToCart/<int:productId>', methods=["GET", "POST"])
 def cartAddToCart(productId):
@@ -31,14 +31,14 @@ def cartAddToCart(productId):
     else: 
         Cart.add_to_cart(userId, productId, quantity)
     user_cart = Cart.get(userId)
-    return render_template('carts.html', userId=userId, productId = productId, user_cart=user_cart)
+    return render_template('carts.html', userId=userId, productId = productId, user_cart=user_cart, totalCost=Cart.getTotalCost(current_user.id))
 
 @bp.route('/cartIncreaseQuantity/<int:productId>', methods=["GET", "POST"])
 def cartIncreaseQuantity(productId):
     userId = current_user.id
     user_cart = Cart.add_quantity(userId, productId)
     user_cart = Cart.get(userId)
-    return render_template('carts.html', userId=userId, user_cart=user_cart, productId = productId)
+    return render_template('carts.html', userId=userId, user_cart=user_cart, productId = productId, totalCost=Cart.getTotalCost(current_user.id))
 
 @bp.route('/cartDecreaseQuantity/<int:productId>', methods=["GET", "POST"])
 def cartDecreaseQuantity(productId):
@@ -47,14 +47,14 @@ def cartDecreaseQuantity(productId):
     if Cart.getQuantity(userId, productId) <= 0:
         Cart.remove_from_cart(userId, productId)
     user_cart = Cart.get(userId)
-    return render_template('carts.html', userId=userId, user_cart=user_cart, productId = productId)
+    return render_template('carts.html', userId=userId, user_cart=user_cart, productId = productId, totalCost=Cart.getTotalCost(current_user.id))
 
 @bp.route('/cartRemoveProduct/<int:productId>', methods=["GET", "POST"])
 def cartRemoveProduct(productId):
     userId = current_user.id
     user_cart = Cart.remove_from_cart(userId, productId)
     user_cart = Cart.get(userId)
-    return render_template('carts.html', userId=userId, user_cart=user_cart, productId = productId)
+    return render_template('carts.html', userId=userId, user_cart=user_cart, productId = productId, totalCost=Cart.getTotalCost(current_user.id))
 
 @bp.route('/submitOrder', methods=["GET", "POST"])
 def submitOrder():
@@ -75,8 +75,10 @@ def submitOrder():
     timeOrdered = datetime.now()
     for cart_item in user_cart: 
         theProduct = Product.get(cart_item.pid)
+        theSeller = theProduct.sellerId
         Product.decrease_quantity(theProduct.id, cart_item.quantity)
         error = Purchase.createPurchase(id, userId, theProduct.id, cart_item.quantity, theProduct.price, timeOrdered, False, None)
+        User.increase_balance(theSeller, cart_item.quantity*cart_item.unitPrice)
     
     User.decrease_balance(userId, Cart.getTotalCost(userId))
     Cart.clearUserCart(userId) 

@@ -39,11 +39,12 @@ def viewOrders():
             userObject = User.get(userId)
             name = userObject.firstname + " " + userObject.lastname
             address = userObject.address
+            email = userObject.email
             orderDate = order.time_ordered
             totalCost = Purchase.getTotalCostSeller(id, current_user.id)
             totalQuantity = Purchase.getTotalQuantitySeller(id, current_user.id)
             fulfillment = FulfilledPurchase.isIn(id)
-            orderSummaries.append([id, userId, name, address, orderDate, totalCost, totalQuantity, fulfillment])
+            orderSummaries.append([id, userId, name, address, email, orderDate, totalCost, totalQuantity, fulfillment])
     return render_template('viewOrders.html', orderSummaries=orderSummaries)
 
 @bp.route('/fulfillOrder/<int:id>/<int:pid>/<int:userId>', methods=["GET", "POST"])

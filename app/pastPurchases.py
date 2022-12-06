@@ -37,10 +37,25 @@ def pastPurchases():
         return render_template('pastPurchases.html', purchaseSummaries=purchaseSummaries, orderSummaries = orderSummaries)
     else:
         return render_template('pastPurchases.html', purchases=None, orders = None)
-    
+
+
 @bp.route('/DetailedOrder<int:id>', methods=["GET", "POST"])
 def detailedOrder(id):
-    lines = Purchase.getByOrder(id)
+    lines = []
+    lineItems = Purchase.getByOrder(id)
+
+    for item in lineItems:
+        id = item.id
+        pid = item.pid 
+        quantity = item.quantity
+        unit_price = item.unit_price
+        time_ordered = item.time_ordered
+        fulfilled = item.fulfilled
+        time_fulfilled = item.time_fulfilled 
+        totalLineCost = quantity*unit_price 
+        productName = Product.get(pid).name
+        lines.append([id, pid, productName, quantity, unit_price, totalLineCost, time_ordered, fulfilled, time_fulfilled])
+    
     return render_template('detailedOrder.html', lines = lines)
     
 
