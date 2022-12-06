@@ -17,15 +17,35 @@ from .config import Config
 from flask import Blueprint
 bp = Blueprint('viewOrders', __name__)
 from flask import current_app 
-
 from .models.product import Product
 from .models.purchase import Purchase
 from .models.fulfilledPurchase import FulfilledPurchase
 
 @bp.route('/viewOrders', methods=["GET", "POST"])
 def viewOrders():
+    if request.method == "GET":
+        orders = Purchase.getAllBySeller(current_user.id)
 
-    orders = Purchase.getAllBySeller(current_user.id)
+    elif request.method == "POST":
+        searchField = request.form["searchField"]
+        buyerId = request.form["buyerId"]
+        date = request.form["date"]
+        if date != "":
+            date = datetime.strptime(request.form["date"], '%Y-%m-%d')
+            month = date.month
+            year = date.year
+            day = date.day
+
+        if buyerId == "" and date == "":
+            orders = Purchase.getBySellerKeyWord(searchField, current_user.id)
+        elif buyerId != "" and date == "":
+            orders = Purchase.getBySellerKeyWordBuyerId(searchField, buyerId, current_user.id)
+        elif buyerId == "" and date != "": 
+             orders = Purchase.getBySellerKeyWordDate(searchField, current_user.id, year, month, day)
+        else:
+            orders = Purchase.getBySellerKeyWordBuyerIdDate(searchField, current_user.id, buyerId, year, month, day)
+
+    
     orderSummaries = []
     used = []
     if orders == None:

@@ -6,15 +6,34 @@ import datetime
 from .models.product import Product
 from .models.purchase import Purchase
 from .models.fulfilledPurchase import FulfilledPurchase
-
 from flask import Blueprint
 bp = Blueprint('pastPurchases', __name__)
-
 
 @bp.route('/pastPurchases', methods=["GET", "POST"])
 def pastPurchases():
     if current_user.is_authenticated:
-        all = Purchase.getByUser(current_user.id)
+
+        if request.method == "GET":
+            all = Purchase.getByUser(current_user.id)
+
+        elif request.method == "POST":
+            searchField = request.form["searchField"]
+            sellerId = request.form["sellerId"]
+            date = request.form["date"]
+            if date != "":
+                date = datetime.strptime(request.form["date"], '%Y-%m-%d')
+                month = date.month
+                year = date.year
+                day = date.day
+
+            if sellerId == "" and date == "":
+                all = Purchase.getByUserKeyWord(searchField, current_user.id)
+            elif sellerId != "" and date == "":
+                all = Purchase.getByUserKeyWordSellerId(searchField, current_user.id, sellerId)
+            elif sellerId == "" and date != "": 
+                all = Purchase.getByUserKeyWordDate(searchField, current_user.id, year, month, day)
+            else:
+                all = Purchase.getByUserKeyWordSellerIdDate(searchField, current_user.id, sellerId, year, month, day)
 
         orderSummaries = []
         purchaseSummaries = []

@@ -160,3 +160,99 @@ ORDER BY 3
 ''', id=id, sellerId = sellerId)
         if rows:
             return [Purchase(*row) for row in rows]
+    
+
+    @staticmethod
+    def getBySellerKeyWord(keyWord, sellerId):     
+        rows = app.db.execute('''
+SELECT purchases.id, purchases.userId, Purchases.pid, Purchases.quantity, Purchases.unit_price, Purchases.time_ordered, Purchases.fulfilled, Purchases.time_fulfilled
+FROM Purchases, Products
+WHERE Purchases.pid = Products.id and sellerId = :sellerId and name ILIKE '%' || :keyWord || '%' 
+ORDER BY time_ordered DESC
+''',
+                              keyWord=keyWord, sellerId = sellerId) 
+        return [Purchase(*row) for row in rows]
+
+        getBySellerKeyWordBuyerId
+
+    @staticmethod
+    def getBySellerKeyWordBuyerId(keyWord, buyerId, sellerId):     
+        rows = app.db.execute('''
+SELECT purchases.id, purchases.userId, Purchases.pid, Purchases.quantity, Purchases.unit_price, Purchases.time_ordered, Purchases.fulfilled, Purchases.time_fulfilled
+FROM Purchases, Products
+WHERE Purchases.pid = Products.id and Purchases.userId = :buyerId and sellerId = :sellerId and name ILIKE '%' || :keyWord || '%' 
+ORDER BY time_ordered DESC
+''',
+                              keyWord=keyWord, sellerId = sellerId, buyerId = buyerId) 
+        return [Purchase(*row) for row in rows]
+
+    @staticmethod
+    def getBySellerKeyWordDate(keyWord, sellerId, year, month, day):     
+        rows = app.db.execute('''
+SELECT purchases.id, purchases.userId, Purchases.pid, Purchases.quantity, Purchases.unit_price, Purchases.time_ordered, Purchases.fulfilled, Purchases.time_fulfilled
+FROM Purchases, Products
+WHERE Purchases.pid = Products.id and extract(year from time_ordered) = :year and extract(month from time_ordered) = :month and extract(day from time_ordered) = :day and sellerId = :sellerId and name ILIKE '%' || :keyWord || '%' 
+ORDER BY time_ordered DESC
+''',
+                              keyWord=keyWord, sellerId=sellerId,year=year, month=month, day=day) 
+        return [Purchase(*row) for row in rows]
+
+
+    @staticmethod
+    def getBySellerKeyWordBuyerIdDate(keyWord, sellerId, buyerId, year, month, day):     
+        rows = app.db.execute('''
+SELECT purchases.id, purchases.userId, Purchases.pid, Purchases.quantity, Purchases.unit_price, Purchases.time_ordered, Purchases.fulfilled, Purchases.time_fulfilled
+FROM Purchases, Products
+WHERE Purchases.pid = Products.id and userId = :buyerId and extract(year from time_ordered) = :year and extract(month from time_ordered) = :month and extract(day from time_ordered) = :day and sellerId = :sellerId and name ILIKE '%' || :keyWord || '%' 
+ORDER BY time_ordered DESC
+''',
+                              keyWord=keyWord, sellerId=sellerId, buyerId = buyerId, year=year, month=month, day=day) 
+        return [Purchase(*row) for row in rows]
+
+    
+    @staticmethod
+    def getByUserKeyWord(keyWord, userId):     
+        rows = app.db.execute('''
+SELECT purchases.id, purchases.userId, Purchases.pid, Purchases.quantity, Purchases.unit_price, Purchases.time_ordered, Purchases.fulfilled, Purchases.time_fulfilled
+FROM Purchases, Products
+WHERE Purchases.pid = Products.id and userId = :userId and name ILIKE '%' || :keyWord || '%' 
+ORDER BY time_ordered DESC
+''',
+                              keyWord=keyWord, userId = userId) 
+        return [Purchase(*row) for row in rows]
+
+        getBySellerKeyWordBuyerId
+
+    @staticmethod
+    def getByUserKeyWordSellerId(keyWord, userId, sellerId):     
+        rows = app.db.execute('''
+SELECT purchases.id, purchases.userId, Purchases.pid, Purchases.quantity, Purchases.unit_price, Purchases.time_ordered, Purchases.fulfilled, Purchases.time_fulfilled
+FROM Purchases, Products
+WHERE Purchases.pid = Products.id and Purchases.userId = :userId and sellerId = :sellerId and name ILIKE '%' || :keyWord || '%' 
+ORDER BY time_ordered DESC
+''',
+                              keyWord=keyWord, userId = userId, sellerId=sellerId) 
+        return [Purchase(*row) for row in rows]
+
+    @staticmethod
+    def getByUserKeyWordDate(keyWord, userId, year, month, day):     
+        rows = app.db.execute('''
+SELECT purchases.id, purchases.userId, Purchases.pid, Purchases.quantity, Purchases.unit_price, Purchases.time_ordered, Purchases.fulfilled, Purchases.time_fulfilled
+FROM Purchases, Products
+WHERE Purchases.pid = Products.id and extract(year from time_ordered) = :year and extract(month from time_ordered) = :month and extract(day from time_ordered) = :day and userId = :userId and name ILIKE '%' || :keyWord || '%' 
+ORDER BY time_ordered DESC
+''',
+                              keyWord=keyWord, userId=userId,year=year, month=month, day=day) 
+        return [Purchase(*row) for row in rows]
+
+
+    @staticmethod
+    def getByUserKeyWordSellerIdDate(keyWord, userId, sellerId, year, month, day):     
+        rows = app.db.execute('''
+SELECT purchases.id, purchases.userId, Purchases.pid, Purchases.quantity, Purchases.unit_price, Purchases.time_ordered, Purchases.fulfilled, Purchases.time_fulfilled
+FROM Purchases, Products
+WHERE Purchases.pid = Products.id and userId = :userId and extract(year from time_ordered) = :year and extract(month from time_ordered) = :month and extract(day from time_ordered) = :day and sellerId = :sellerId and name ILIKE '%' || :keyWord || '%' 
+ORDER BY time_ordered DESC
+''',
+                              keyWord=keyWord, userId=userId, sellerId = sellerId, year=year, month=month, day=day) 
+        return [Purchase(*row) for row in rows]

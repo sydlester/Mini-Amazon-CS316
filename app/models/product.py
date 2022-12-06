@@ -1,5 +1,4 @@
 from flask import current_app as app
-
 class Product:
     def __init__(self, id, name, price, available, category, theDescription, quantity, sellerId, theImage):
         self.id = id
@@ -11,7 +10,6 @@ class Product:
         self.quantity = quantity
         self.sellerId = sellerId
         self.theImage = theImage
-
     @staticmethod
     def get(id):
         rows = app.db.execute('''
