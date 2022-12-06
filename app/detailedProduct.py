@@ -47,12 +47,17 @@ def detailedProduct(productId):
     sellers = Product.getByName(name) 
 
     product = Product.get(productId)
+    
+    if Product.purchased(current_user.id) and productId in Product.purchased(current_user.id):
+        wasPurchased = True
+    else:
+        wasPurchased = False
 
     if product != None:
         picture = url_for('static', filename = 'photos/'+product.theImage)
         
         return render_template('detailedProduct.html', productId = productId, product = product, avgRating = avg, numRating = num, numOnes = numOnes, 
-        numTwos = numTwos, numThrees= numThrees, numFours = numFours, numFives = numFives, sellers = sellers, picture=picture)
+        numTwos = numTwos, numThrees= numThrees, numFours = numFours, numFives = numFives, sellers = sellers, picture=picture, wasPurchased=wasPurchased)
 
 
        

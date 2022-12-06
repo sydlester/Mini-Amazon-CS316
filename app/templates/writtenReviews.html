@@ -1,14 +1,46 @@
 {% extends "base.html" %}
-
 {% block content %}
 
-<h1>Welcome to Written Reviews Page</h1>
-<div class = "sortButtonGroup"> 
-    <label><b>Select Review Type</b></label>
+<style>
+  .outer {
+  display: flex;
+  justify-content: center;
+  }
+
+</style>
+
+<h1 style = "text-align: center;">Reviews you have written!</h1>
+
+<div class = "sortButtonGroup outer"> 
+    <label style="margin-right: 25px;"><b>Select Review Type</b></label>
       <a id = "sortButton1" class = "btn btn-secondary" href="{{ url_for('receivedReviews.receivedReviews') }}"role = "button">Received</a> 
       <a style="background-color: hotpink;" id = "sortButton2" class = "btn btn-secondary" role = "button">Written</a> 
 </div>
 
-<p>This will provide a summary of the reviews you have written!</p> 
-
+<table class='table table-hover table-bordered container'>
+  <thead class="thead-dark">
+    <tr>
+      <th scope="col">ID of Reviewed</th>
+      <th scope="col">Rating</th>
+      <th scope="col">Description</th>
+      <th scope="col">Date</th>
+      <th scope="col">Type</th>
+    </tr>
+  </thead>
+  <tbody>
+    {% for review in reviews%}
+      <tr>
+        <th scope="row">{{review[0]}}</th>
+        <td>{{review[1]}}</td>
+        <td>{{review[2]}}</td>
+        <td>{{review[3]}}</td>
+        {% if review[4] == 0 %}
+        <td>Product</td>
+        {% else %}
+        <td>Seller</td>
+        {% endif %}
+      </tr>
+    {% endfor %}
+  </tbody>
+</table>
 {% endblock %}

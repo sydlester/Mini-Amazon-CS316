@@ -134,3 +134,45 @@ FROM ProductReviews
 WHERE pid = :productId and rating = 5
 ''', productId = productId)
         return rows[0][0]
+
+    @staticmethod
+    def checkExists(userId, productId):
+        rows = app.db.execute('''
+SELECT *
+FROM ProductReviews
+WHERE userId = :userId and pid = :productId
+''', userId = userId, productId = productId)
+        if rows: 
+            return True
+        else:
+            return False
+
+    @staticmethod
+    def editProductReview(userId, pid, rating, theDescription, theDate):
+        rows = app.db.execute('''
+UPDATE ProductReviews 
+SET rating= :rating, theDescription = :theDescription, theDate = :theDate
+WHERE userId = :userId and pid = :pid
+''', userId=userId, pid=pid, rating=rating, theDescription=theDescription, theDate=theDate)
+
+
+    @staticmethod
+    def getAllByUser(userId):
+        try: 
+            rows = app.db.execute('''
+SELECT *
+FROM (
+    Select userId, pid as receiverId, rating, theDescription, theDate, 0 as type From ProductReviews WHERE userId = :userId
+    UNION ALL 
+    Select userId, sellerId as receiverId, rating, theDescription, theDate, 1 as type From SellerReviews WHERE userId = :userId
+) as T
+ORDER BY theDate
+''', userId = userId)
+        #ret = []
+        #if rows: 
+        #    for row in rows: 
+        #        ret.append(row)
+            return rows
+        except Exception as e:
+            return str(e)
+

@@ -256,3 +256,43 @@ ORDER BY time_ordered DESC
 ''',
                               keyWord=keyWord, userId=userId, sellerId = sellerId, year=year, month=month, day=day) 
         return [Purchase(*row) for row in rows]
+    
+
+    @staticmethod
+    def checkProductExists(userId, productId):
+        rows = app.db.execute('''
+SELECT *
+FROM Purchases
+WHERE userId = :userId and pid = :productId
+''', userId = userId, productId = productId)
+        if rows: 
+            return True
+        else:
+            return False
+    
+    @staticmethod
+    def checkSellerExists(userId, sellerId):
+        rows = app.db.execute('''
+SELECT Products.id
+FROM Purchases, Products 
+WHERE pid = Products.id and userId = :userId and sellerId= :sellerId
+''', userId = userId,  sellerId=sellerId)
+        if rows: 
+            return True
+        else:
+            return False
+
+    @staticmethod
+    def purchasedFrom(userId):
+        rows = app.db.execute('''
+SELECT sellerId
+FROM Purchases, Products 
+WHERE pid = Products.id and userId = :userId 
+''', userId = userId)
+        ret = []
+        if rows: 
+            for row in rows:
+                ret.append(row[0])
+            return ret 
+        else:
+            return None

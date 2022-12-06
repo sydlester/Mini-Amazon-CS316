@@ -184,3 +184,18 @@ RETURNING id
         except Exception as e:
             return str(e)
      
+
+    @staticmethod
+    def purchased(userId):
+        rows = app.db.execute('''
+SELECT pid
+FROM Purchases 
+WHERE userId = :userId 
+''', userId = userId)
+        ret = []
+        if rows: 
+            for row in rows:
+                ret.append(row[0])
+            return ret 
+        else:
+            return None

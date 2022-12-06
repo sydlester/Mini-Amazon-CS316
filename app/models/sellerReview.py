@@ -121,3 +121,23 @@ FROM SellerReviews
 WHERE sellerId = :sellerId and rating = 5
 ''', sellerId = sellerId)
         return rows[0][0]
+    
+    @staticmethod
+    def checkExists(userId, sellerId):
+        rows = app.db.execute('''
+SELECT *
+FROM SellerReviews 
+WHERE userId = :userId and sellerId= :sellerId
+''', userId = userId,  sellerId=sellerId)
+        if rows: 
+            return True
+        else:
+            return False
+    
+    @staticmethod
+    def editSellerReview(userId, sellerId, rating, theDescription, theDate):
+        rows = app.db.execute('''
+UPDATE SellerReviews 
+SET rating= :rating, theDescription = :theDescription, theDate = :theDate
+WHERE userId = :userId and sellerId = :sellerId
+''', userId=userId, sellerId=sellerId, rating=rating, theDescription= theDescription, theDate=theDate)

@@ -10,7 +10,6 @@ from .models.purchase import Purchase
 from flask import Blueprint
 bp = Blueprint('products', __name__)
 
-
 @bp.route('/products/', methods=['GET', 'POST'])
 def products():
     activePage = request.args.get('activePage')

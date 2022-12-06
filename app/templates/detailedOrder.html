@@ -1,6 +1,5 @@
 {% extends "base.html" %}
 {% block content %}
-
 <br><br>
 <h1>Detailed Order Page:</h1>
 {% if current_user.is_authenticated %}
@@ -11,12 +10,15 @@
       <th scope="col">Order ID</th>
       <th scope="col">Product Id</th>
       <th scope="col">Product Name</th>
+      <th scope="col">Seller Id</th>
       <th scope="col">Quantity</th>
       <th scope="col">Unit Price (Final)</th>
       <th scope="col">Total Line Cost</th>
       <th scope="col">Time Ordered</th>
       <th scope="col">Was Fulfilled</th>
       <th scope="col">Time Fulfilled</th>
+      <th scope="col">Submit Product Review</th>
+      <th scope="col">Submit Seller Review</th>
     </tr>
   </thead>
   <tbody>
@@ -30,11 +32,15 @@
         <td>{{order[5]}}</td>
         <td>{{order[6]}}</td>
         <td>{{order[7]}}</td>
-        {% if order[7] == false%}
+        <td>{{order[8]}}</td>
+        {% if order[8] == false%}
           <td><p>N/A</p></td>
         {% else %}
-        <td>{{order[8]}}</td>
+        <td>{{order[9]}}</td>
         {% endif %}
+        <td><button class="btn btn-secondary" ><a href="{{ url_for('submitProductReview.submitProductReview', productId = order[1], userId = current_user.id)}}">Review this Product </button></td>
+        <td><button class="btn btn-secondary"><a href="{{ url_for('submitSellerReview.submitSellerReview', sellerId = order[3], userId = current_user.id)}}">Review this Seller</button></td>
+
     </tr>
     {% endfor %}
 

@@ -1,9 +1,10 @@
 {% extends "base.html" %}
 {% block content %}
+  
 <p>   </p>
-<h4>Submit Review for product {{productId}}</h4>
+<h4>Edit your Review for Seller {{sellerId}}</h4>
 
-<form action = "{{ url_for('newProductReview.newProductReview', productId = productId, userId = userId) }}" method = "POST"> 
+<form action = "{{ url_for('newSellerReview.editSellerReview', sellerId = sellerId, userId = userId) }}" method = "POST"> 
     <ul style = "list-style: none"> 
         <li>
             <label class = "ReviewLabels" for = "rating"><b>Select Rating</b></label> 

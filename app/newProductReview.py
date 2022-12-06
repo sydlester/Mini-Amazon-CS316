@@ -23,3 +23,13 @@ def newProductReview(productId, userId):
     return render_template('productReviewOutput.html', productId = productId, orderBy = 5, product_reviews=product_reviews)
 
 
+@bp.route('/editProductReview/<int:productId>/<int:userId>', methods=["GET", "POST"])
+def editProductReview(productId, userId):
+    rating = request.form["rating"]
+    description = request.form["description"]
+    theDate = datetime.now()
+    ProductReview.editProductReview(userId, productId, rating, description, theDate)
+    product_reviews = ProductReview.get_by_productId(productId, 5)
+    return render_template('productReviewOutput.html', productId = productId, orderBy = 5, product_reviews=product_reviews)
+
+

@@ -88,6 +88,15 @@ WHERE isSeller = True
         return [User(*row) for row in rows]
 
     @staticmethod
+    def getAll():
+        rows = app.db.execute('''
+SELECT id, email, firstname, lastname, address, balance, isSeller
+FROM Users
+''',
+                              )
+        return [User(*row) for row in rows]
+
+    @staticmethod
     def isSeller(id):
         rows = app.db.execute('''
 SELECT isSeller

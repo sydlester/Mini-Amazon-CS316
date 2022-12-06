@@ -67,7 +67,7 @@ def submitOrder():
             flash('Insufficient Inventory Remaining')
             return redirect(url_for('carts.carts')) 
         if current_user.balance < Cart.getTotalCost(userId):
-            flash('Insufficient Balance Remaining' + str(current_user.balance) +  "HELLO" + str(Cart.getTotalCost(userId)))
+            flash('Insufficient Balance Remaining') 
             return redirect(url_for('carts.carts')) 
 
     error = None

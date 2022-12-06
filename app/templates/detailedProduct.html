@@ -140,12 +140,23 @@ background-color: #F0ECEB;
 grid-column-start: 11;
 grid-column-end: 12;
 grid-row-start: 1;
-grid-row-end: 5;
+grid-row-end: 1;
 overflow: hidden;
 white-space: nowrap;
 text-align: left;
 background-color: #F0ECEB;
 }
+.inner4 {
+grid-column-start: 11;
+grid-column-end: 12;
+grid-row-start: 2;
+grid-row-end: 6;
+overflow: hidden;
+white-space: nowrap;
+text-align: left;
+background-color: #F0ECEB;
+}
+
 
 .myBtn {
   position: relative; 
@@ -193,10 +204,10 @@ background-color: #F0ECEB;
     <h5 style="text-align: left;"><b>Category: </b>{{product.category}}</h5> 
     <p style="text-align:left;"><b>Description: </b>{{product.theDescription}}</p> 
     </div>
-    <image src={{picture}} width = 200px height = 200px>
-    <td><a style="height: 40px" class = "btn btn-secondary cartButton" href="{{ url_for('carts.cartAddToCart', productId = productId) }}" role = "button">Add To Cart</a></td> 
+    <image style="float: left" src={{picture}} width = 200px height = 200px>
+    <td><a style="height: 40px; float: left; margin-top: 160px;" class = "btn btn-secondary cartButton" href="{{ url_for('carts.cartAddToCart', productId = productId) }}" role = "button">Add To Cart</a></td> 
 
-    
+
   </div>
   <div class = "inner"> 
     <div> 
@@ -428,9 +439,15 @@ background-color: #F0ECEB;
 </div> 
 
 
-<div class = "inner3"> 
-<a class = "btn btn-secondary myBtn" href="{{ url_for('productReviewOutput.productReviewOutput', productId = productId, orderBy = 5) }}" role = "button">See Reviews</a>
+<div class = "inner3">   
+<a style="position: relative" class = "btn btn-secondary myBtn" href="{{ url_for('productReviewOutput.productReviewOutput', productId = productId, orderBy = 5) }}" role = "button">See Reviews</a>
 </div>
+<div class = "inner4">   
+  {% if wasPurchased == True %}
+  <a style="position: relative" class = "btn btn-secondary myBtn" href="{{ url_for('submitProductReview.submitProductReview', productId = product.id, userId = current_user.id) }}" role = "button">Review this Product</a>
+  {% endif %}
+</div>
+
 
 </div> 
 {% endif %}

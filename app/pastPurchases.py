@@ -73,7 +73,8 @@ def detailedOrder(id):
         time_fulfilled = item.time_fulfilled 
         totalLineCost = quantity*unit_price 
         productName = Product.get(pid).name
-        lines.append([id, pid, productName, quantity, unit_price, totalLineCost, time_ordered, fulfilled, time_fulfilled])
+        sellerId = Product.get(pid).sellerId
+        lines.append([id, pid, productName, sellerId, quantity, unit_price, totalLineCost, time_ordered, fulfilled, time_fulfilled])
     
     return render_template('detailedOrder.html', lines = lines)
     
