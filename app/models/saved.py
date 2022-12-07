@@ -15,7 +15,7 @@ SELECT Saved.userId, Saved.pid, Products.name, Products.price
     WHERE Saved.userId = :userId and Saved.pid = Products.id
 ''',
                               userId=userId)
-        return [S(*row) for row in rows]
+        return [Saved(*row) for row in rows]
 
     @staticmethod
     def add_to_saved(userId, productId):

@@ -43,7 +43,12 @@ def savedRemoveProduct(productId):
 def savedAddToCart(productId):
     userId = current_user.id
     quantity = 1
-    Cart.add_to_cart(productId, userId, quantity)
-    user_saved = Saved.remove_from_saved(userId, productId)
-    user_saved = Saved.get(userId)
+    if Cart.check(userId, productId): 
+        Cart.add_quantity(userId, productId)
+        user_saved = Saved.remove_from_saved(userId, productId)
+        user_saved = Saved.get(userId)
+    else: 
+        Cart.add_to_cart(userId, productId, quantity)
+        user_saved = Saved.remove_from_saved(userId, productId)
+        user_saved = Saved.get(userId)
     return render_template('saved.html', userId=userId, user_saved=user_saved, productId = productId)
