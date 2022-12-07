@@ -87,6 +87,9 @@ def create_app():
 
     from .sellerDetailedOrder import bp as sellerDetailedOrder_bp
     app.register_blueprint(sellerDetailedOrder_bp)
+
+    from .saved import bp as saved_bp
+    app.register_blueprint(saved_bp)
     
     return app
 
