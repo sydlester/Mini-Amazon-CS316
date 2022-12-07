@@ -38,8 +38,8 @@ def sellerReviewOutput(sellerId, orderBy):
 
     return render_template('sellerReviewOutput.html', seller_reviews=seller_reviews, activePage = activePage, pages = pages, sellerId=sellerId, orderBy=orderBy, avgRating=avgRating, num=num)
 
-@bp.route('/addUpvotes/<int:userId>/<int:sellerId>/<int:orderBy>', methods=["GET", "POST"])
-def addUpvotes(userId, sellerId, orderBy):
+@bp.route('/addSellerUpvotes/<int:userId>/<int:sellerId>/<int:orderBy>', methods=["GET", "POST"])
+def addSellerUpvotes(userId, sellerId, orderBy):
     SellerReview.addUpvotes(userId, sellerId)
     return redirect(url_for('sellerReviewOutput.sellerReviewOutput', sellerId=sellerId, orderBy=orderBy))
 
