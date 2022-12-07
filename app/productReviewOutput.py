@@ -36,8 +36,9 @@ def productReviewOutput(productId, orderBy):
     total = len(allProductReviews)
     product_reviews = ProductReview.getOff(productId, offset, orderBy)
     pages = math.ceil(total/10)
+    top3 = ProductReview.getTop3(orderBy)
 
-    return render_template('productReviewOutput.html', product_reviews=product_reviews, activePage = activePage, pages = pages, productId=productId, orderBy=orderBy)
+    return render_template('productReviewOutput.html', top3=top3, product_reviews=product_reviews, activePage = activePage, pages = pages, productId=productId, orderBy=orderBy)
 
 
 @bp.route('/addUpvotes/<int:userId>/<int:productId>/<int:orderBy>', methods=["GET", "POST"])

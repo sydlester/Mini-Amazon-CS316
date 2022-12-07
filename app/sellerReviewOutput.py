@@ -35,8 +35,8 @@ def sellerReviewOutput(sellerId, orderBy):
     pages = math.ceil(total/10)
     avgRating = SellerReview.getAverageRating(sellerId)
     num = SellerReview.getNumberRatings(sellerId)
-
-    return render_template('sellerReviewOutput.html', seller_reviews=seller_reviews, activePage = activePage, pages = pages, sellerId=sellerId, orderBy=orderBy, avgRating=avgRating, num=num)
+    top3 = SellerReview.getTop3(orderBy)
+    return render_template('sellerReviewOutput.html', top3=top3, seller_reviews=seller_reviews, activePage = activePage, pages = pages, sellerId=sellerId, orderBy=orderBy, avgRating=avgRating, num=num)
 
 @bp.route('/addSellerUpvotes/<int:userId>/<int:sellerId>/<int:orderBy>', methods=["GET", "POST"])
 def addSellerUpvotes(userId, sellerId, orderBy):

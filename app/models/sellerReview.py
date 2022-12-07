@@ -43,7 +43,7 @@ ORDER BY :orderMe DESC
     @staticmethod
     def submitSellerReview(userId, sellerId, rating, theDescription, theDate):
         rows = app.db.execute('''
-INSERT INTO SellerReviews VALUES (:userId, :sellerId, :rating, :theDescription, :theDate)
+INSERT INTO SellerReviews VALUES (:userId, :sellerId, :rating, :theDescription, :theDate, 0)
 ''',
                               userId = userId, sellerId = sellerId, rating = rating, theDescription = theDescription, theDate=theDate)
         return
@@ -170,3 +170,14 @@ UPDATE SellerReviews
             # likely email already in use; better error checking and reporting needed;
             # the following simply prints the error to the console:
             return str(e)
+
+    @staticmethod
+    def getTop3(orderMe):
+        rows = app.db.execute('''
+SELECT *
+FROM SellerReviews
+ORDER BY upvotes DESC, :orderMe DESC
+LIMIT 3
+''',
+                              orderMe=orderMe)
+        return [SellerReview(*row) for row in rows]

@@ -54,7 +54,7 @@ ORDER BY :orderMe DESC
     @staticmethod
     def submitProductReview(userId, pid, rating, theDescription, theDate):
         rows = app.db.execute('''
-INSERT INTO ProductReviews VALUES (:userId, :pid, :rating, :theDescription, :theDate)
+INSERT INTO ProductReviews VALUES (:userId, :pid, :rating, :theDescription, :theDate, 0)
 ''',
                               userId = userId, pid = pid, rating = rating, theDescription = theDescription, theDate=theDate)
         return
@@ -163,9 +163,9 @@ WHERE userId = :userId and pid = :pid
             rows = app.db.execute('''
 SELECT *
 FROM (
-    Select pid as receiverId, rating, theDescription, theDate, 0 as type From ProductReviews WHERE userId = :userId
+    Select pid as receiverId, rating, theDescription, theDate, 0 as type, upvotes From ProductReviews WHERE userId = :userId
     UNION ALL 
-    Select sellerId as receiverId, rating, theDescription, theDate, 1 as type From SellerReviews WHERE userId = :userId
+    Select sellerId as receiverId, rating, theDescription, theDate, 1 as type, upvotes From SellerReviews WHERE userId = :userId
 ) as T
 ORDER BY theDate DESC
 ''', userId = userId)
@@ -202,4 +202,38 @@ UPDATE ProductReviews
         except Exception as e:
             # likely email already in use; better error checking and reporting needed;
             # the following simply prints the error to the console:
+            return str(e)
+
+    @staticmethod
+    def getTop3(orderMe):
+        rows = app.db.execute('''
+SELECT *
+FROM ProductReviews
+ORDER BY upvotes DESC, :orderMe DESC
+LIMIT 3
+''',
+                              orderMe=orderMe)
+        return [ProductReview(*row) for row in rows]
+
+    
+    @staticmethod
+    def top3All():
+        try: 
+            rows = app.db.execute('''
+SELECT *
+FROM (
+    Select pid as receiverId, rating, theDescription, theDate, 0 as type, upvotes From ProductReviews WHERE userId = :userId
+    UNION ALL 
+    Select sellerId as receiverId, rating, theDescription, theDate, 1 as type, upvotes From SellerReviews WHERE userId = :userId
+) as T
+ORDER BY upvotes DESC, theDate DESC
+LIMIT 3
+''')
+
+        #ret = []
+        #if rows: 
+        #    for row in rows: 
+        #        ret.append(row)
+            return rows
+        except Exception as e:
             return str(e)
