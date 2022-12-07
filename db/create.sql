@@ -55,7 +55,8 @@ CREATE TABLE ProductReviews(
     rating FLOAT NOT NULL CHECK(rating>0 AND rating <= 5),
     theDescription varchar(512),
     theDate timestamp without time zone NOT NULL DEFAULT (current_timestamp AT TIME ZONE 'UTC'),
-    primary key (userId, pid)
+    primary key (userId, pid),
+    upvotes INT NOT NULL
 );
 
 CREATE TABLE SellerReviews(
@@ -64,7 +65,8 @@ CREATE TABLE SellerReviews(
     rating FLOAT NOT NULL CHECK(rating>0 AND rating <= 5),
     theDescription varchar(512),
     theDate timestamp without time zone NOT NULL DEFAULT (current_timestamp AT TIME ZONE 'UTC'),
-    primary key (userId, sellerId)
+    primary key (userId, sellerId),
+    upvotes INT NOT NULL 
 );
 
 CREATE TABLE Messages(

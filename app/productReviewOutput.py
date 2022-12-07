@@ -4,6 +4,7 @@ from flask_login import current_user
 from flask import request
 import datetime
 import math 
+from flask import Flask, flash, request, redirect, url_for
 
 from .models.product import Product
 from .models.purchase import Purchase
@@ -39,27 +40,21 @@ def productReviewOutput(productId, orderBy):
     return render_template('productReviewOutput.html', product_reviews=product_reviews, activePage = activePage, pages = pages, productId=productId, orderBy=orderBy)
 
 
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    if orderBy == None:
-        orderBy = 5
-    orderBy = int(orderBy)
+@bp.route('/addUpvotes/<int:userId>/<int:productId>/<int:orderBy>', methods=["GET", "POST"])
+def addUpvotes(userId, productId, orderBy):
+    ProductReview.addUpvotes(userId, productId)
+    return redirect(url_for('productReviewOutput.productReviewOutput', productId=productId, orderBy=orderBy))
 
-
-    product_reviews = ProductReview.get_by_productId(productId, orderBy)
-
-    return render_template('productReviewOutput.html', productId = productId, orderBy = orderBy, product_reviews = product_reviews)
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    

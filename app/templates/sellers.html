@@ -11,6 +11,7 @@
         <th scope="col">Last Name</th>
         <th scope="col">Email</th>
         <th scope="col">Address</th>
+        <th scope="col">Is Seller?</th>
         <th scope="col">See Reviews</th>
         <th scope="col"><p>Write Review</p><p>(If you've purchased</p></th>
         <th scope="col">Chat Room</th>
@@ -24,6 +25,7 @@
           <td>{{person.lastname}}</td>
           <td>{{person.email}}</td>
           <td>{{person.address}}</td>
+          <td>{{person.isSeller}}</td>
           <td><a class = "btn btn-secondary" href="{{ url_for('sellerReviewOutput.sellerReviewOutput', sellerId = person.id, orderBy = 5) }}" role = "button">Click for Reviews</a></td> 
           {% if purchasedFrom != None and person.id in purchasedFrom %}
           <td><a class = "btn btn-secondary" href="{{ url_for('submitSellerReview.submitSellerReview', sellerId = person.id, userId = current_user.id) }}" role = "button">Write Review</a></td> 

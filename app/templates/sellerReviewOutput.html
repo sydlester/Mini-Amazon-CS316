@@ -33,6 +33,7 @@
       <th scope="col">Rating</th>
       <th scope="col">Description</th>
       <th scope="col">Date</th>
+      <th scope="col">Upvotes</th>
     </tr>
   </thead>
   <tbody>
@@ -43,6 +44,12 @@
         <td>{{review.rating}}</td>
         <td>{{review.theDescription}}</td>
         <td>{{review.theDate}}</td>
+        <td> 
+          <div>
+          <a href="{{ url_for('sellerReviewOutput.addUpvotes', userId = review.userId, sellerId=review.sellerId, orderBy=orderBy) }}" class="w3-button w3-win8-pink"><i class="fa fa-thumbs-up fa-lg" aria-hidden="true"></i></a>
+          {{review.upvotes}}
+        </div>
+        </td>
       </tr>
     {% endfor %}
   </tbody>

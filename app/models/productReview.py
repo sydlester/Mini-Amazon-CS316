@@ -2,12 +2,13 @@ from flask import current_app as app
 
 class ProductReview:
 
-    def __init__(self, userId, pid, rating, theDescription, theDate):
+    def __init__(self, userId, pid, rating, theDescription, theDate, upvotes):
         self.userId = userId
         self.pid = pid
         self.rating = rating
         self.theDescription = theDescription
         self.theDate = theDate
+        self.upvotes = upvotes
 
     @staticmethod
     def getByUser(userId):
@@ -188,3 +189,17 @@ OFFSET :os
 ''',
                               productId=productId, os = os, orderMe=orderMe)
         return [ProductReview(*row) for row in rows]
+
+    @staticmethod
+    def addUpvotes(userId, productId):
+        try:
+            rows = app.db.execute("""
+UPDATE ProductReviews
+    SET upvotes = upvotes + 1 
+    WHERE userId = :userId and pid = :productId
+""", userId=userId, productId=productId)
+            return None
+        except Exception as e:
+            # likely email already in use; better error checking and reporting needed;
+            # the following simply prints the error to the console:
+            return str(e)
