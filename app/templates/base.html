@@ -70,6 +70,7 @@
     <a href="{{ url_for('receivedReviews.receivedReviews',  reviewedId=current_user.id, type = 1) }}"><i class="fa fa-fw fa-comments"></i>Reviews</a>
     <a href="/account"><i class="fa fa-fw fa-user"></i>Account</a>
     <a href="/carts"><i class="fa fa-fw fa-shopping-cart"></i>Cart</a>
+    <a href="/saved"><i class="fa fa-fw fa-star"></i>Saved</a>
   </div>
   {% elif "/products" in request.path or "/detailedProduct" in request.path  %}
   <div class = "topnav d-flex myNav">
@@ -81,6 +82,7 @@
     <a href="{{ url_for('receivedReviews.receivedReviews',  reviewedId=current_user.id, type = 1) }}"><i class="fa fa-fw fa-comments"></i>Reviews</a>
     <a href="/account"><i class="fa fa-fw fa-user"></i>Account</a>
     <a href="/carts"><i class="fa fa-fw fa-shopping-cart"></i>Cart</a>
+    <a href="/saved"><i class="fa fa-fw fa-star"></i>Saved</a>
   </div>
   {% elif request.path == "/sellers" %}
   <div class = "topnav d-flex myNav">
@@ -92,6 +94,7 @@
     <a href="{{ url_for('receivedReviews.receivedReviews',  reviewedId=current_user.id, type = 1) }}"><i class="fa fa-fw fa-comments"></i>Reviews</a>
     <a href="/account"><i class="fa fa-fw fa-user"></i>Account</a>
     <a href="/carts"><i class="fa fa-fw fa-shopping-cart"></i>Cart</a>
+    <a href="/saved"><i class="fa fa-fw fa-star"></i>Saved</a>
 
   </div>
   {% elif request.path == "/carts" or "cart" in request.path %}
@@ -104,6 +107,7 @@
     <a href="{{ url_for('receivedReviews.receivedReviews',  reviewedId=current_user.id, type = 1) }}"><i class="fa fa-fw fa-comments"></i>Reviews</a>
     <a href="/account"><i class="fa fa-fw fa-user"></i>Account</a>
     <a class = "current"href="/carts"><i class="fa fa-fw fa-shopping-cart"></i>Cart</a>
+    <a href="/saved"><i class="fa fa-fw fa-star"></i>Saved</a>
   </div>
   {% elif request.path == "/account" or request.path == "/manage_balance" or request.path == "/update_account"%}
   <div class = "topnav d-flex myNav">
@@ -115,6 +119,7 @@
     <a href="{{ url_for('receivedReviews.receivedReviews',  reviewedId=current_user.id, type = 1) }}"><i class="fa fa-fw fa-comments"></i>Reviews</a>
     <a class = "current"href="/account"><i class="fa fa-fw fa-user"></i>Account</a>
     <a href="/carts"><i class="fa fa-fw fa-shopping-cart"></i>Cart</a>
+    <a href="/saved"><i class="fa fa-fw fa-star"></i>Saved</a>
     </div>
   {% elif request.path == "/manageInventory" %}
   <div class = "topnav d-flex myNav">
@@ -126,6 +131,7 @@
     <a href="{{ url_for('receivedReviews.receivedReviews',  reviewedId=current_user.id, type = 1) }}"><i class="fa fa-fw fa-comments"></i>Reviews</a>
     <a href="/account"><i class="fa fa-fw fa-user"></i>Account</a>
     <a href="/carts"><i class="fa fa-fw fa-shopping-cart"></i>Cart</a>
+    <a href="/saved"><i class="fa fa-fw fa-star"></i>Saved</a>
   </div>
   {% elif request.path == "/pastPurchases" %}
   <div class = "topnav d-flex myNav">
@@ -137,6 +143,7 @@
     <a href="{{ url_for('receivedReviews.receivedReviews',  reviewedId=current_user.id, type = 1) }}"><i class="fa fa-fw fa-comments"></i>Reviews</a>
     <a href="/account"><i class="fa fa-fw fa-user"></i>Account</a>  
     <a href="/carts"><i class="fa fa-fw fa-shopping-cart"></i>Cart</a>
+    <a href="/saved"><i class="fa fa-fw fa-star"></i>Saved</a>
   </div>
   {% elif request.path == "/writtenReviews"%}
   <div class = "topnav d-flex myNav">
@@ -148,6 +155,7 @@
     <a class = "current" href="/writtenReviews"><i class="fa fa-fw fa-comments"></i>Reviews</a>
     <a href="/account"><i class="fa fa-fw fa-user"></i>Account</a>  
     <a href="/carts"><i class="fa fa-fw fa-shopping-cart"></i>Cart</a>
+    <a href="/saved"><i class="fa fa-fw fa-star"></i>Saved</a>
   </div>
   {% elif request.path == "/receivedReviews"%}
   <div class = "topnav d-flex myNav">
@@ -159,6 +167,19 @@
     <a class = "current" href="{{ url_for('receivedReviews.receivedReviews',  reviewedId=current_user.id, type = 1) }}"><i class="fa fa-fw fa-comments"></i>Reviews</a>
     <a href="/account"><i class="fa fa-fw fa-user"></i>Account</a>  
     <a href="/carts"><i class="fa fa-fw fa-shopping-cart"></i>Cart</a>
+    <a href="/saved"><i class="fa fa-fw fa-star"></i>Saved</a>
+  </div>
+  {% elif request.path == "/saved"%}
+  <div class = "topnav d-flex myNav">
+    <a href="/"><i class="fa fa-fw fa-home"></i>Home</a>
+    <a href="/products"><i class="fa fa-fw fa-search"></i>Shop Products</a>
+    <a href="/sellers"><i class="fa fa-fw fa-users"></i>Browse Users/Sellers</a>
+    <a href="/pastPurchases"><i class="fa fa-fw fa-history"></i>Past Purchases</a>
+    <a href="/manageInventory"><i class="fa fa-fw fa-cubes"></i>Manage Inventory</a>
+    <a href="/writtenReviews"><i class="fa fa-fw fa-comments"></i>Reviews</a>
+    <a href="/account"><i class="fa fa-fw fa-user"></i>Account</a>  
+    <a href="/carts"><i class="fa fa-fw fa-shopping-cart"></i>Cart</a>
+    <a class = "current" href="/saved"><i class="fa fa-fw fa-star"></i>Saved</a>
   </div>
   {% else %}
   <div class = "topnav d-flex myNav">
@@ -170,6 +191,7 @@
     <a href="{{ url_for('receivedReviews.receivedReviews',  reviewedId=current_user.id, type = 1) }}"><i class="fa fa-fw fa-comments"></i>Reviews</a>
     <a href="/account"><i class="fa fa-fw fa-user"></i>Account</a>  
     <a href="/carts"><i class="fa fa-fw fa-shopping-cart"></i>Cart</a>
+    <a href="/saved"><i class="fa fa-fw fa-star"></i>Saved</a>
   </div>
   {% endif %}
 

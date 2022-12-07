@@ -28,6 +28,7 @@
       <th scope="col">Add Quantity</th>
       <th scope="col">Remove Quantity</th>
       <th scope="col">Remove From Cart</th>
+      <th scope="col">Save For Later</th>
     </tr>
   </thead>
   <tbody>
@@ -42,6 +43,7 @@
           <td><a style="background-color: hotpink;" class = "btn btn-secondary" href="{{ url_for('carts.cartIncreaseQuantity', productId = cart.pid) }}" role = "button">Add 1</a></td> 
           <td><a style="background-color: hotpink;" class = "btn btn-secondary" href="{{ url_for('carts.cartDecreaseQuantity', productId = cart.pid) }}" role = "button">Remove 1</a></td> 
           <td><a style="background-color: hotpink;"class = "btn btn-secondary" href="{{ url_for('carts.cartRemoveProduct', productId = cart.pid) }}" role = "button">Remove from Cart</a></td> 
+          <td><a style="background-color: hotpink;"class = "btn btn-secondary" href="{{ url_for('carts.cartSaveForLater', productId = cart.pid) }}" role = "button">Save For Later</a></td> 
         </tr>
       {% endfor %}
   </tbody>

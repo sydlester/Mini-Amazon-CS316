@@ -43,6 +43,12 @@ CREATE TABLE Carts (
     PRIMARY KEY (userId, pid)
 );
 
+CREATE TABLE Saved (
+    userId INT NOT NULL REFERENCES Users(id),
+    pid INT NOT NULL REFERENCES Products(id),
+    PRIMARY KEY (userId, pid)
+);
+
 CREATE TABLE ProductReviews(
     userId INT NOT NULL REFERENCES Users(id),
     pid INT NOT NULL REFERENCES Products(id),

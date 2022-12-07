@@ -7,6 +7,7 @@ from .models.product import Product
 from .models.cart import Cart
 from .models.user import User
 from .models.purchase import Purchase
+from .models.saved import Saved
 from .models.fulfilledPurchase import FulfilledPurchase
 
 from flask import Blueprint
@@ -32,6 +33,18 @@ def cartAddToCart(productId):
         Cart.add_to_cart(userId, productId, quantity)
     user_cart = Cart.get(userId)
     return render_template('carts.html', userId=userId, productId = productId, user_cart=user_cart, totalCost=Cart.getTotalCost(current_user.id))
+
+@bp.route('/cartSaveForLater/<int:productId>', methods=["GET", "POST"])
+def cartSaveForLater(productId):
+    userId = current_user.id
+    if Saved.check(userId, productId): 
+        Cart.remove_from_cart(userId, productId)
+    else: 
+        Saved.add_to_saved(userId, productId)
+        Cart.remove_from_cart(userId, productId)
+    user_cart = Cart.get(userId)
+    return render_template('carts.html', userId=userId, productId = productId, user_cart=user_cart, totalCost=Cart.getTotalCost(current_user.id))
+
 
 @bp.route('/cartIncreaseQuantity/<int:productId>', methods=["GET", "POST"])
 def cartIncreaseQuantity(productId):
