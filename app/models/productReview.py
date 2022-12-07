@@ -176,3 +176,15 @@ ORDER BY theDate DESC
         except Exception as e:
             return str(e)
 
+    @staticmethod
+    def getOff(productId, os, orderMe):
+        rows = app.db.execute('''
+SELECT *
+FROM ProductReviews
+WHERE pid = :productId
+ORDER BY :orderMe DESC
+LIMIT 10
+OFFSET :os
+''',
+                              productId=productId, os = os, orderMe=orderMe)
+        return [ProductReview(*row) for row in rows]

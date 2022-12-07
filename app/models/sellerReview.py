@@ -141,3 +141,17 @@ UPDATE SellerReviews
 SET rating= :rating, theDescription = :theDescription, theDate = :theDate
 WHERE userId = :userId and sellerId = :sellerId
 ''', userId=userId, sellerId=sellerId, rating=rating, theDescription= theDescription, theDate=theDate)
+
+
+    @staticmethod
+    def getOff(sellerId, os, orderMe):
+        rows = app.db.execute('''
+SELECT *
+FROM SellerReviews
+WHERE sellerId = :sellerId
+ORDER BY :orderMe DESC
+LIMIT 10
+OFFSET :os
+''',
+                              sellerId=sellerId, os = os, orderMe=orderMe)
+        return [SellerReview(*row) for row in rows]

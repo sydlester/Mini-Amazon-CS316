@@ -48,5 +48,30 @@
   </tbody>
 </table>
 
+
+<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+<link rel="stylesheet" href="https://www.w3schools.com/lib/w3-colors-win8.css">
+
+<div class="w3-bar w3-center" style="padding-top: 10px; padding-bottom: 30px;">
+	{% if activePage == 1 %}
+		<a href="{{ url_for('sellerReviewOutput.sellerReviewOutput', activePage = activePage, sellerId=sellerId, orderBy=orderBy) }}" class="w3-button w3-dark-grey">&laquo;</a>
+	{% else %}
+		<a href="{{ url_for('sellerReviewOutput.sellerReviewOutput', activePage = activePage-1, sellerId=sellerId, orderBy=orderBy) }}" class="w3-button w3-dark-grey">&laquo;</a>
+	{% endif %}
+	
+	{% for page in range(1, pages+1) %}
+		{% if activePage == page %}
+			<a href="{{ url_for('sellerReviewOutput.sellerReviewOutput', activePage = page, sellerId=sellerId, orderBy=orderBy) }}" class="w3-button w3-win8-pink">{{page}}</a>
+		{% else %}
+			<a href="{{ url_for('sellerReviewOutput.sellerReviewOutput', activePage = page, sellerId=sellerId, orderBy=orderBy) }}" class="w3-button w3-dark-grey">{{page}}</a>
+		{% endif %}
+	{% endfor %}
+
+	{% if activePage == pages %}
+		<a href="{{ url_for('sellerReviewOutput.sellerReviewOutput', activePage = activePage, sellerId=sellerId, orderBy=orderBy) }}" class="w3-button w3-dark-grey">&raquo;</a>
+	{% else %}
+		<a href="{{ url_for('sellerReviewOutput.sellerReviewOutput', activePage = activePage+1, sellerId=sellerId, orderBy=orderBy) }}" class="w3-button w3-dark-grey">&raquo;</a>
+	{% endif %}
+</div>
 {% endblock %}
 

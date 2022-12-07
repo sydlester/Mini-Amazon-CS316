@@ -246,3 +246,15 @@ RETURNING email;
         if here:
             return True
         return False
+
+    @staticmethod
+    def getOff(os):
+        rows = app.db.execute('''
+SELECT id, email, firstname, lastname, address, balance, isSeller
+FROM Users
+ORDER BY id
+LIMIT 10
+OFFSET :os
+''',
+                              os = os)
+        return [User(*row) for row in rows]
