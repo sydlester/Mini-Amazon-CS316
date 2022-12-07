@@ -29,7 +29,7 @@
         <td>{{review.theDate}}</td>
         <td> 
           <div> 
-          <a href="{{ url_for('productReviewOutput.addUpvotes', userId = review.userId, productId=productId, orderBy=orderBy) }}" class="w3-button w3-win8-pink"><i class="fa fa-thumbs-up fa-lg" aria-hidden="true"></i></a>
+          <a href="{{ url_for('productReviewOutput.addUpvotes', userId = review.userId, productId=review.pid, orderBy=orderBy) }}" class="w3-button w3-win8-pink"><i class="fa fa-thumbs-up fa-lg" aria-hidden="true"></i></a>
           {{review.upvotes}}
         </div>
         </td>
@@ -72,7 +72,7 @@
         <td>{{review.theDate}}</td>
         <td> 
           <div> 
-          <a href="{{ url_for('productReviewOutput.addUpvotes', userId = review.userId, productId=productId, orderBy=orderBy) }}" class="w3-button w3-win8-pink"><i class="fa fa-thumbs-up fa-lg" aria-hidden="true"></i></a>
+          <a href="{{ url_for('productReviewOutput.addUpvotes', userId = review.userId, productId=review.pid, orderBy=orderBy) }}" class="w3-button w3-win8-pink"><i class="fa fa-thumbs-up fa-lg" aria-hidden="true"></i></a>
           {{review.upvotes}}
         </div>
         </td>

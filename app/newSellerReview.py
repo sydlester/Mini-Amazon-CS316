@@ -22,7 +22,7 @@ def newSellerReview(sellerId, userId):
     theDate = datetime.now()
     SellerReview.submitSellerReview(userId, sellerId, rating, description, theDate)
     seller_reviews = SellerReview.get_by_sellerId(sellerId, 5)
-    return render_template('sellerReviewOutput.html', sellerId = sellerId, orderBy = 5, seller_reviews = seller_reviews, activePage=1, pages=pages)
+    return redirect(url_for('sellerReviewOutput.sellerReviewOutput', sellerId=sellerId, orderBy=5))
 
 @bp.route('/editSellerReview/<int:sellerId>/<int:userId>', methods=["GET", "POST"])
 def editSellerReview(sellerId, userId):
