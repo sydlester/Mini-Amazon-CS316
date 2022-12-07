@@ -472,8 +472,8 @@ background-color: #F0ECEB;
     <td>{{seller.sellerId}}</td>
     <td>{{seller.quantity}}</td>
     <td>{{seller.price}}</td>
-    <td><a class = "btn btn-secondary cartButton" href="{{ url_for('carts.cartAddToCart', productId = productId) }}" role = "button">Add To Cart</a></td> 
-    <td><a class = "btn btn-secondary cartButton" href="{{ url_for('saved.savedSaveForLater', productId = productId) }}" role = "button">Save For Later</a></td> 
+    <td><a style="background-color: rgb(255, 129, 192);" class = "btn btn-secondary cartButton" href="{{ url_for('carts.cartAddToCart', productId = productId) }}" role = "button">Add To Cart</a></td> 
+    <td><a style="background-color: rgb(255, 129, 192);" class = "btn btn-secondary cartButton" href="{{ url_for('saved.savedSaveForLater', productId = productId) }}" role = "button">Save For Later</a></td> 
       </tr>
     {% endfor %}
   </tbody>

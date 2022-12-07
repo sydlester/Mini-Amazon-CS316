@@ -276,6 +276,7 @@ input[type="range"]:disabled::-webkit-slider-thumb {
         <th scope="col">Product Name</th>
         <th scope="col">Price</th>
         <th scope="col">Detailed Page</th>
+		<th scope="col">Quick Add to Cart</th>
       </tr>
     </thead>
     <tbody>
@@ -285,8 +286,9 @@ input[type="range"]:disabled::-webkit-slider-thumb {
         	<td>{{product.category}}</td>
         	<td>{{product.name}}</td>
         	<td>{{product.price}}</td>
-        	<td><a class = "btn btn-secondary" href="{{ url_for('detailedProduct.detailedProduct', productId = product.id, name = product.name, price = product.price, available = product.available, description = product.description, sellerId = product.sellerId, image = product.theImage) }}" role = "button">More Info</a></td> 	
-    	</tr>
+        	<td><a style="background-color: hotpink;" class = "btn btn-secondary" href="{{ url_for('detailedProduct.detailedProduct', productId = product.id, name = product.name, price = product.price, available = product.available, description = product.description, sellerId = product.sellerId, image = product.theImage) }}" role = "button">More Info</a></td> 	
+			<td><a style="background-color: hotpink;" class = "btn btn-secondary" href="{{ url_for('carts.cartAddToCart', productId = product.id) }}" role = "button">Add to Cart</a></td>
+		</tr>
       {% endfor %}
     </tbody>
   </table>
