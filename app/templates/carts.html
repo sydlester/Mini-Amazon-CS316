@@ -46,7 +46,7 @@
           <td><a style="background-color: hotpink;" class = "btn btn-secondary" href="{{ url_for('carts.cartIncreaseQuantity', productId = cart.pid) }}" role = "button">Add 1</a></td> 
           <td><a style="background-color: hotpink;" class = "btn btn-secondary" href="{{ url_for('carts.cartDecreaseQuantity', productId = cart.pid) }}" role = "button">Remove 1</a></td> 
           <td><a style="background-color: hotpink;"class = "btn btn-secondary" href="{{ url_for('carts.cartRemoveProduct', productId = cart.pid) }}" role = "button">Remove from Cart</a></td> 
-          <td><a style="background-color: hotpink;"class = "btn btn-secondary" href="{{ url_for('carts.cartSaveForLater', productId = cart.pid) }}" role = "button">Save For Later</a></td> 
+          <td><a style="background-color: hotpink;"class = "btn btn-secondary" href="{{ url_for('saved.savedSaveForLater', productId = cart.pid) }}" role = "button">Save For Later</a></td> 
         </tr>
       {% endfor %}
   </tbody>

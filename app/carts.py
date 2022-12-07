@@ -34,17 +34,18 @@ def cartAddToCart(productId):
     user_cart = Cart.get(userId)
     return render_template('carts.html', userId=userId, productId = productId, user_cart=user_cart, totalCost=Cart.getTotalCost(current_user.id))
 
-@bp.route('/cartSaveForLater/<int:productId>', methods=["GET", "POST"])
-def cartSaveForLater(productId):
+@bp.route('/cartAddFromSaved/<int:productId>', methods=["GET", "POST"])
+def cartAddFromSaved(productId):
     userId = current_user.id
-    if Saved.check(userId, productId): 
-        Cart.remove_from_cart(userId, productId)
+    quantity = 1
+    if Cart.check(userId, productId): 
+        Cart.add_quantity(userId, productId)
+        Saved.remove_from_saved(userId, productId)
     else: 
-        Saved.add_to_saved(userId, productId)
-        Cart.remove_from_cart(userId, productId)
+        Cart.add_to_cart(userId, productId, quantity)
+        Saved.remove_from_saved(userId, productId)
     user_cart = Cart.get(userId)
-    return render_template('carts.html', userId=userId, productId = productId, user_cart=user_cart, totalCost=Cart.getTotalCost(current_user.id))
-
+    return render_template('carts.html', userId=userId, user_cart=user_cart, productId = productId, totalCost=Cart.getTotalCost(current_user.id))
 
 @bp.route('/cartIncreaseQuantity/<int:productId>', methods=["GET", "POST"])
 def cartIncreaseQuantity(productId):

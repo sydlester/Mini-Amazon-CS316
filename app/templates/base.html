@@ -169,7 +169,7 @@
     <a href="/carts"><i class="fa fa-fw fa-shopping-cart"></i>Cart</a>
     <a href="{{ url_for('saved.saved') }}"><i class="fa fa-fw fa-star"></i>Saved</a>
   </div>
-  {% elif request.path == "/saved"%}
+  {% elif request.path == "/saved" or "saved" in request.path%}
   <div class = "topnav d-flex myNav">
     <a href="/"><i class="fa fa-fw fa-home"></i>Home</a>
     <a href="/products"><i class="fa fa-fw fa-search"></i>Shop Products</a>

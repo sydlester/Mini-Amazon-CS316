@@ -29,8 +29,7 @@ def savedAddProduct(productId):
     else: 
         Saved.add_to_saved(userId, productId)
     user_saved = Saved.get(userId)
-    user_cart = Cart.get(userId)
-    return render_template('carts.html', userId=userId, user_cart=user_cart, productId = productId, totalCost=Cart.getTotalCost(current_user.id))
+    return render_template('saved.html', userId=userId, user_saved=user_saved, productId = productId)
 
 @bp.route('/savedRemoveProduct/<int:productId>', methods=["GET", "POST"])
 def savedRemoveProduct(productId):
@@ -39,16 +38,13 @@ def savedRemoveProduct(productId):
     user_saved = Saved.get(userId)
     return render_template('saved.html', userId=userId, user_saved=user_saved, productId = productId)
 
-@bp.route('/savedAddToCart/<int:productId>', methods=["GET", "POST"])
-def savedAddToCart(productId):
+@bp.route('/savedSaveForLater/<int:productId>', methods=["GET", "POST"])
+def savedSaveForLater(productId):
     userId = current_user.id
-    quantity = 1
-    if Cart.check(userId, productId): 
-        Cart.add_quantity(userId, productId)
-        user_saved = Saved.remove_from_saved(userId, productId)
-        user_saved = Saved.get(userId)
+    if Saved.check(userId, productId): 
+        Cart.remove_from_cart(userId, productId)
     else: 
-        Cart.add_to_cart(userId, productId, quantity)
-        user_saved = Saved.remove_from_saved(userId, productId)
-        user_saved = Saved.get(userId)
+        Saved.add_to_saved(userId, productId)
+        Cart.remove_from_cart(userId, productId)
+    user_saved = Saved.get(userId)
     return render_template('saved.html', userId=userId, user_saved=user_saved, productId = productId)

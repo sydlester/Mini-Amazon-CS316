@@ -23,7 +23,7 @@
           <td>{{saved.pid}}</td>
           <td>{{saved.productName}}</td>
           <td>{{saved.unitPrice}}</td>
-          <td><a style="background-color: hotpink;" class = "btn btn-secondary" href="{{ url_for('saved.savedAddToCart', productId = saved.pid) }}" role = "button">Add to Cart</a></td> 
+          <td><a style="background-color: hotpink;" class = "btn btn-secondary" href="{{ url_for('carts.cartAddFromSaved', productId = saved.pid) }}" role = "button">Add to Cart</a></td> 
           <td><a style="background-color: hotpink;" class = "btn btn-secondary" href="{{ url_for('saved.savedRemoveProduct', productId = saved.pid) }}" role = "button">Remove from Saved</a></td> 
         </tr>
       {% endfor %}

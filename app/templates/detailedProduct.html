@@ -206,6 +206,7 @@ background-color: #F0ECEB;
     </div>
     <image style="float: left" src={{picture}} width = 200px height = 200px>
     <td><a style="height: 40px; float: left; margin-top: 160px;" class = "btn btn-secondary cartButton" href="{{ url_for('carts.cartAddToCart', productId = productId) }}" role = "button">Add To Cart</a></td> 
+    <td><a style="height: 40px; float: left; margin-top: 160px;" class = "btn btn-secondary cartButton" href="{{ url_for('saved.savedSaveForLater', productId = productId) }}" role = "button">Save For Later</a></td> 
 
 
   </div>
@@ -462,6 +463,7 @@ background-color: #F0ECEB;
     <th scope="col">Quantity In Stock</th>
     <th scope="col">Price</th>
     <th scope="col">Add to Cart</th>
+    <th scope="col">Save For Later</th>
   </tr>
   </thead>
   <tbody>
@@ -471,6 +473,7 @@ background-color: #F0ECEB;
     <td>{{seller.quantity}}</td>
     <td>{{seller.price}}</td>
     <td><a class = "btn btn-secondary cartButton" href="{{ url_for('carts.cartAddToCart', productId = productId) }}" role = "button">Add To Cart</a></td> 
+    <td><a class = "btn btn-secondary cartButton" href="{{ url_for('saved.savedSaveForLater', productId = productId) }}" role = "button">Save For Later</a></td> 
       </tr>
     {% endfor %}
   </tbody>
