@@ -59,7 +59,7 @@
       </div>
     {% endblock %}
   </div>
-
+{% if current_user.is_authenticated %}
   {% if request.path == "/" %}
   <div class = "topnav d-flex myNav">
     <a class = "current" href="/"><i class="fa fa-fw fa-home"></i>Home</a>
@@ -67,7 +67,7 @@
     <a href="/sellers"><i class="fa fa-fw fa-users"></i>Browse Users/Sellers</a>
     <a href="/pastPurchases"><i class="fa fa-fw fa-history"></i>Past Purchases</a>
     <a href="/manageInventory"><i class="fa fa-fw fa-cubes"></i>Manage Inventory</a>
-    <a href="/receivedReviews"><i class="fa fa-fw fa-comments"></i>Reviews</a>
+    <a href="{{ url_for('receivedReviews.receivedReviews',  reviewedId=current_user.id, type = 1) }}"><i class="fa fa-fw fa-comments"></i>Reviews</a>
     <a href="/account"><i class="fa fa-fw fa-user"></i>Account</a>
     <a href="/carts"><i class="fa fa-fw fa-shopping-cart"></i>Cart</a>
   </div>
@@ -78,7 +78,7 @@
     <a href="/sellers"><i class="fa fa-fw fa-users"></i>Browse Users/Sellers</a>
     <a href="/pastPurchases"><i class="fa fa-fw fa-history"></i>Past Purchases</a>
     <a href="/manageInventory"><i class="fa fa-fw fa-cubes"></i>Manage Inventory</a>
-    <a href="/receivedReviews"><i class="fa fa-fw fa-comments"></i>Reviews</a>
+    <a href="{{ url_for('receivedReviews.receivedReviews',  reviewedId=current_user.id, type = 1) }}"><i class="fa fa-fw fa-comments"></i>Reviews</a>
     <a href="/account"><i class="fa fa-fw fa-user"></i>Account</a>
     <a href="/carts"><i class="fa fa-fw fa-shopping-cart"></i>Cart</a>
   </div>
@@ -89,7 +89,7 @@
     <a class = "current" href="/sellers"><i class="fa fa-fw fa-users"></i>Browse Users/Sellers</a>
     <a href="/pastPurchases"><i class="fa fa-fw fa-history"></i>Past Purchases</a>
     <a href="/manageInventory"><i class="fa fa-fw fa-cubes"></i>Manage Inventory</a>
-    <a href="/receivedReviews"><i class="fa fa-fw fa-comments"></i>Reviews</a>
+    <a href="{{ url_for('receivedReviews.receivedReviews',  reviewedId=current_user.id, type = 1) }}"><i class="fa fa-fw fa-comments"></i>Reviews</a>
     <a href="/account"><i class="fa fa-fw fa-user"></i>Account</a>
     <a href="/carts"><i class="fa fa-fw fa-shopping-cart"></i>Cart</a>
 
@@ -101,7 +101,7 @@
     <a href="/sellers"><i class="fa fa-fw fa-users"></i>Browse Users/Sellers</a>
     <a href="/pastPurchases"><i class="fa fa-fw fa-history"></i>Past Purchases</a>
     <a href="/manageInventory"><i class="fa fa-fw fa-cubes"></i>Manage Inventory</a>
-    <a href="/receivedReviews"><i class="fa fa-fw fa-comments"></i>Reviews</a>
+    <a href="{{ url_for('receivedReviews.receivedReviews',  reviewedId=current_user.id, type = 1) }}"><i class="fa fa-fw fa-comments"></i>Reviews</a>
     <a href="/account"><i class="fa fa-fw fa-user"></i>Account</a>
     <a class = "current"href="/carts"><i class="fa fa-fw fa-shopping-cart"></i>Cart</a>
   </div>
@@ -112,7 +112,7 @@
     <a href="/sellers"><i class="fa fa-fw fa-users"></i>Browse Users/Sellers</a>
     <a href="/pastPurchases"><i class="fa fa-fw fa-history"></i>Past Purchases</a>
     <a href="/manageInventory"><i class="fa fa-fw fa-cubes"></i>Manage Inventory</a>
-    <a href="/receivedReviews"><i class="fa fa-fw fa-comments"></i>Reviews</a>
+    <a href="{{ url_for('receivedReviews.receivedReviews',  reviewedId=current_user.id, type = 1) }}"><i class="fa fa-fw fa-comments"></i>Reviews</a>
     <a class = "current"href="/account"><i class="fa fa-fw fa-user"></i>Account</a>
     <a href="/carts"><i class="fa fa-fw fa-shopping-cart"></i>Cart</a>
     </div>
@@ -123,7 +123,7 @@
     <a href="/sellers"><i class="fa fa-fw fa-users"></i>Browse Users/Sellers</a>
     <a href="/pastPurchases"><i class="fa fa-fw fa-history"></i>Past Purchases</a>
     <a class = "current"href="/manageInventory"><i class="fa fa-fw fa-cubes"></i>Manage Inventory</a>  
-    <a href="/receivedReviews"><i class="fa fa-fw fa-comments"></i>Reviews</a>
+    <a href="{{ url_for('receivedReviews.receivedReviews',  reviewedId=current_user.id, type = 1) }}"><i class="fa fa-fw fa-comments"></i>Reviews</a>
     <a href="/account"><i class="fa fa-fw fa-user"></i>Account</a>
     <a href="/carts"><i class="fa fa-fw fa-shopping-cart"></i>Cart</a>
   </div>
@@ -134,18 +134,29 @@
     <a href="/sellers"><i class="fa fa-fw fa-users"></i>Browse Users/Sellers</a>
     <a class = "current" href="/pastPurchases"><i class="fa fa-fw fa-history"></i>Past Purchases</a>
     <a href="/manageInventory"><i class="fa fa-fw fa-cubes"></i>Manage Inventory</a>
-    <a href="/receivedReviews"><i class="fa fa-fw fa-comments"></i>Reviews</a>
+    <a href="{{ url_for('receivedReviews.receivedReviews',  reviewedId=current_user.id, type = 1) }}"><i class="fa fa-fw fa-comments"></i>Reviews</a>
     <a href="/account"><i class="fa fa-fw fa-user"></i>Account</a>  
     <a href="/carts"><i class="fa fa-fw fa-shopping-cart"></i>Cart</a>
   </div>
-  {% elif request.path == "/receivedReviews" or request.path == "/writtenReviews" or "Review" in request.path%}
+  {% elif request.path == "/writtenReviews"%}
   <div class = "topnav d-flex myNav">
     <a href="/"><i class="fa fa-fw fa-home"></i>Home</a>
     <a href="/products"><i class="fa fa-fw fa-search"></i>Shop Products</a>
     <a href="/sellers"><i class="fa fa-fw fa-users"></i>Browse Users/Sellers</a>
     <a href="/pastPurchases"><i class="fa fa-fw fa-history"></i>Past Purchases</a>
     <a href="/manageInventory"><i class="fa fa-fw fa-cubes"></i>Manage Inventory</a>
-    <a class = "current" href="/receivedReviews"><i class="fa fa-fw fa-comments"></i>Reviews</a>
+    <a class = "current" href="/writtenReviews"><i class="fa fa-fw fa-comments"></i>Reviews</a>
+    <a href="/account"><i class="fa fa-fw fa-user"></i>Account</a>  
+    <a href="/carts"><i class="fa fa-fw fa-shopping-cart"></i>Cart</a>
+  </div>
+  {% elif request.path == "/receivedReviews"%}
+  <div class = "topnav d-flex myNav">
+    <a href="/"><i class="fa fa-fw fa-home"></i>Home</a>
+    <a href="/products"><i class="fa fa-fw fa-search"></i>Shop Products</a>
+    <a href="/sellers"><i class="fa fa-fw fa-users"></i>Browse Users/Sellers</a>
+    <a href="/pastPurchases"><i class="fa fa-fw fa-history"></i>Past Purchases</a>
+    <a href="/manageInventory"><i class="fa fa-fw fa-cubes"></i>Manage Inventory</a>
+    <a class = "current" href="{{ url_for('receivedReviews.receivedReviews',  reviewedId=current_user.id, type = 1) }}"><i class="fa fa-fw fa-comments"></i>Reviews</a>
     <a href="/account"><i class="fa fa-fw fa-user"></i>Account</a>  
     <a href="/carts"><i class="fa fa-fw fa-shopping-cart"></i>Cart</a>
   </div>
@@ -156,10 +167,12 @@
     <a href="/sellers"><i class="fa fa-fw fa-users"></i>Browse Users/Sellers</a>
     <a href="/pastPurchases"><i class="fa fa-fw fa-history"></i>Past Purchases</a>
     <a href="/manageInventory"><i class="fa fa-fw fa-cubes"></i>Manage Inventory</a>
-    <a href="/receivedReviews"><i class="fa fa-fw fa-comments"></i>Reviews</a>
+    <a href="{{ url_for('receivedReviews.receivedReviews',  reviewedId=current_user.id, type = 1) }}"><i class="fa fa-fw fa-comments"></i>Reviews</a>
     <a href="/account"><i class="fa fa-fw fa-user"></i>Account</a>  
     <a href="/carts"><i class="fa fa-fw fa-shopping-cart"></i>Cart</a>
   </div>
+  {% endif %}
+
   {% endif %}
 
   <br></br>

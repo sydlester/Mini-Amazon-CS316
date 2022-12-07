@@ -1,12 +1,16 @@
 {% extends "base.html" %}
-
 {% block content %}
+<style>
+  .outer {
+  display: flex;
+  justify-content: center;
+  }
+</style> 
 
-<h2>Reviews of Seller {{sellerId}}</h2>
+<h2 style="text-align: center;">Reviews of Seller {{sellerId}}</h2>
     <br></br>
-    <div class = "sortButtonGroup"> 
+    <div class = "sortButtonGroup outer"> 
     <label><b>Select Sort Criteria</b></label>
-
       {%if orderBy == 5 %}
       <a id = "sortButton1" class = "btn btn-secondary" href="{{ url_for('sellerReviewOutput.sellerReviewOutput', sellerId = sellerId, orderBy = 3) }}" role = "button">By Ratings</a> 
       <a style="background-color: hotpink;" id = "sortButton2" class = "btn btn-secondary" href="{{ url_for('sellerReviewOutput.sellerReviewOutput', sellerId = sellerId, orderBy = 5) }}" role = "button">By Date</a> 
@@ -15,7 +19,13 @@
       <a id = "sortButton2" class = "btn btn-secondary" href="{{ url_for('sellerReviewOutput.sellerReviewOutput', sellerId = sellerId, orderBy = 5) }}" role = "button">By Date</a> 
       {%endif %}
     </div>
-<table class='table table-hover table-bordered container'>
+  <div> 
+    <p>Average = {{avgRating}}</p>
+    <p>Number of Ratings = {{num}}</p>
+  </div>
+
+
+  <table class='table table-hover table-bordered container'>
   <thead class="thead-dark">
     <tr>
       <th scope="col">User ID</th>

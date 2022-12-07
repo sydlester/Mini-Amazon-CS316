@@ -292,7 +292,6 @@ input[type="range"]:disabled::-webkit-slider-thumb {
   </table>
 
 
-<p>{{activePage}}</p>
 <div class="w3-bar w3-center" style="padding-top: 10px; padding-bottom: 30px;">
 	{% if activePage == 1 %}
 		<a href="{{ url_for('products.products', activePage = activePage) }}" class="w3-button w3-dark-grey">&laquo;</a>
@@ -313,6 +312,6 @@ input[type="range"]:disabled::-webkit-slider-thumb {
 	{% else %}
 		<a href="{{ url_for('products.products', activePage = activePage+1) }}" class="w3-button w3-dark-grey">&raquo;</a>
 	{% endif %}
-	
 </div>
+
 {% endblock %}

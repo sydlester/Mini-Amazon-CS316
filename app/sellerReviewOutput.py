@@ -16,4 +16,12 @@ def sellerReviewOutput(sellerId, orderBy):
         orderBy = 5
     orderBy = int(orderBy)
     seller_reviews = SellerReview.get_by_sellerId(sellerId, orderBy)
-    return render_template('sellerReviewOutput.html', sellerId = sellerId, orderBy = orderBy, seller_reviews = seller_reviews)
+    avgRating = SellerReview.getAverageRating(sellerId)
+    num = SellerReview.getNumberRatings(sellerId)
+    return render_template('sellerReviewOutput.html', sellerId = sellerId, orderBy = orderBy, seller_reviews = seller_reviews, avgRating=avgRating, num=num)
+    
+    
+    
+    
+    
+    
