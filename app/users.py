@@ -107,6 +107,7 @@ def manage_balance():
                     return render_template('account.html', current_user=current_user)          
     return render_template('manageBalance.html', form=form)
 
+
 @bp.route('/update_account', methods=['GET', 'POST'])
 def update_account_details():
     if current_user.is_authenticated:
@@ -128,8 +129,54 @@ def update_account_details():
                     new_email = v.rstrip()
                     if new_email == '':
                         new_email = None
-            if User.update_information(current_user, new_email, new_first, new_last):
+                if k == 'update_address':
+                    new_address = v.rstrip()
+                    if new_address == '':
+                        new_address = None
+            if User.update_information(current_user, new_email, new_first, new_last, new_address):
                 return render_template('account.html', current_user=current_user)
             else:
                 return render_template('updateInfo.html', user_details=user_details)
     return render_template('updateInfo.html', user_details=user_details)
+
+
+class ForgotPassword(FlaskForm):
+    email = StringField(('Email'), validators=[DataRequired(), Email()])
+    new_password = PasswordField(('New Password'), validators=[DataRequired()])
+    submit = SubmitField(('Change Password'))
+
+
+@bp.route('/forgot_password',methods=['GET', 'POST'])
+def forgot_password():
+    if current_user.is_authenticated:
+        return redirect(url_for('index.index'))
+    form = ForgotPassword()
+    if form.validate_on_submit:
+        email, new_pass = form.email.data, form.new_password.data
+        if User.forgot_password(email, new_pass):
+            flash('Congratulations, you have successfully changed your password!')
+            return redirect(url_for('users.login'))
+    return render_template('forgotPassword.html',title="Change Password", form=form)
+
+
+class ChangePassword(FlaskForm):
+    email = StringField(('Email'), validators=[DataRequired(), Email()])
+    curr_password = PasswordField(('Current Password'), validators=[DataRequired()])
+    new_password = PasswordField(('New Password'), validators=[DataRequired()])
+    new_password2 = PasswordField(('Repeat New Password'), validators=[DataRequired(),EqualTo('new_password')])
+    submit = SubmitField(('Change Password'))
+
+
+@bp.route('/change_password',methods=['GET', 'POST'])
+def change_password():
+    form = ChangePassword()
+    if form.validate_on_submit:
+        email, curr_pass, new_pass = form.email.data, form.curr_password.data, form.new_password.data
+        if email != current_user.email and request.method == 'POST':
+            flash('Invalid email or password')
+            return render_template('changePassword.html',title="Change Password", form=form)
+        if current_user.forgot_password(email, new_pass):
+            flash('Congratulations, you have successfully changed your password!')
+            logout()
+            return redirect(url_for('users.login'))
+    return render_template('changePassword.html',title="Change Password", form=form)

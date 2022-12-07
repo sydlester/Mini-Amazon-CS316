@@ -1,10 +1,9 @@
 {% extends "base.html" %}
 
 {% block content %}
-
+{% if current_user.is_authenticated %}
 <br><br>
 <h1>Your cart:</h1>
-{% if current_user.is_authenticated %}
 <td><a style="background-color: hotpink;"class = "btn btn-secondary" href="{{ url_for('carts.submitOrder') }}" role = "button">Submit Order</a></td> 
 <p>
   {% with messages = get_flashed_messages() %}

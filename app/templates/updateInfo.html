@@ -2,7 +2,7 @@
 {% block content %}
 
 <div class="container-sm">
-    <div class="home-header">        
+    <div class="home-header">      
         <form method="POST">
             <div class="card text-left">
                 <div class="card-body">
@@ -27,7 +27,8 @@
                 </div>
                 <button type="submit" class="btn btn-secondary">Make Changes</button>
         </form>
-    </div>
+    </div>  
 </div>
 </div>
+<a href="{{ url_for('users.change_password') }}" type="btn btn-secondary" class="button" >Change Password</a>
 {% endblock %}

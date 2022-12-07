@@ -18,7 +18,8 @@ class User(UserMixin):
             'User ID': ['id', self.id],
             'First Name': ['name_first', self.firstname],
             'Last Name': ['name_last', self.lastname],
-            'Email': ['email', self.email]
+            'Email': ['email', self.email], 
+            "Address": ['address', self.address]
         }
 
     @staticmethod
@@ -147,7 +148,7 @@ UPDATE Users
 
 
     @staticmethod
-    def update_information(self, email, firstname, lastname):
+    def update_information(self, email, firstname, lastname, address):
         uid = self.id
         if email is not None:
             if self.email_exists(email):
@@ -183,6 +184,18 @@ RETURNING id;
 """,
                             lastname = lastname,
                             id = uid)
+
+
+        if address is not None:
+            self.address = address
+            app.db.execute("""
+UPDATE Users 
+SET address = :address
+WHERE id = :id
+RETURNING id;
+""",
+                            address = address,
+                            id = uid)
         return True
 
 
@@ -207,8 +220,6 @@ UPDATE USERS
         return
 
 
-
-
     @staticmethod
     def get(id):
         rows = app.db.execute('''
@@ -218,3 +229,20 @@ WHERE id = :id
 ''',
                               id=id)
         return User(*(rows[0])) if rows is not None else None
+
+
+    @staticmethod
+    def forgot_password(email, new_password):
+        if not email or not new_password:
+            return
+        here = app.db.execute("""
+UPDATE Users 
+SET password = :new_password
+WHERE email = :email
+RETURNING email;
+""",
+                            new_password = generate_password_hash(new_password),
+                            email = email)
+        if here:
+            return True
+        return False

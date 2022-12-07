@@ -3,7 +3,7 @@
 
 {% if current_user.is_authenticated %}
 
-{% if current_user.isSeller == False %}
+  {% if current_user.isSeller == False %}
 <h1>Oh No! You must be a seller to see this page!</h1>
 
 {% else %}
@@ -47,7 +47,7 @@
     </tbody>
   </table>
 
-{% endif %}
+  {% endif %}
 
 {% else %}
 <p><a href="{{ url_for('users.login') }}">Log in</a> to see your purchase history!</p>

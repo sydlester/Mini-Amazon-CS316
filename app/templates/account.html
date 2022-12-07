@@ -1,8 +1,8 @@
 {% extends "base.html" %}
 
 {% block content %}
-<h1>Account Information</h1>
 {% if current_user.is_authenticated %}
+<h1>Account Information</h1>
 <style>
     body {
         background-color: #eee;
@@ -40,7 +40,6 @@
         position: relative;
         top: 2px
     }
-
     .middle-container {
         background-color: #eee;
         border-radius: 12px
@@ -127,9 +126,20 @@
     .fashion-studio-border:hover {
         border-bottom: 1px solid #dee2e6 !important
     }
+    .buttons{
+        top: 400px
+
+    }
 </style>
 
-
+<div class = "buttons">
+    <td><a class = "btn btn-secondary" href="/pastPurchases" role = "button">See My Past Purchases</a></td>
+    <td><a href="{{ url_for('users.manage_balance') }}" role="button" class="btn btn-secondary">Manage My Balance</a></td>
+    <td><a href="{{ url_for('users.update_account_details') }}" role="button" class="btn btn-secondary">Update Account Info</a></td>  
+        {% if current_user.isSeller %}
+        <td><a class = "btn btn-secondary" href="/receivedReviews" role = "button">See My Seller Reviews</a></td>
+        {% endif %}
+</div>
 <div class="container d-flex justify-content-left mt-5">
     <div class="card">
         <div class="top-container"> <img src="https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png" class="img-fluid profile-image"
@@ -137,7 +147,9 @@
             <div class="ml-3">
                 <h5 class="name">{{current_user.firstname}} {{current_user.lastname}}</h5>
                 <p class="mail">{{current_user.email}}</p>
-
+                {% if current_user.isSeller %}
+                <p class="mail">{{current_user.address}}</p>
+                {% endif %}
             </div>
         </div>
         <div class="ml-3">
@@ -154,13 +166,6 @@
         </div>
     </div>
 </div> 
-<a class = "btn btn-secondary" href="/pastPurchases" role = "button">See My Past Purchases</a>
-<a href="{{ url_for('users.manage_balance') }}" role="button" class="btn btn-secondary">Manage My Balance</a> 
-<a href="{{ url_for('users.update_account_details') }}" role="button" class="btn btn-secondary">Update Account Info</a>  
-    
-    {% if current_user.isSeller %}
-    <a class = "btn btn-secondary" href="/receivedReviews" role = "button">See My Seller Reviews</a>
-    {% endif %}
 {% else %}
 <p><a href="{{ url_for('users.login') }}">Log in</a> to view your account info!</p>
 {% endif %}
