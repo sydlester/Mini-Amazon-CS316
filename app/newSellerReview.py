@@ -26,13 +26,15 @@ def newSellerReview(sellerId, userId):
 
 @bp.route('/editSellerReview/<int:sellerId>/<int:userId>', methods=["GET", "POST"])
 def editSellerReview(sellerId, userId):
-    rating = request.form["rating"]
-    description = request.form["description"]
-    theDate = datetime.now()
-    SellerReview.editSellerReview(userId, sellerId, rating, description, theDate)
-    seller_reviews = SellerReview.get_by_sellerId(sellerId, 5)
-    return render_template('sellerReviewOutput.html', sellerId = sellerId, orderBy = 5, seller_reviews=seller_reviews)
-
+    if request.method == 'POST':
+        rating = request.form["rating"]
+        description = request.form["description"]
+        theDate = datetime.now()
+        SellerReview.editSellerReview(userId, sellerId, rating, description, theDate)
+        seller_reviews = SellerReview.get_by_sellerId(sellerId, 5)
+        return render_template('sellerReviewOutput.html', sellerId = sellerId, orderBy = 5, seller_reviews=seller_reviews)
+    else: 
+        return render_template("editSellerReview.html", sellerId=sellerId, userId=userId) 
 
 
 

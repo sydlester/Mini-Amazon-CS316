@@ -15,7 +15,6 @@
 </div>
 </div>
 
-
 <style>
     .checked {
     color: hotpink;
@@ -387,10 +386,16 @@
 </div> 
 </div> 
 
+</div> 
 
-<div> 
+<div class = "inner3">   
+  <a style="position: relative" class = "btn btn-secondary myBtn" href="{{ url_for('sellerReviewOutput.sellerReviewOutput', sellerId = current_user.id, orderBy = 5) }}" role = "button">See All Reviews</a>
 </div>
+
+
 {% endif %}
+
+
 {% else %}
 <p><a href="{{ url_for('users.login') }}">Log in</a> to see your received reviews!</p>
 {% endif %}

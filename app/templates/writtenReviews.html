@@ -6,6 +6,9 @@
   display: flex;
   justify-content: center;
   }
+  body {
+  margin:60px 0 40px 0;
+}
 
 </style>
 
@@ -13,7 +16,7 @@
 
 <div class = "sortButtonGroup outer"> 
     <label style="margin-right: 25px;"><b>Select Review Type</b></label>
-      <a id = "sortButton1" class = "btn btn-secondary" href="{{ url_for('receivedReviews.receivedReviews') }}"role = "button">Received</a> 
+      <a id = "sortButton1" class = "btn btn-secondary" href="{{ url_for('receivedReviews.receivedReviews', reviewedId = current_user.id, type=1) }}"role = "button">Received</a> 
       <a style="background-color: hotpink;" id = "sortButton2" class = "btn btn-secondary" role = "button">Written</a> 
 </div>
 
@@ -25,6 +28,7 @@
       <th scope="col">Description</th>
       <th scope="col">Date</th>
       <th scope="col">Type</th>
+      <th scope="col">Edit Review</th>
     </tr>
   </thead>
   <tbody>
@@ -39,6 +43,11 @@
         {% else %}
         <td>Seller</td>
         {% endif %}
+        {% if review[4] == 0 %}
+        <td><button class="btn btn-secondary" ><a href="{{ url_for('newProductReview.editProductReview', productId = review[0], userId = current_user.id)}}">Edit Product Review </button></td>
+          {% else %}
+          <td><button class="btn btn-secondary" ><a href="{{ url_for('newSellerReview.editSellerReview', sellerId = review[0], userId = current_user.id)}}">Edit Seller Review </button></td>
+          {% endif %}
       </tr>
     {% endfor %}
   </tbody>

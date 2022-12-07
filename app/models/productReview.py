@@ -162,11 +162,11 @@ WHERE userId = :userId and pid = :pid
             rows = app.db.execute('''
 SELECT *
 FROM (
-    Select userId, pid as receiverId, rating, theDescription, theDate, 0 as type From ProductReviews WHERE userId = :userId
+    Select pid as receiverId, rating, theDescription, theDate, 0 as type From ProductReviews WHERE userId = :userId
     UNION ALL 
-    Select userId, sellerId as receiverId, rating, theDescription, theDate, 1 as type From SellerReviews WHERE userId = :userId
+    Select sellerId as receiverId, rating, theDescription, theDate, 1 as type From SellerReviews WHERE userId = :userId
 ) as T
-ORDER BY theDate
+ORDER BY theDate DESC
 ''', userId = userId)
         #ret = []
         #if rows: 
