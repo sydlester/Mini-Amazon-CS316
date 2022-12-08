@@ -2,13 +2,14 @@ from flask import current_app as app
 
 class ProductReview:
 
-    def __init__(self, userId, pid, rating, theDescription, theDate, upvotes):
+    def __init__(self, userId, pid, rating, theDescription, theDate, theImage, upvotes):
         self.userId = userId
         self.pid = pid
         self.rating = rating
         self.theDescription = theDescription
         self.theDate = theDate
         self.upvotes = upvotes
+        self.theImage = theImage
 
     @staticmethod
     def getByUser(userId):
@@ -52,11 +53,11 @@ ORDER BY :orderMe DESC
 
 
     @staticmethod
-    def submitProductReview(userId, pid, rating, theDescription, theDate):
+    def submitProductReview(userId, pid, rating, theDescription, theDate, theImage):
         rows = app.db.execute('''
-INSERT INTO ProductReviews VALUES (:userId, :pid, :rating, :theDescription, :theDate, 0)
+INSERT INTO ProductReviews VALUES (:userId, :pid, :rating, :theDescription, :theDate, :theImage, 0)
 ''',
-                              userId = userId, pid = pid, rating = rating, theDescription = theDescription, theDate=theDate)
+                              userId = userId, pid = pid, rating = rating, theDescription = theDescription, theDate=theDate, theImage=theImage)
         return
 
 
@@ -163,9 +164,9 @@ WHERE userId = :userId and pid = :pid
             rows = app.db.execute('''
 SELECT *
 FROM (
-    Select pid as receiverId, rating, theDescription, theDate, 0 as type, upvotes From ProductReviews WHERE userId = :userId
+    Select pid as receiverId, rating, theDescription, theDate, 0 as type, theImage, upvotes From ProductReviews WHERE userId = :userId
     UNION ALL 
-    Select sellerId as receiverId, rating, theDescription, theDate, 1 as type, upvotes From SellerReviews WHERE userId = :userId
+    Select sellerId as receiverId, rating, theDescription, theDate, 1 as type, theImage, upvotes From SellerReviews WHERE userId = :userId
 ) as T
 ORDER BY theDate DESC
 ''', userId = userId)
@@ -205,30 +206,31 @@ UPDATE ProductReviews
             return str(e)
 
     @staticmethod
-    def getTop3(orderMe):
+    def getTop3(productId, orderMe):
         rows = app.db.execute('''
 SELECT *
 FROM ProductReviews
+WHERE pid = :productId
 ORDER BY upvotes DESC, :orderMe DESC
 LIMIT 3
 ''',
-                              orderMe=orderMe)
+                              productId=productId, orderMe=orderMe)
         return [ProductReview(*row) for row in rows]
 
     
     @staticmethod
-    def top3All():
+    def top3All(userId):
         try: 
             rows = app.db.execute('''
 SELECT *
 FROM (
-    Select pid as receiverId, rating, theDescription, theDate, 0 as type, upvotes From ProductReviews WHERE userId = :userId
+    Select pid as receiverId, rating, theDescription, theDate, 0 as type, theImage, upvotes From ProductReviews WHERE userId = :userId
     UNION ALL 
-    Select sellerId as receiverId, rating, theDescription, theDate, 1 as type, upvotes From SellerReviews WHERE userId = :userId
+    Select sellerId as receiverId, rating, theDescription, theDate, 1 as type, theImage, upvotes From SellerReviews WHERE userId = :userId
 ) as T
 ORDER BY upvotes DESC, theDate DESC
 LIMIT 3
-''')
+''',             userId=userId)
 
         #ret = []
         #if rows: 
@@ -237,3 +239,4 @@ LIMIT 3
             return rows
         except Exception as e:
             return str(e)
+
