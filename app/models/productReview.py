@@ -2,13 +2,14 @@ from flask import current_app as app
 
 class ProductReview:
 
-    def __init__(self, userId, pid, rating, theDescription, theDate, upvotes):
+    def __init__(self, userId, pid, rating, theDescription, theDate, theImage, upvotes):
         self.userId = userId
         self.pid = pid
         self.rating = rating
         self.theDescription = theDescription
         self.theDate = theDate
         self.upvotes = upvotes
+        self.theImage = theImage
 
     @staticmethod
     def getByUser(userId):
@@ -52,11 +53,11 @@ ORDER BY :orderMe DESC
 
 
     @staticmethod
-    def submitProductReview(userId, pid, rating, theDescription, theDate):
+    def submitProductReview(userId, pid, rating, theDescription, theDate, theImage):
         rows = app.db.execute('''
-INSERT INTO ProductReviews VALUES (:userId, :pid, :rating, :theDescription, :theDate, 0)
+INSERT INTO ProductReviews VALUES (:userId, :pid, :rating, :theDescription, :theDate, :theImage, 0)
 ''',
-                              userId = userId, pid = pid, rating = rating, theDescription = theDescription, theDate=theDate)
+                              userId = userId, pid = pid, rating = rating, theDescription = theDescription, theDate=theDate, theImage=theImage)
         return
 
 
@@ -237,3 +238,4 @@ LIMIT 3
             return rows
         except Exception as e:
             return str(e)
+

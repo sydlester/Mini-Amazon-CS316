@@ -56,6 +56,7 @@ CREATE TABLE ProductReviews(
     theDescription varchar(512),
     theDate timestamp without time zone NOT NULL DEFAULT (current_timestamp AT TIME ZONE 'UTC'),
     primary key (userId, pid),
+    theImage VARCHAR(2048),
     upvotes INT NOT NULL
 );
 

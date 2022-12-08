@@ -13,6 +13,7 @@
 <table class='table table-hover table-bordered container'>
   <thead class="thead-dark">
     <tr>
+      <th scope="col">The Image</th>
       <th scope="col">User ID</th>
       <th scope="col">Rating</th>
       <th scope="col">Description</th>
@@ -23,6 +24,7 @@
   <tbody>
     {% for review in top3%}
       <tr>
+        <td><img src={{url_for('static', filename = 'photos/'+review.theImage)}} width = "100" height = "100"></td>
         <th scope="row">{{review.userId}}</th>
         <td>{{review.rating}}</td>
         <td>{{review.theDescription}}</td>

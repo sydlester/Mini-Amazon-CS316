@@ -126,8 +126,9 @@ def gen_product_reviews(num_product_reviews, available_pids, users):
             rating = fake.random_int(min=1, max=5)
             description = fake.sentence(nb_words =12)[:-1]
             theDate = fake.date_time()
+            theImage = fake.random_element(elements=images)
             upvotes = fake.random_int(min=0, max=num_users)
-            writer.writerow([userId, pid, rating, description, theDate, upvotes])
+            writer.writerow([userId, pid, rating, description, theDate, theImage, upvotes])
         print(f'{num_product_reviews} generated')
     return 
 
