@@ -444,7 +444,7 @@ background-color: #F0ECEB;
 <a style="position: relative" class = "btn btn-secondary myBtn" href="{{ url_for('productReviewOutput.productReviewOutput', productId = productId, orderBy = 5) }}" role = "button">See Reviews</a>
 </div>
 <div class = "inner4">   
-  {% if wasPurchased == True %}
+  {% if current_user.is_authenticated and wasPurchased == True %}
   <a style="position: relative" class = "btn btn-secondary myBtn" href="{{ url_for('submitProductReview.submitProductReview', productId = product.id, userId = current_user.id) }}" role = "button">Review this Product</a>
   {% endif %}
 </div>

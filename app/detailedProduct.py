@@ -48,7 +48,7 @@ def detailedProduct(productId):
 
     product = Product.get(productId)
     
-    if Product.purchased(current_user.id) and productId in Product.purchased(current_user.id):
+    if current_user.is_authenticated and Product.purchased(current_user.id) and productId in Product.purchased(current_user.id):
         wasPurchased = True
     else:
         wasPurchased = False
