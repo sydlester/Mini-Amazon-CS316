@@ -9,7 +9,7 @@ from .models.user import User
 from .models.purchase import Purchase
 from .models.saved import Saved
 from .models.fulfilledPurchase import FulfilledPurchase
-
+import decimal 
 from flask import Blueprint
 bp = Blueprint('carts', __name__)
 
@@ -79,12 +79,10 @@ def submitOrder():
     else:
         percentOff = 0
     
-    
-
     userId = current_user.id
     user_cart = Cart.get(userId)
     initialCost = Cart.getTotalCost(userId)
-    actualCost = initialCost*(1-percentOff)
+    actualCost = initialCost*(1-decimal.Decimal(percentOff))
     for cart_item in user_cart: 
         tempProduct = Product.get(cart_item.pid)
         if tempProduct.quantity < cart_item.quantity:
