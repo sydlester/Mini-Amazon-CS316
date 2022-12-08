@@ -165,6 +165,13 @@ def gen_seller_reviews(num_seller_reviews, sellers, users):
     return 
 
 
+def coupons():
+    with open('db/data/coupons.csv', 'w') as f:
+        writer = get_csv_writer(f)
+        writer.writerow(["123456", .1])
+    return 
+
+
 sellers, users = gen_users(num_users)
 available_pids = gen_products(num_products, sellers)
 gen_purchases(num_purchases, available_pids)
@@ -175,3 +182,4 @@ num_seller_reviews = len(sellers)*len(users)
 
 gen_product_reviews(num_product_reviews, available_pids, users)
 gen_seller_reviews(num_seller_reviews, sellers, users)
+coupons()

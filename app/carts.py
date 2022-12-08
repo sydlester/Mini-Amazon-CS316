@@ -72,15 +72,25 @@ def cartRemoveProduct(productId):
 
 @bp.route('/submitOrder', methods=["GET", "POST"])
 def submitOrder():
+
+    couponCode = request.form.get("couponCode")
+    if Cart.getCouponValue(couponCode) != None:
+        percentOff = Cart.getCouponValue(couponCode)
+    else:
+        percentOff = 0
+    
+    
+
     userId = current_user.id
     user_cart = Cart.get(userId)
-    recentOrderCost = Cart.getTotalCost(userId)
+    initialCost = Cart.getTotalCost(userId)
+    actualCost = initialCost*(1-percentOff)
     for cart_item in user_cart: 
         tempProduct = Product.get(cart_item.pid)
         if tempProduct.quantity < cart_item.quantity:
             flash('Insufficient Inventory Remaining')
             return redirect(url_for('carts.carts')) 
-        if current_user.balance < Cart.getTotalCost(userId):
+        if current_user.balance < actualCost:
             flash('Insufficient Balance Remaining') 
             return redirect(url_for('carts.carts')) 
 
@@ -94,7 +104,7 @@ def submitOrder():
         error = Purchase.createPurchase(id, userId, theProduct.id, cart_item.quantity, theProduct.price, timeOrdered, False, None)
         User.increase_balance(theSeller, cart_item.quantity*cart_item.unitPrice)
     
-    User.decrease_balance(userId, Cart.getTotalCost(userId))
+    User.decrease_balance(userId, actualCost)
     Cart.clearUserCart(userId) 
 
     if current_user.is_authenticated:

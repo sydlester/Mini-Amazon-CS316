@@ -109,3 +109,15 @@ DELETE FROM Carts
                               userId=userId)
         return
 
+    @staticmethod
+    def getCouponValue(code):
+        rows = app.db.execute('''
+SELECT percentOff
+FROM coupons
+WHERE code = :code
+''',
+                              code=code)
+        if rows: 
+            return rows[0][0]
+        else: 
+            return None

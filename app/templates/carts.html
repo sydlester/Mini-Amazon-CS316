@@ -4,7 +4,14 @@
 {% if current_user.is_authenticated %}
 <br><br>
 <h1>Your cart:</h1>
-<td><a style="background-color: hotpink;"class = "btn btn-secondary" href="{{ url_for('carts.submitOrder') }}" role = "button">Submit Order</a></td> 
+
+<form action="{{ url_for('carts.submitOrder') }}" method="post">
+  <input type="text" name="couponCode">
+  <input type="submit" style="background-color: hotpink;"class = "btn btn-secondary" role = "button">Submit Order</a></td> 
+</form>
+  
+
+
 <p>
   {% with messages = get_flashed_messages() %}
   {% if messages %}

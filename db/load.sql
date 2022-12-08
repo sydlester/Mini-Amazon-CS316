@@ -27,3 +27,5 @@ SELECT pg_catalog.setval('public.messages_id_seq',
                          false);
 
 \COPY FulFilledPurchases FROM '../data/fulfilledPurchases.csv' WITH DELIMITER ',' NULL '' CSV;
+
+\COPY Coupons FROM '../data/coupons.csv' WITH DELIMITER ',' NULL '' CSV;
