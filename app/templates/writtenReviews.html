@@ -14,6 +14,48 @@
 
 <h1 style = "text-align: center;">Reviews you have written!</h1>
 
+<h2>TOP 3 MOST UPVOTED REVIEWS</h2>
+<table class='table table-hover table-bordered container'>
+  <thead class="thead-dark">
+    <tr>
+      <th scope="col">ID of Reviewed</th>
+      <th scope="col">Rating</th>
+      <th scope="col">Description</th>
+      <th scope="col">Date</th>
+      <th scope="col">Type</th>
+      <th scope="col">Upvotes</th>
+      <th scope="col">Edit Review</th>
+    </tr>
+  </thead>
+  <tbody>
+    {% for review in top3%}
+      <tr>
+        <th scope="row">{{review[0]}}</th>
+        <td>{{review[1]}}</td>
+        <td>{{review[2]}}</td>
+        <td>{{review[3]}}</td>
+        {% if review[4] == 0 %}
+        <td>Product</td>
+        {% else %}
+        <td>Seller</td>
+        {% endif %}
+        <td> 
+          {{review[5]}}
+        </td>
+        {% if review[4] == 0 %}
+        <td><button class="btn btn-secondary" ><a href="{{ url_for('newProductReview.editProductReview', productId = review[0], userId = current_user.id)}}">Edit Product Review </button></td>
+          {% else %}
+          <td><button class="btn btn-secondary" ><a href="{{ url_for('newSellerReview.editSellerReview', sellerId = review[0], userId = current_user.id)}}">Edit Seller Review </button></td>
+          {% endif %}
+      </tr>
+    {% endfor %}
+  </tbody>
+</table>
+
+
+
+
+
 <div class = "sortButtonGroup outer"> 
     <label style="margin-right: 25px;"><b>Select Review Type</b></label>
       <a id = "sortButton1" class = "btn btn-secondary" href="{{ url_for('receivedReviews.receivedReviews', reviewedId = current_user.id, type=1) }}"role = "button">Received</a> 
@@ -44,7 +86,9 @@
         {% else %}
         <td>Seller</td>
         {% endif %}
-        <td>{{review[5]}}</td>
+        <td> 
+          {{review[5]}}
+        </td>
         {% if review[4] == 0 %}
         <td><button class="btn btn-secondary" ><a href="{{ url_for('newProductReview.editProductReview', productId = review[0], userId = current_user.id)}}">Edit Product Review </button></td>
           {% else %}

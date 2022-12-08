@@ -12,4 +12,8 @@ bp = Blueprint('writtenReviews', __name__)
 @bp.route('/writtenReviews', methods=["GET", "POST"])
 def writtenReviews():
     reviews = ProductReview.getAllByUser(current_user.id)
-    return render_template('writtenReviews.html', reviewType = "written", reviews = reviews)
+    top3 = ProductReview.top3All()
+    return render_template('writtenReviews.html', reviewType = "written", reviews = reviews, top3=top3)
+
+
+    

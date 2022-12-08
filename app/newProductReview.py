@@ -20,8 +20,7 @@ def newProductReview(productId, userId):
     theDate = datetime.now()
     ProductReview.submitProductReview(userId, productId, rating, description, theDate)
     product_reviews = ProductReview.get_by_productId(productId, 5)
-    return render_template('productReviewOutput.html', productId = productId, orderBy = 5, product_reviews=product_reviews)
-
+    return redirect(url_for('productReviewOutput.productReviewOutput', productId=productId, orderBy=5))
 
 @bp.route('/editProductReview/<int:productId>/<int:userId>', methods=["GET", "POST"])
 def editProductReview(productId, userId):
@@ -31,7 +30,7 @@ def editProductReview(productId, userId):
         theDate = datetime.now()
         ProductReview.editProductReview(userId, productId, rating, description, theDate)
         product_reviews = ProductReview.get_by_productId(productId, 5)
-        return render_template('productReviewOutput.html', productId = productId, orderBy = 5, product_reviews=product_reviews)
+        return redirect(url_for('productReviewOutput.productReviewOutput', productId=productId, orderBy=5))
     else:
         return render_template("editProductReview.html", productId=productId, userId=userId) 
 

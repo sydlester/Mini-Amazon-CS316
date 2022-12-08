@@ -137,7 +137,7 @@
     <td><a href="{{ url_for('users.manage_balance') }}" role="button" class="btn btn-secondary">Manage My Balance</a></td>
     <td><a href="{{ url_for('users.update_account_details') }}" role="button" class="btn btn-secondary">Update Account Info</a></td>  
         {% if current_user.isSeller %}
-        <td><a class = "btn btn-secondary" href="/receivedReviews" role = "button">See My Seller Reviews</a></td>
+        <td><a class = "btn btn-secondary" href="{{ url_for('receivedReviews.receivedReviews',  reviewedId=current_user.id, type = 1) }}" role = "button">See My Seller Reviews</a></td>
         {% endif %}
 </div>
 <div class="container d-flex justify-content-left mt-5">

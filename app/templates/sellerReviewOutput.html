@@ -9,6 +9,36 @@
 
 <h2 style="text-align: center;">Reviews of Seller {{sellerId}}</h2>
     <br></br>
+
+<h2>TOP 3 MOST UPVOTED REVIEWS</h2>
+<table class='table table-hover table-bordered container'>
+  <thead class="thead-dark">
+    <tr>
+      <th scope="col">User ID</th>
+      <th scope="col">Rating</th>
+      <th scope="col">Description</th>
+      <th scope="col">Date</th>
+      <th scope="col">Upvotes</th>
+    </tr>
+  </thead>
+  <tbody>
+    {% for review in top3%}
+      <tr>
+        <th scope="row">{{review.userId}}</th>
+        <td>{{review.rating}}</td>
+        <td>{{review.theDescription}}</td>
+        <td>{{review.theDate}}</td>
+        <td> 
+          <div> 
+          <a href="{{ url_for('sellerReviewOutput.addSellerUpvotes', userId = review.userId, sellerId=review.sellerId, orderBy=orderBy) }}" class="w3-button w3-win8-pink"><i class="fa fa-thumbs-up fa-lg" aria-hidden="true"></i></a>
+          {{review.upvotes}}
+        </div>
+        </td>
+      </tr>
+    {% endfor %}
+  </tbody>
+</table>
+
     <div class = "sortButtonGroup outer"> 
     <label><b>Select Sort Criteria</b></label>
       {%if orderBy == 5 %}

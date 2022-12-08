@@ -3,7 +3,6 @@ import csv, random
 from faker import Faker
 from itertools import product
 
-
 num_users = 100
 num_products = 100
 num_purchases = 100
