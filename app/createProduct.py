@@ -32,6 +32,15 @@ class NewProductForm(FlaskForm):
     available = BooleanField(label = 'Immediately Available')
     image = FileField(label = "Upload Photo")
     submit = SubmitField(label = "Create Product")
+class EditProductForm(FlaskForm):
+    name = StringField(label = 'Name')
+    description = TextAreaField(label = 'Description')
+    category = SelectField(label = 'Category', choices=[('Food', 'Food'), ('Clothes', 'Clothes'), ('Sports', 'Sports'), ('Appliances', 'Appliances'), ('Random', 'Random')])
+    price = FloatField(label = 'Price')
+    quantity = IntegerField(label = 'Quantity')
+    available = BooleanField(label = 'Immediately Available')
+    image = FileField(label = "Upload Photo")
+    submit = SubmitField(label = "Create Product")
 
 def save_image(image_file):
     image_name = image_file.filename
@@ -60,6 +69,40 @@ def createProduct():
 
     else:
         return render_template('createProduct.html', form=form)
+
+@bp.route('/editProduct/<int:productId>', methods=["GET", "POST"])
+def editProduct(productId):
+    form = EditProductForm()
+    
+    if request.method == "GET":
+        product = Product.get(productId)
+        form.name.data = product.name
+        form.description.data = product.theDescription
+        form.category.data = product.category
+        form.price.data = product.price
+        form.quantity.data = product.quantity
+        form.available.data = product.available
+        form.image.data = product.theImage
+    
+    #def editProduct(id, name, price, available, category, theDescription, quantity, theImage):
+
+    if form.validate_on_submit():
+            if form.image.data: 
+                image_name = save_image(form.image.data)
+                errorMessage = Product.editProduct(
+                         productId,
+                         form.name.data,
+                         form.price.data,
+                         form.available.data,
+                         form.category.data, 
+                         form.description.data,
+                         form.quantity.data,
+                         image_name)
+
+                return redirect(url_for('manageInventory.manageInventory'))
+
+    else:
+        return render_template('editProduct.html', form=form)
 
 
 

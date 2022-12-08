@@ -25,6 +25,7 @@
         <th scope="col">Detailed Page</th>
         <th scope="col">Edit Quantity</th>
         <th scope="col">Remove From Inventory</th>
+        <th scope="col">Edit Product</th>
       </tr>
     </thead>
     <tbody>
@@ -38,6 +39,8 @@
           <td><a class = "btn btn-secondary" href="{{ url_for('detailedProduct.detailedProduct', productId = product.id, name = product.name, price = product.price, available = product.available, description = product.description, sellerId = product.sellerId, image = product.theImage) }}" role = "button">More Info</a></td> 	
           <td><a class = "btn btn-secondary" href="{{ url_for('editInventory.editInventory', sellerId = current_user.Id, productId = product.id) }}" role = "button">Edit Quantity</a></td> 
           <td><a class = "btn btn-secondary" href="{{ url_for('manageInventory.removeFromInventory', productId = product.id) }}" role = "button">Remove from Inventory</a></td> 
+          <td><button class="btn btn-secondary" ><a href="{{ url_for('createProduct.editProduct', productId = product.id)}}">Edit Product </button></td>
+
         </tr>
         </tr>
       </tr>

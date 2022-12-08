@@ -209,3 +209,11 @@ WHERE userId = :userId
             return ret 
         else:
             return None
+    
+    @staticmethod
+    def editProduct(id, name, price, available, category, theDescription, quantity, theImage):
+        rows = app.db.execute('''
+UPDATE Products 
+SET id= :id, name = :name, price = :price, available = :available, category = :category, theDescription = :theDescription, quantity = :quantity, theImage = :theImage
+WHERE id = :id
+''', id=id, name=name, price=price, available=available, category=category, theDescription=theDescription, quantity=quantity, theImage=theImage)
