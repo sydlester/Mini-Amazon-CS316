@@ -181,5 +181,5 @@ WHERE sellerId = :sellerId
 ORDER BY upvotes DESC, :orderMe DESC
 LIMIT 3
 ''',
-                              sellerId, orderMe=orderMe)
+                              sellerId=sellerId, orderMe=orderMe)
         return [SellerReview(*row) for row in rows]
