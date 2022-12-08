@@ -61,4 +61,14 @@
 <p><a href="{{ url_for('users.login') }}">Log in</a> to see your purchase history!</p>
 {% endif %}
 
+<br></br>
+<h1>My Seller Analytics</h1>
+<br></br>
+<h6>My Product With Highest Quantity Sold: {{analyticsQuantity}}</h6>
+<br></br>
+<h6>My Product Bringing in the Most Revenue: {{analyticsRevenue}}</h6>
+<br></br>
+<h6>Number of Distinct Customers: {{analyticsCustomers}}</h6>
+
+
 {% endblock %}

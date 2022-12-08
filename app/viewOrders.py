@@ -65,7 +65,10 @@ def viewOrders():
             totalQuantity = Purchase.getTotalQuantitySeller(id, current_user.id)
             fulfillment = FulfilledPurchase.isIn(id)
             orderSummaries.append([id, userId, name, address, email, orderDate, totalCost, totalQuantity, fulfillment])
-    return render_template('viewOrders.html', orderSummaries=orderSummaries)
+            analyticsQuantity = Purchase.getAnalyticsQuantity(current_user.id)
+            analyticsRevenue = 1
+            analyticsCustomers = Purchase.getAnalyticsCustomers(current_user.id)
+    return render_template('viewOrders.html', orderSummaries=orderSummaries, analyticsQuantity = analyticsQuantity, analyticsRevenue = analyticsRevenue, analyticsCustomers = analyticsCustomers)
 
 @bp.route('/fulfillOrder/<int:id>/<int:pid>/<int:userId>', methods=["GET", "POST"])
 def fulfillOrder(id, pid, userId):

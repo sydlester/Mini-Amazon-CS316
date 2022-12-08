@@ -36,8 +36,8 @@
           <td>{{product.price}}</td>
           <td>{{product.quantity}}</td>
           <td><a class = "btn btn-secondary" href="{{ url_for('detailedProduct.detailedProduct', productId = product.id, name = product.name, price = product.price, available = product.available, description = product.description, sellerId = product.sellerId, image = product.theImage) }}" role = "button">More Info</a></td> 	
-          <td><a style="background-color: hotpink;" class = "btn btn-secondary" href="{{ url_for('editInventory.editInventory', sellerId = current_user.Id, productId = product.id) }}" role = "button">Edit Quantity</a></td> 
-          <td><a style="background-color: hotpink;"class = "btn btn-secondary" href="{{ url_for('manageInventory.removeFromInventory', productId = product.id) }}" role = "button">Remove from Inventory</a></td> 
+          <td><a class = "btn btn-secondary" href="{{ url_for('editInventory.editInventory', sellerId = current_user.Id, productId = product.id) }}" role = "button">Edit Quantity</a></td> 
+          <td><a class = "btn btn-secondary" href="{{ url_for('manageInventory.removeFromInventory', productId = product.id) }}" role = "button">Remove from Inventory</a></td> 
         </tr>
         </tr>
       </tr>

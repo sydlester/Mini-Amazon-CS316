@@ -296,3 +296,30 @@ WHERE pid = Products.id and userId = :userId
             return ret 
         else:
             return None
+
+    @staticmethod
+    def getAnalyticsQuantity(userId):
+        rows = app.db.execute('''
+SELECT pid
+FROM (SELECT pid, SUM(Purchases.quantity) totalQuantity
+      FROM purchases, products
+      WHERE Purchases.pid = Products.id and sellerId = :userId
+      GROUP BY pid) temp
+ORDER BY totalQuantity DESC
+LIMIT 1
+''', userId = userId) 
+        if rows:
+            return rows[0][0]
+
+    @staticmethod
+    def getAnalyticsCustomers(userId):
+        rows = app.db.execute('''
+SELECT COUNT(DISTINCT(userid))
+FROM Purchases, Products
+WHERE Purchases.pid = Products.id and sellerId = :userId
+''', userId = userId) 
+        if rows:
+            return rows[0][0]
+
+
+
