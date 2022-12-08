@@ -83,7 +83,7 @@ def editSellerReview(sellerId, userId):
             errorMessage = SellerReview.editSellerReview(userId, sellerId, form.rating.data, form.description.data, datetime.now(), image_name) 
             return redirect(url_for('sellerReviewOutput.sellerReviewOutput', sellerId=sellerId, orderBy=5))
     else: 
-        return render_template('editProductReview.html', sellerId=sellerId, userId=userId, form=form) 
+        return render_template('editSellerReview.html', sellerId=sellerId, userId=userId, form=form) 
 
 
 
