@@ -33,6 +33,7 @@ CREATE TABLE Purchases (
     time_ordered timestamp without time zone NOT NULL DEFAULT (current_timestamp AT TIME ZONE 'UTC'),
     fulfilled BOOLEAN NOT NULL,
     time_fulfilled timestamp without time zone DEFAULT (current_timestamp AT TIME ZONE 'UTC'),
+    discountAmount FLOAT,
     PRIMARY KEY (id, userId, pid)
 );
 

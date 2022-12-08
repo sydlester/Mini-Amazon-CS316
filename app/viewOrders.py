@@ -64,10 +64,12 @@ def viewOrders():
             totalCost = Purchase.getTotalCostSeller(id, current_user.id)
             totalQuantity = Purchase.getTotalQuantitySeller(id, current_user.id)
             fulfillment = FulfilledPurchase.isIn(id)
-            orderSummaries.append([id, userId, name, address, email, orderDate, totalCost, totalQuantity, fulfillment])
+            actualCost = order.discountAmount
+            orderSummaries.append([id, userId, name, address, email, orderDate, totalCost, actualCost, totalQuantity, fulfillment])
             analyticsQuantity = Purchase.getAnalyticsQuantity(current_user.id)
             analyticsRevenue = Purchase.getAnalyticsRevenue(current_user.id)
             analyticsCustomers = Purchase.getAnalyticsCustomers(current_user.id)
+            actualCost = order.discountAmount
     return render_template('viewOrders.html', orderSummaries=orderSummaries, analyticsQuantity = analyticsQuantity, analyticsRevenue = analyticsRevenue, analyticsCustomers = analyticsCustomers)
 
 @bp.route('/fulfillOrder/<int:id>/<int:pid>/<int:userId>', methods=["GET", "POST"])

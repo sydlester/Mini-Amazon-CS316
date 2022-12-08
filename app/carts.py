@@ -99,7 +99,7 @@ def submitOrder():
         theProduct = Product.get(cart_item.pid)
         theSeller = theProduct.sellerId
         Product.decrease_quantity(theProduct.id, cart_item.quantity)
-        error = Purchase.createPurchase(id, userId, theProduct.id, cart_item.quantity, theProduct.price, timeOrdered, False, None)
+        error = Purchase.createPurchase(id, userId, theProduct.id, cart_item.quantity, theProduct.price, timeOrdered, False, None, actualCost)
         User.increase_balance(theSeller, cart_item.quantity*cart_item.unitPrice)
     
     User.decrease_balance(userId, actualCost)
@@ -121,10 +121,11 @@ def submitOrder():
                 timeOrdered = order.time_ordered
                 fulfillmentStatus = FulfilledPurchase.isIn(id)
                 fulfillTime = order.time_fulfilled
+                actualCost = order.discountAmount
                 if fulfillmentStatus == False:
-                    orderSummaries.append([id, totalItems, totalCost, timeOrdered, fulfillmentStatus, fulfillTime])
+                    orderSummaries.append([id, totalItems, totalCost, actualCost, timeOrdered, fulfillmentStatus, fulfillTime])
                 else:
-                    purchaseSummaries.append([id, totalItems, totalCost, timeOrdered, fulfillmentStatus, fulfillTime])
+                    purchaseSummaries.append([id, totalItems, totalCost, actualCost, timeOrdered, fulfillmentStatus, fulfillTime])
 
         return render_template('pastPurchases.html', purchaseSummaries=purchaseSummaries, orderSummaries = orderSummaries)
     else:

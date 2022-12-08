@@ -48,10 +48,11 @@ def pastPurchases():
                 timeOrdered = order.time_ordered
                 fulfillmentStatus = FulfilledPurchase.isIn(id)
                 fulfillTime = order.time_fulfilled
+                actualCost = order.discountAmount
                 if fulfillmentStatus == False:
-                    orderSummaries.append([id, totalItems, totalCost, timeOrdered, fulfillmentStatus, fulfillTime])
+                    orderSummaries.append([id, totalItems, totalCost, actualCost, timeOrdered, fulfillmentStatus, fulfillTime])
                 else:
-                    purchaseSummaries.append([id, totalItems, totalCost, timeOrdered, fulfillmentStatus, fulfillTime])
+                    purchaseSummaries.append([id, totalItems, totalCost, actualCost, timeOrdered, fulfillmentStatus, fulfillTime])
 
         return render_template('pastPurchases.html', purchaseSummaries=purchaseSummaries, orderSummaries = orderSummaries)
     else:

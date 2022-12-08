@@ -35,6 +35,7 @@
       <th scope="col">Email</th>
       <th scope="col">Time Ordered</th>
       <th scope="col">Total Cost</th>
+      <th scope="col">Acutal/Discounted Cost</th>
       <th scope="col">Total Quantity</th>
       <th scope="col">Was Fulfilled</th>
       <th scope="col">More Info</th>
@@ -52,6 +53,7 @@
         <td>{{orderSummary[6]}}</td>
         <td>{{orderSummary[7]}}</td>
         <td>{{orderSummary[8]}}</td>
+        <td>{{orderSummary[9]}}</td>
         <td><a class = "btn btn-secondary" href="{{ url_for('sellerDetailedOrder.sellerDetailedOrder', id = orderSummary[0]) }}" role = "button">More Info</a></td> 	
     </tr>
     {% endfor %}

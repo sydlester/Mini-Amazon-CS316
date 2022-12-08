@@ -19,6 +19,7 @@
       <th scope="col">Order ID</th>
       <th scope="col">Total Items</th>
       <th scope="col">Total Cost</th>
+      <th scope="col">Actual/Discounted Cost</th>
       <th scope="col">Time Ordered</th>
       <th scope="col">Was Fulfilled</th>
       <th scope="col">Time Fulfilled</th>
@@ -33,10 +34,11 @@
         <td>{{orderSummary[2]}}</td>
         <td>{{orderSummary[3]}}</td>
         <td>{{orderSummary[4]}}</td>
-        {% if orderSummary[4] == None %}
+        <td>{{orderSummary[5]}}</td>
+        {% if orderSummary[5] == None %}
         <td>N/A</td>
         {% else %}
-        <td>{{orderSummary[5]}}</td>
+        <td>{{orderSummary[6]}}</td>
         {% endif %}
         <td><a class = "btn btn-secondary" href="{{ url_for('pastPurchases.detailedOrder', id = orderSummary[0]) }}" role = "button">More Info</a></td> 	
       </tr>
@@ -55,6 +57,7 @@
       <th scope="col">Order ID</th>
       <th scope="col">Total Items</th>
       <th scope="col">Total Cost</th>
+      <th scope="col">Actual/Discounted Cost</th>
       <th scope="col">Time Ordered</th>
       <th scope="col">Was Fulfilled</th>
       <th scope="col">Time Fulfilled</th>
@@ -69,10 +72,11 @@
         <td>{{purchaseSummary[2]}}</td>
         <td>{{purchaseSummary[3]}}</td>
         <td>{{purchaseSummary[4]}}</td>
-        {% if purchaseSummary[4] == None %}
+        <td>{{purchaseSummary[5]}}</td>
+        {% if purchaseSummary[5] == None %}
         <td>N/A</td>
         {% else %}
-        <td>{{purchaseSummary[5]}}</td>
+        <td>{{purchaseSummary[6]}}</td>
         {% endif %}
         <td><a class = "btn btn-secondary" href="{{ url_for('pastPurchases.detailedOrder', id = purchaseSummary[0]) }}" role = "button">More Info</a></td> 	
       </tr>

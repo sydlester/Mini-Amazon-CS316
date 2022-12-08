@@ -1,7 +1,7 @@
 from flask import current_app as app
 
 class Purchase:
-    def __init__(self, id, userId, pid, quantity, unit_price, time_ordered, fulfilled, time_fulfilled):
+    def __init__(self, id, userId, pid, quantity, unit_price, time_ordered, fulfilled, time_fulfilled, discountAmount):
         self.id = id
         self.userId = userId
         self.pid = pid
@@ -10,6 +10,7 @@ class Purchase:
         self.time_ordered = time_ordered
         self.fulfilled = fulfilled
         self.time_fulfilled = time_fulfilled
+        self.discountAmount=discountAmount
 
     @staticmethod
     def getByUser(userId):
@@ -23,12 +24,12 @@ ORDER BY 6 DESC
         return [Purchase(*row) for row in rows]
 
     @staticmethod
-    def createPurchase(id, userId, pid, quantity, unit_price, time_ordered, fulfilled, time_fulfilled):
+    def createPurchase(id, userId, pid, quantity, unit_price, time_ordered, fulfilled, time_fulfilled, discountAmount):
         try:
             rows = app.db.execute("""
-INSERT INTO Purchases(id, userId, pid, quantity, unit_price, time_ordered, fulfilled, time_fulfilled)
-VALUES(:id, :userId, :pid, :quantity, :unit_price, :time_ordered, :fulfilled, :time_fulfilled)
-""",id = id, userId=userId, pid = pid, quantity = quantity, unit_price = unit_price, time_ordered = time_ordered, fulfilled=fulfilled, time_fulfilled = time_fulfilled)
+INSERT INTO Purchases(id, userId, pid, quantity, unit_price, time_ordered, fulfilled, time_fulfilled, discountAmount)
+VALUES(:id, :userId, :pid, :quantity, :unit_price, :time_ordered, :fulfilled, :time_fulfilled, :discountAmount)
+""",id = id, userId=userId, pid = pid, quantity = quantity, unit_price = unit_price, time_ordered = time_ordered, fulfilled=fulfilled, time_fulfilled = time_fulfilled, discountAmount=discountAmount)
             id = rows[0][0]
             return Purchase.get(id)
         except Exception as e:
@@ -85,7 +86,7 @@ Where id = :id
     @staticmethod
     def getBySeller(sellerId, status):
         rows = app.db.execute('''
-SELECT purchases.id, purchases.userId, Purchases.pid, Purchases.quantity, Purchases.unit_price, Purchases.time_ordered, Purchases.fulfilled, Purchases.time_fulfilled
+SELECT purchases.id, purchases.userId, Purchases.pid, Purchases.quantity, Purchases.unit_price, Purchases.time_ordered, Purchases.fulfilled, Purchases.time_fulfilled, Purchases.discountAmount
 FROM Purchases, Products
 WHERE Purchases.pid = products.id and products.sellerId = :sellerId status = :status
 ORDER BY 6 DESC
@@ -100,7 +101,7 @@ ORDER BY 6 DESC
     @staticmethod
     def getAllBySeller(sellerId):
         rows = app.db.execute('''
-SELECT purchases.id, purchases.userId, Purchases.pid, Purchases.quantity, Purchases.unit_price, Purchases.time_ordered, Purchases.fulfilled, Purchases.time_fulfilled
+SELECT purchases.id, purchases.userId, Purchases.pid, Purchases.quantity, Purchases.unit_price, Purchases.time_ordered, Purchases.fulfilled, Purchases.time_fulfilled, Purchases.discountAmount
 FROM Purchases, Products
 WHERE Purchases.pid = products.id and products.sellerId = :sellerId
 ORDER BY 6 DESC
@@ -153,7 +154,7 @@ WHERE Purchases.id = :id and sellerId = :sellerId and purchases.pid = products.i
     @staticmethod
     def getByOrderSeller(id, sellerId):
         rows = app.db.execute('''
-SELECT purchases.id, purchases.userId, Purchases.pid, Purchases.quantity, Purchases.unit_price, Purchases.time_ordered, Purchases.fulfilled, Purchases.time_fulfilled
+SELECT purchases.id, purchases.userId, Purchases.pid, Purchases.quantity, Purchases.unit_price, Purchases.time_ordered, Purchases.fulfilled, Purchases.time_fulfilled, Purchases.discountAmount
 FROM Purchases, Products
 WHERE Purchases.id = :id and sellerId = :sellerId and Products.id = Purchases.pid
 ORDER BY 3
@@ -165,7 +166,7 @@ ORDER BY 3
     @staticmethod
     def getBySellerKeyWord(keyWord, sellerId):     
         rows = app.db.execute('''
-SELECT purchases.id, purchases.userId, Purchases.pid, Purchases.quantity, Purchases.unit_price, Purchases.time_ordered, Purchases.fulfilled, Purchases.time_fulfilled
+SELECT purchases.id, purchases.userId, Purchases.pid, Purchases.quantity, Purchases.unit_price, Purchases.time_ordered, Purchases.fulfilled, Purchases.time_fulfilled, Purchases.discountAmount
 FROM Purchases, Products
 WHERE Purchases.pid = Products.id and sellerId = :sellerId and name ILIKE '%' || :keyWord || '%' 
 ORDER BY time_ordered DESC
@@ -178,7 +179,7 @@ ORDER BY time_ordered DESC
     @staticmethod
     def getBySellerKeyWordBuyerId(keyWord, buyerId, sellerId):     
         rows = app.db.execute('''
-SELECT purchases.id, purchases.userId, Purchases.pid, Purchases.quantity, Purchases.unit_price, Purchases.time_ordered, Purchases.fulfilled, Purchases.time_fulfilled
+SELECT purchases.id, purchases.userId, Purchases.pid, Purchases.quantity, Purchases.unit_price, Purchases.time_ordered, Purchases.fulfilled, Purchases.time_fulfilled, Purchases.discountAmount
 FROM Purchases, Products
 WHERE Purchases.pid = Products.id and Purchases.userId = :buyerId and sellerId = :sellerId and name ILIKE '%' || :keyWord || '%' 
 ORDER BY time_ordered DESC
@@ -189,7 +190,7 @@ ORDER BY time_ordered DESC
     @staticmethod
     def getBySellerKeyWordDate(keyWord, sellerId, year, month, day):     
         rows = app.db.execute('''
-SELECT purchases.id, purchases.userId, Purchases.pid, Purchases.quantity, Purchases.unit_price, Purchases.time_ordered, Purchases.fulfilled, Purchases.time_fulfilled
+SELECT purchases.id, purchases.userId, Purchases.pid, Purchases.quantity, Purchases.unit_price, Purchases.time_ordered, Purchases.fulfilled, Purchases.time_fulfilled, Purchases.discountAmount
 FROM Purchases, Products
 WHERE Purchases.pid = Products.id and extract(year from time_ordered) = :year and extract(month from time_ordered) = :month and extract(day from time_ordered) = :day and sellerId = :sellerId and name ILIKE '%' || :keyWord || '%' 
 ORDER BY time_ordered DESC
@@ -201,7 +202,7 @@ ORDER BY time_ordered DESC
     @staticmethod
     def getBySellerKeyWordBuyerIdDate(keyWord, sellerId, buyerId, year, month, day):     
         rows = app.db.execute('''
-SELECT purchases.id, purchases.userId, Purchases.pid, Purchases.quantity, Purchases.unit_price, Purchases.time_ordered, Purchases.fulfilled, Purchases.time_fulfilled
+SELECT purchases.id, purchases.userId, Purchases.pid, Purchases.quantity, Purchases.unit_price, Purchases.time_ordered, Purchases.fulfilled, Purchases.time_fulfilled, Purchases.discountAmount
 FROM Purchases, Products
 WHERE Purchases.pid = Products.id and userId = :buyerId and extract(year from time_ordered) = :year and extract(month from time_ordered) = :month and extract(day from time_ordered) = :day and sellerId = :sellerId and name ILIKE '%' || :keyWord || '%' 
 ORDER BY time_ordered DESC
@@ -213,7 +214,7 @@ ORDER BY time_ordered DESC
     @staticmethod
     def getByUserKeyWord(keyWord, userId):     
         rows = app.db.execute('''
-SELECT purchases.id, purchases.userId, Purchases.pid, Purchases.quantity, Purchases.unit_price, Purchases.time_ordered, Purchases.fulfilled, Purchases.time_fulfilled
+SELECT purchases.id, purchases.userId, Purchases.pid, Purchases.quantity, Purchases.unit_price, Purchases.time_ordered, Purchases.fulfilled, Purchases.time_fulfilled, Purchases.discountAmount
 FROM Purchases, Products
 WHERE Purchases.pid = Products.id and userId = :userId and name ILIKE '%' || :keyWord || '%' 
 ORDER BY time_ordered DESC
@@ -226,7 +227,7 @@ ORDER BY time_ordered DESC
     @staticmethod
     def getByUserKeyWordSellerId(keyWord, userId, sellerId):     
         rows = app.db.execute('''
-SELECT purchases.id, purchases.userId, Purchases.pid, Purchases.quantity, Purchases.unit_price, Purchases.time_ordered, Purchases.fulfilled, Purchases.time_fulfilled
+SELECT purchases.id, purchases.userId, Purchases.pid, Purchases.quantity, Purchases.unit_price, Purchases.time_ordered, Purchases.fulfilled, Purchases.time_fulfilled, Purchases.discountAmount
 FROM Purchases, Products
 WHERE Purchases.pid = Products.id and Purchases.userId = :userId and sellerId = :sellerId and name ILIKE '%' || :keyWord || '%' 
 ORDER BY time_ordered DESC
@@ -237,7 +238,7 @@ ORDER BY time_ordered DESC
     @staticmethod
     def getByUserKeyWordDate(keyWord, userId, year, month, day):     
         rows = app.db.execute('''
-SELECT purchases.id, purchases.userId, Purchases.pid, Purchases.quantity, Purchases.unit_price, Purchases.time_ordered, Purchases.fulfilled, Purchases.time_fulfilled
+SELECT purchases.id, purchases.userId, Purchases.pid, Purchases.quantity, Purchases.unit_price, Purchases.time_ordered, Purchases.fulfilled, Purchases.time_fulfilled, Purchases.discountAmount
 FROM Purchases, Products
 WHERE Purchases.pid = Products.id and extract(year from time_ordered) = :year and extract(month from time_ordered) = :month and extract(day from time_ordered) = :day and userId = :userId and name ILIKE '%' || :keyWord || '%' 
 ORDER BY time_ordered DESC
@@ -249,7 +250,7 @@ ORDER BY time_ordered DESC
     @staticmethod
     def getByUserKeyWordSellerIdDate(keyWord, userId, sellerId, year, month, day):     
         rows = app.db.execute('''
-SELECT purchases.id, purchases.userId, Purchases.pid, Purchases.quantity, Purchases.unit_price, Purchases.time_ordered, Purchases.fulfilled, Purchases.time_fulfilled
+SELECT purchases.id, purchases.userId, Purchases.pid, Purchases.quantity, Purchases.unit_price, Purchases.time_ordered, Purchases.fulfilled, Purchases.time_fulfilled, Purchases.discountAmount
 FROM Purchases, Products
 WHERE Purchases.pid = Products.id and userId = :userId and extract(year from time_ordered) = :year and extract(month from time_ordered) = :month and extract(day from time_ordered) = :day and sellerId = :sellerId and name ILIKE '%' || :keyWord || '%' 
 ORDER BY time_ordered DESC

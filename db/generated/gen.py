@@ -86,7 +86,7 @@ def gen_purchases(num_purcahses, available_pids):
                 time_fulfilled = fake.date_time()
             else:
                 time_fulfilled = None
-            writer.writerow([id, uid, pid, quantity, unit_price, time_ordered, fulfilled, time_fulfilled])
+            writer.writerow([id, uid, pid, quantity, unit_price, time_ordered, fulfilled, time_fulfilled, 0])
         print(f'{num_purchases} generated')   
     return
 
