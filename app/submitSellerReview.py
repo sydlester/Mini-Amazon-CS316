@@ -39,6 +39,11 @@ class NewSellerReviewForm(FlaskForm):
     rating = SelectField(label = 'Rating', choices=[(1, 1), (2, 2), (3, 3), (4, 4), (5, 5)])
     image = FileField(label = "Upload Photo")
     submit = SubmitField(label = "Submit Review")
+class EditSellerReviewForm(FlaskForm):
+    description = TextAreaField(label = 'Description')
+    rating = SelectField(label = 'Rating', choices=[(1, 1), (2, 2), (3, 3), (4, 4), (5, 5)])
+    image = FileField(label = "Upload Photo")
+    submit = SubmitField(label = "Submit Review")
 def save_image(image_file):
     image_name = image_file.filename
     image_path = os.path.join(current_app.config["UPLOAD_FOLDER"], image_name)
@@ -62,6 +67,24 @@ def submitSellerReview(sellerId, userId):
     else: 
         return render_template('submitSellerReview.html', sellerId=sellerId, userId=userId, form=form) 
 
+
+@bp.route('/editSellerReview/<int:sellerId>/<int:userId>', methods=["GET", "POST"])
+def editSellerReview(sellerId, userId):
+    form = EditSellerReviewForm()
+    
+    if request.method == "GET":
+        review = SellerReview.getSpecific(userId, sellerId)[0]
+        form.description.data = review.theDescription
+        form.image.data = review.theImage
+        form.rating.data = review.rating
+
+    if form.validate_on_submit():
+        if form.image.data: 
+            image_name = save_image(form.image.data)
+            errorMessage = SellerReview.editSellerReview(userId, sellerId, form.rating.data, form.description.data, datetime.now(), image_name) 
+            return redirect(url_for('sellerReviewOutput.sellerReviewOutput', sellerId=sellerId, orderBy=5))
+    else: 
+        return render_template('editProductReview.html', sellerId=sellerId, userId=userId, form=form) 
 
 
 

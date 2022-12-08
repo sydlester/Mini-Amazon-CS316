@@ -137,12 +137,12 @@ WHERE userId = :userId and sellerId= :sellerId
             return False
     
     @staticmethod
-    def editSellerReview(userId, sellerId, rating, theDescription, theDate):
+    def editSellerReview(userId, sellerId, rating, theDescription, theDate, theImage):
         rows = app.db.execute('''
 UPDATE SellerReviews 
-SET rating= :rating, theDescription = :theDescription, theDate = :theDate
+SET rating= :rating, theDescription = :theDescription, theDate = :theDate, theImage = :theImage
 WHERE userId = :userId and sellerId = :sellerId
-''', userId=userId, sellerId=sellerId, rating=rating, theDescription= theDescription, theDate=theDate)
+''', userId=userId, sellerId=sellerId, rating=rating, theDescription= theDescription, theDate=theDate, theImage=theImage)
 
 
     @staticmethod
@@ -182,4 +182,13 @@ ORDER BY upvotes DESC, :orderMe DESC
 LIMIT 3
 ''',
                               sellerId=sellerId, orderMe=orderMe)
+        return [SellerReview(*row) for row in rows]
+
+    @staticmethod
+    def getSpecific(userId, sellerId):
+        rows = app.db.execute('''
+SELECT *
+FROM SellerReviews
+Where userId = :userId and sellerId = :sellerId
+''', userId = userId, sellerId=sellerId)
         return [SellerReview(*row) for row in rows]

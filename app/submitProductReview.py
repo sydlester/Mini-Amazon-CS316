@@ -37,6 +37,12 @@ class NewProductReviewForm(FlaskForm):
     image = FileField(label = "Upload Photo")
     submit = SubmitField(label = "Submit Review")
 
+class EditProductReviewForm(FlaskForm):
+    description = TextAreaField(label = 'Description')
+    rating = SelectField(label = 'Rating', choices=[(1, 1), (2, 2), (3, 3), (4, 4), (5, 5)])
+    image = FileField(label = "Upload Photo")
+    submit = SubmitField(label = "Submit Review")
+
 def save_image(image_file):
     image_name = image_file.filename
     image_path = os.path.join(current_app.config["UPLOAD_FOLDER"], image_name)
@@ -58,4 +64,23 @@ def submitProductReview(productId, userId):
             return redirect(url_for('productReviewOutput.productReviewOutput', productId=productId, orderBy=5))
     else: 
         return render_template('submitProductReview.html', productId=productId, userId=userId, form=form) 
+
+
+@bp.route('/editProductReview/<int:productId>/<int:userId>', methods=["GET", "POST"])
+def editProductReview(productId, userId):
+    form = EditProductReviewForm()
+    
+    if request.method == "GET":
+        review = ProductReview.getSpecific(userId, productId)[0]
+        form.description.data = review.theDescription
+        form.image.data = review.theImage
+        form.rating.data = review.rating
+
+    if form.validate_on_submit():
+        if form.image.data: 
+            image_name = save_image(form.image.data)
+            errorMessage = ProductReview.editProductReview(userId, productId, form.rating.data, form.description.data, datetime.now(), image_name) 
+            return redirect(url_for('productReviewOutput.productReviewOutput', productId=productId, orderBy=5))
+    else: 
+        return render_template('editProductReview.html', productId=productId, userId=userId, form=form) 
 

@@ -150,12 +150,12 @@ WHERE userId = :userId and pid = :productId
             return False
 
     @staticmethod
-    def editProductReview(userId, pid, rating, theDescription, theDate):
+    def editProductReview(userId, pid, rating, theDescription, theDate, theImage):
         rows = app.db.execute('''
 UPDATE ProductReviews 
-SET rating= :rating, theDescription = :theDescription, theDate = :theDate
+SET rating= :rating, theDescription = :theDescription, theDate = :theDate, theimage = :theImage
 WHERE userId = :userId and pid = :pid
-''', userId=userId, pid=pid, rating=rating, theDescription=theDescription, theDate=theDate)
+''', userId=userId, pid=pid, rating=rating, theDescription=theDescription, theDate=theDate, theImage=theImage)
 
 
     @staticmethod
@@ -239,4 +239,13 @@ LIMIT 3
             return rows
         except Exception as e:
             return str(e)
+
+    @staticmethod
+    def getSpecific(userId, productId):
+        rows = app.db.execute('''
+SELECT *
+FROM ProductReviews
+Where userId = :userId and pid = :productId
+''', userId = userId, productId=productId)
+        return [ProductReview(*row) for row in rows]
 

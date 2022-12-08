@@ -4,34 +4,30 @@
 <p>   </p>
 <h4>Edit your Review for Seller {{sellerId}}</h4>
 
-<form action = "{{ url_for('newSellerReview.editSellerReview', sellerId = sellerId, userId = userId) }}" method = "POST"> 
-    <ul style = "list-style: none"> 
-        <li>
-            <label class = "ReviewLabels" for = "rating"><b>Select Rating</b></label> 
-        </li>
-        <li> 
-            <fieldset> 
-            <select class = "RatingSelector" name = "rating" id = "rating" required>
-                <option value = 1>1</option>
-                <option value = 2>2</option>
-                <option value = 3>3</option>
-                <option value = 4>4</option>
-                <option value = 5>5</option>
-            </select>
-        </fieldset>
-        </li>
-        <li>
-            <label class = "ReviewLabels" for = "description"><b>Write Your Review</b></label> 
-        </li>    
-        <li>
-            <textarea class = "ReviewDescription" type="text" name="description"> </textarea>
-        </li>
-        <li><p>  </p> </li>
-        <li>
-            <input type="submit" class = "ReviewSubmit"></input>
-        </li>
-    </ul>
-</form>
+<form action="" method="post" enctype="multipart/form-data">
+    {{ form.hidden_tag() }}
+    <p>
+      {{form.description.label}}
+      {{form.description}}
+      {% for error in form.image.errors %}
+      <span style="color: red;">[{{ error }}]</span>
+      {% endfor %}
+    </p>  
+    <p>
+      {{form.rating.label}}
+      {{form.rating}}
+      {% for error in form.image.errors %}
+      <span style="color: red;">[{{ error }}]</span>
+      {% endfor %}
+    </p>  
+    <p>
+      {{form.image(class="form-control-file")}}
+      {% for error in form.image.errors %}
+      <span style="color: red;">[{{ error }}]</span>
+      {% endfor %}
+    </p>  
+    <p>{{ form.submit() }}</p>
+  </form>
     
     
 

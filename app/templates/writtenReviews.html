@@ -11,6 +11,8 @@
 }
 
 </style>
+<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+<link rel="stylesheet" href="https://www.w3schools.com/lib/w3-colors-win8.css">
 
 <h1 style = "text-align: center;">Reviews you have written!</h1>
 
@@ -48,13 +50,25 @@
         {% else %}
         <td>Seller</td>
         {% endif %}
+        {% if review[4] == 0%}
         <td> 
-          {{review[5]}}
+          <div> 
+          <a class="w3-button w3-win8-pink"><i class="fa fa-thumbs-up fa-lg" aria-hidden="true"></i></a>
+          {{review.upvotes}}
+        </div>
         </td>
+        {%else%}
+        <td> 
+          <div>
+          <a class="w3-button w3-win8-pink"><i class="fa fa-thumbs-up fa-lg" aria-hidden="true"></i></a>
+          {{review.upvotes}}
+        </div>
+        </td>
+        {% endif %}
         {% if review[4] == 0 %}
-        <td><button class="btn btn-secondary" ><a href="{{ url_for('newProductReview.editProductReview', productId = review[0], userId = current_user.id)}}">Edit Product Review </button></td>
+        <td><button class="btn btn-secondary" ><a href="{{ url_for('submitProductReview.editProductReview', productId = review[0], userId = current_user.id)}}">Edit Product Review </button></td>
           {% else %}
-          <td><button class="btn btn-secondary" ><a href="{{ url_for('newSellerReview.editSellerReview', sellerId = review[0], userId = current_user.id)}}">Edit Seller Review </button></td>
+          <td><button class="btn btn-secondary" ><a href="{{ url_for('submitSellerReview.editSellerReview', sellerId = review[0], userId = current_user.id)}}">Edit Seller Review </button></td>
           {% endif %}
       </tr>
     {% endfor %}
@@ -89,9 +103,21 @@
         {% else %}
         <td>Seller</td>
         {% endif %}
+        {% if review[4] == 0%}
         <td> 
-          {{review[5]}}
+          <div> 
+          <a class="w3-button w3-win8-pink"><i class="fa fa-thumbs-up fa-lg" aria-hidden="true"></i></a>
+          {{review.upvotes}}
+        </div>
         </td>
+        {%else%}
+        <td> 
+          <div>
+          <a class="w3-button w3-win8-pink"><i class="fa fa-thumbs-up fa-lg" aria-hidden="true"></i></a>
+          {{review.upvotes}}
+        </div>
+        </td>
+        {% endif %}
         {% if review[4] == 0 %}
         <td><button class="btn btn-secondary" ><a href="{{ url_for('newProductReview.editProductReview', productId = review[0], userId = current_user.id)}}">Edit Product Review </button></td>
           {% else %}
