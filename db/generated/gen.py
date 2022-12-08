@@ -158,8 +158,9 @@ def gen_seller_reviews(num_seller_reviews, sellers, users):
             rating = fake.random_int(min=1, max=5)
             description = fake.sentence(nb_words =12)[:-1]
             theDate = fake.date_time()
+            theImage = fake.random_element(elements=images)
             upvotes = fake.random_int(min=0, max=num_users)
-            writer.writerow([userId, sellerId, rating, description, theDate, upvotes])
+            writer.writerow([userId, sellerId, rating, description, theDate, theImage, upvotes])
         print(f'{num_seller_reviews} generated')
     return 
 

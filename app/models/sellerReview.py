@@ -2,12 +2,13 @@ from flask import current_app as app
 
 class SellerReview:
 
-    def __init__(self, userId, sellerId, rating, theDescription, theDate, upvotes):
+    def __init__(self, userId, sellerId, rating, theDescription, theDate, theImage, upvotes):
         self.userId = userId
         self.sellerId = sellerId
         self.rating = rating
         self.theDescription = theDescription
         self.theDate = theDate
+        self.theImage = theImage
         self.upvotes = upvotes
 
     @staticmethod
@@ -41,11 +42,11 @@ ORDER BY :orderMe DESC
 
 
     @staticmethod
-    def submitSellerReview(userId, sellerId, rating, theDescription, theDate):
+    def submitSellerReview(userId, sellerId, rating, theDescription, theDate, theImage):
         rows = app.db.execute('''
-INSERT INTO SellerReviews VALUES (:userId, :sellerId, :rating, :theDescription, :theDate, 0)
+INSERT INTO SellerReviews VALUES (:userId, :sellerId, :rating, :theDescription, :theDate, :theImage, 0)
 ''',
-                              userId = userId, sellerId = sellerId, rating = rating, theDescription = theDescription, theDate=theDate)
+                              userId = userId, sellerId = sellerId, rating = rating, theDescription = theDescription, theDate=theDate, theImage=theImage)
         return
 
     @staticmethod
