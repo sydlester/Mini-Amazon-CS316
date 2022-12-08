@@ -23,13 +23,16 @@ def saved():
 
 @bp.route('/savedAddProduct/<int:productId>', methods=["GET", "POST"])
 def savedAddProduct(productId):
-    userId = current_user.id
-    if Saved.check(userId, productId): 
-        Cart.remove_from_cart(userId, productId)
-    else: 
-        Saved.add_to_saved(userId, productId)
-    user_saved = Saved.get(userId)
-    return render_template('saved.html', userId=userId, user_saved=user_saved, productId = productId)
+    if current_user.is_authenticated:
+        userId = current_user.id
+        if Saved.check(userId, productId): 
+            Cart.remove_from_cart(userId, productId)
+        else: 
+            Saved.add_to_saved(userId, productId)
+        user_saved = Saved.get(userId)
+        return render_template('saved.html', userId=userId, user_saved=user_saved, productId = productId)
+    else:
+        return render_template('notLoggedIn.html')
 
 @bp.route('/savedRemoveProduct/<int:productId>', methods=["GET", "POST"])
 def savedRemoveProduct(productId):

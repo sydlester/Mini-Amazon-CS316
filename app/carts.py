@@ -25,14 +25,17 @@ def carts():
 
 @bp.route('/cartAddToCart/<int:productId>', methods=["GET", "POST"])
 def cartAddToCart(productId):
-    userId = current_user.id
-    quantity = 1
-    if Cart.check(userId, productId): 
-        Cart.add_quantity(userId, productId)
-    else: 
-        Cart.add_to_cart(userId, productId, quantity)
-    user_cart = Cart.get(userId)
-    return render_template('carts.html', userId=userId, productId = productId, user_cart=user_cart, totalCost=Cart.getTotalCost(current_user.id))
+    if current_user.is_authenticated:
+        userId = current_user.id
+        quantity = 1
+        if Cart.check(userId, productId): 
+            Cart.add_quantity(userId, productId)
+        else: 
+            Cart.add_to_cart(userId, productId, quantity)
+        user_cart = Cart.get(userId)
+        return render_template('carts.html', userId=userId, productId = productId, user_cart=user_cart, totalCost=Cart.getTotalCost(current_user.id))
+    else:
+        return render_template('notLoggedIn.html')
 
 @bp.route('/cartAddFromSaved/<int:productId>', methods=["GET", "POST"])
 def cartAddFromSaved(productId):
