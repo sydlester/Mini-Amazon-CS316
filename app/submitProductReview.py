@@ -54,7 +54,7 @@ def submitProductReview(productId, userId):
     if Purchase.checkProductExists(userId, productId) == False:
         return render_template("error.html", errorMessage = "You haven't bought this product")
     if ProductReview.checkExists(userId, productId) == True: 
-        return render_template("editProductReview.html", productId=productId, userId=userId) 
+        return redirect (url_for('submitProductReview.editProductReview', productId = productId, userId = userId))
     
     form = NewProductReviewForm()
     if form.validate_on_submit():

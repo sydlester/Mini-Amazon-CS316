@@ -55,9 +55,8 @@ def submitSellerReview(sellerId, userId):
     if Purchase.checkSellerExists(userId, sellerId) == False:
         return render_template("error.html", errorMessage = "You haven't purchased from this seller")
     if SellerReview.checkExists(userId, sellerId) == True: 
-        return render_template("editSellerReview.html", sellerId=sellerId, userId=userId) 
+        return redirect (url_for('submitSellerReview.editSellerReview', sellerId = sellerId, userId = userId))
     
-
     form = NewSellerReviewForm()
     if form.validate_on_submit():
         if form.image.data: 
