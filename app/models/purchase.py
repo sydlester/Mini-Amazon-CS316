@@ -312,6 +312,21 @@ LIMIT 1
             return rows[0][0]
 
     @staticmethod
+    def getAnalyticsRevenue(userId):
+        rows = app.db.execute('''
+SELECT temp.pid
+FROM (SELECT pid, SUM(Purchases.quantity) totalQuantity
+      FROM purchases, products
+      WHERE Purchases.pid = Products.id and sellerId = :userId
+      GROUP BY pid) temp, Purchases
+WHERE temp.pid = Purchases.pid
+ORDER BY (totalQuantity*Purchases.unit_price) DESC
+LIMIT 1
+''', userId = userId) 
+        if rows:
+            return rows[0][0]
+
+    @staticmethod
     def getAnalyticsCustomers(userId):
         rows = app.db.execute('''
 SELECT COUNT(DISTINCT(userid))

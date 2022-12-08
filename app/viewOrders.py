@@ -66,7 +66,7 @@ def viewOrders():
             fulfillment = FulfilledPurchase.isIn(id)
             orderSummaries.append([id, userId, name, address, email, orderDate, totalCost, totalQuantity, fulfillment])
             analyticsQuantity = Purchase.getAnalyticsQuantity(current_user.id)
-            analyticsRevenue = 1
+            analyticsRevenue = Purchase.getAnalyticsRevenue(current_user.id)
             analyticsCustomers = Purchase.getAnalyticsCustomers(current_user.id)
     return render_template('viewOrders.html', orderSummaries=orderSummaries, analyticsQuantity = analyticsQuantity, analyticsRevenue = analyticsRevenue, analyticsCustomers = analyticsCustomers)
 
