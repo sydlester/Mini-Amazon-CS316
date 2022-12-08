@@ -90,6 +90,12 @@ def create_app():
 
     from .saved import bp as saved_bp
     app.register_blueprint(saved_bp)
+
+    from .editInventorySuccess import bp as editInventorySuccess_bp
+    app.register_blueprint(editInventorySuccess_bp)
+
+    from .editInventory import bp as editInventory_bp
+    app.register_blueprint(editInventory_bp)
     
     return app
 
