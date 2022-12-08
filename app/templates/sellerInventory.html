@@ -27,8 +27,7 @@
             <th scope="col">Category</th>
             <th scope="col">Description</th>
             <th scope="col">Inventory Quantity</th>
-            <th scope="col">Increase Quantity</th>
-            <th scope="col">Decrease Quantity</th>
+            <th scope="col">Edit Quantity</th>
             <th scope="col">Delete Item</th>
           </tr>
         </thead>
@@ -42,8 +41,7 @@
               <td>{{item.category}}</td>
               <td>{{item.theDescription}}</td>
               <td>{{item.quantity}}</td>
-              <td><a style="background-color: hotpink;" class = "btn btn-secondary" href="{{ url_for('sellerInventory.increaseQuantity', id = item.id) }}" role = "button">Add 1</a></td> 
-              <td><a style="background-color: hotpink;" class = "btn btn-secondary" href="{{ url_for('sellerInventory.decreaseQuantity', id = item.id) }}" role = "button">Remove 1</a></td> 
+              <td><a style="background-color: hotpink;" class = "btn btn-secondary" href="{{ url_for('editInventory.editInventory', sellerId = current_user.id, productId = item.id) }}" role = "button">Edit Quantity/a></td> 
               <td><a style="background-color: hotpink;" class = "btn btn-secondary" href="{{ url_for('sellerInventory.removeProduct', id = item.id) }}" role = "button">Delete Product</a></td>  
             </tr>
           {% endfor %}

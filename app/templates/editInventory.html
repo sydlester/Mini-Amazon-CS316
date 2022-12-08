@@ -1,0 +1,24 @@
+{% extends "base.html" %}
+{% block content %}
+  
+<p>   </p>
+<h4>Edit your Inventory for Product {{productId}}</h4>
+
+<form action = "{{ url_for('editInventorySuccess.editInventorySuccess', productId = productId) }}" method = "POST"> 
+    <ul style = "list-style: none"> 
+        <li>
+            <label class = "UpdateQuantityLabels" for = "quantityNew"><b>Update Product Quantity</b></label> 
+        </li>    
+        <li>
+            <input class = "UpdatedQuantity" type="text" name="quantityNew"> </input>
+        </li>
+        <li><p>  </p> </li>
+        <li>
+            <input type="submit" class = "UpdateQuantitySubmit"></input>
+        </li>
+    </ul>
+</form>
+    
+    
+
+{% endblock %}

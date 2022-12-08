@@ -99,6 +99,16 @@ UPDATE Products
         return
 
     @staticmethod
+    def editInventory(sellerId, id, quantityNew):
+        rows = app.db.execute('''
+UPDATE Products
+    SET quantity = :quantityNew
+    WHERE id = :id and sellerId = :sellerId
+''',
+                              sellerId = sellerId, id = id, quantityNew = quantityNew)
+        return
+
+    @staticmethod
     def removeFromInventory(sellerId, id):
         rows = app.db.execute('''
 DELETE FROM Products
