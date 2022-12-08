@@ -173,12 +173,13 @@ UPDATE SellerReviews
             return str(e)
 
     @staticmethod
-    def getTop3(orderMe):
+    def getTop3(sellerId, orderMe):
         rows = app.db.execute('''
 SELECT *
 FROM SellerReviews
+WHERE sellerId = :sellerId
 ORDER BY upvotes DESC, :orderMe DESC
 LIMIT 3
 ''',
-                              orderMe=orderMe)
+                              sellerId, orderMe=orderMe)
         return [SellerReview(*row) for row in rows]

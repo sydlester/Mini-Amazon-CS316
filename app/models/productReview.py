@@ -164,9 +164,9 @@ WHERE userId = :userId and pid = :pid
             rows = app.db.execute('''
 SELECT *
 FROM (
-    Select pid as receiverId, rating, theDescription, theDate, 0 as type, upvotes From ProductReviews WHERE userId = :userId
+    Select pid as receiverId, rating, theDescription, theDate, 0 as type, theImage, upvotes From ProductReviews WHERE userId = :userId
     UNION ALL 
-    Select sellerId as receiverId, rating, theDescription, theDate, 1 as type, upvotes From SellerReviews WHERE userId = :userId
+    Select sellerId as receiverId, rating, theDescription, theDate, 1 as type, theImage, upvotes From SellerReviews WHERE userId = :userId
 ) as T
 ORDER BY theDate DESC
 ''', userId = userId)
@@ -206,30 +206,31 @@ UPDATE ProductReviews
             return str(e)
 
     @staticmethod
-    def getTop3(orderMe):
+    def getTop3(productId, orderMe):
         rows = app.db.execute('''
 SELECT *
 FROM ProductReviews
+WHERE pid = :productId
 ORDER BY upvotes DESC, :orderMe DESC
 LIMIT 3
 ''',
-                              orderMe=orderMe)
+                              productId=productId, orderMe=orderMe)
         return [ProductReview(*row) for row in rows]
 
     
     @staticmethod
-    def top3All():
+    def top3All(userId):
         try: 
             rows = app.db.execute('''
 SELECT *
 FROM (
-    Select pid as receiverId, rating, theDescription, theDate, 0 as type, upvotes From ProductReviews WHERE userId = :userId
+    Select pid as receiverId, rating, theDescription, theDate, 0 as type, theImage, upvotes From ProductReviews WHERE userId = :userId
     UNION ALL 
-    Select sellerId as receiverId, rating, theDescription, theDate, 1 as type, upvotes From SellerReviews WHERE userId = :userId
+    Select sellerId as receiverId, rating, theDescription, theDate, 1 as type, theImage, upvotes From SellerReviews WHERE userId = :userId
 ) as T
 ORDER BY upvotes DESC, theDate DESC
 LIMIT 3
-''')
+''',             userId=userId)
 
         #ret = []
         #if rows: 

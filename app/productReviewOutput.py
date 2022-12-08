@@ -37,7 +37,7 @@ def productReviewOutput(productId, orderBy):
     product_reviews = ProductReview.getOff(productId, offset, orderBy)
     pages = math.ceil(total/10)
     
-    top3 = ProductReview.getTop3(orderBy)
+    top3 = ProductReview.getTop3(productId, orderBy)
 
     return render_template('productReviewOutput.html', top3=top3, product_reviews=product_reviews, activePage = activePage, pages = pages, productId=productId, orderBy=orderBy)
 
