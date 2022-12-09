@@ -6,8 +6,9 @@
 <h1>Your cart:</h1>
 
 <form action="{{ url_for('carts.submitOrder') }}" method="post">
+  <label style="margin-left: -30px;" for = "couponCode">Coupon Code</label> 
   <input type="text" name="couponCode">
-  <input type="submit" style="background-color: hotpink;"class = "btn btn-secondary" role = "button">Submit Order</a></td> 
+  <input type="submit" style="background-color: hotpink;"class = "btn btn-secondary" role = "button"></a></td> 
 </form>
   
 
