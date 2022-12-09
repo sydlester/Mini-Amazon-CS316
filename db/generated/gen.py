@@ -17,6 +17,12 @@ images = ['apple.png', 'banana.png', 'detergent.png', 'gloves.png', 'keurig.png'
 def get_csv_writer(f):
     return csv.writer(f, dialect='unix')
 
+
+
+
+
+
+
 def gen_users(num_users):
     sellers = []
     users = [] 
@@ -47,6 +53,8 @@ def gen_users(num_users):
 
 def gen_products(num_products, sellers):
     available_pids = []
+    availableElectronics = []
+    availableClothes = []
     response = requests.get('https://fakestoreapi.com/products')
     jArray = response.json()
     with open('db/data/products.csv', 'w') as f:
@@ -57,6 +65,10 @@ def gen_products(num_products, sellers):
             name = jObject["title"]
             price = jObject["price"]
             category = jObject["category"]
+            if category == "electronics":
+                availableElectronics.append(pid)
+            else:
+                availableClothes.append(pid)
             description = jObject["description"]
             theImage = jObject["image"] 
             available = fake.random_element(elements=('true', 'false'))
@@ -69,7 +81,7 @@ def gen_products(num_products, sellers):
                 i = 0
             else:
                 i += 1
-    return available_pids
+    return available_pids, availableElectronics, availableClothes
 
 
     #available_pids = []
@@ -134,29 +146,47 @@ def gen_carts(num_carts, available_pids, users):
     return 
 
 
-def gen_product_reviews(num_product_reviews, available_pids, users):
+
+
+def gen_product_reviews(num_product_reviews, available_pids, users, availableElectronics, availableClothes):
     with open('db/data/productReviews.csv', 'w') as f:
         writer = get_csv_writer(f)
-        temp = []
-        for x in users:
-            for y in available_pids:
-                temp.append([x, y])
+        for id in availableElectronics: 
+            for userId in range(num_users):
+                description = electronicsReviews[userId]
+                rating = electronicsRatings[userId]
+                theDate = fake.date_time()
+                theImage = "review.png"
+                upvotes = fake.random_int(min=0, max=num_users)
+                writer.writerow([userId, id, rating, description, theDate, theImage, upvotes])
+        for clothesId in availableClothes: 
+            for userId in range(num_users):
+                description = clothesReviews[userId]
+                rating = clothesRatings[userId]
+                theDate = fake.date_time()
+                theImage = "review.png"
+                upvotes = fake.random_int(min=0, max=num_users)
+                writer.writerow([userId, clothesId, rating, description, theDate, theImage, upvotes])
+        #temp = []
+        #for x in users:
+        #    for y in available_pids:
+        #        temp.append([x, y])
 
-        for id in range(num_product_reviews):
-            if id % 100 == 0:
-                print(f'{id}', end=' ', flush=True)
+        #for id in range(num_product_reviews):
+        #    if id % 100 == 0:
+        #        print(f'{id}', end=' ', flush=True)
             
-            selected = fake.random_element(elements=temp)
-            userId = selected[0]
-            pid = selected[1]
-            temp.remove(selected)
-            rating = fake.random_int(min=1, max=5)
-            description = fake.sentence(nb_words =12)[:-1]
-            theDate = fake.date_time()
-            theImage = fake.random_element(elements=images)
-            upvotes = fake.random_int(min=0, max=num_users)
-            writer.writerow([userId, pid, rating, description, theDate, theImage, upvotes])
-        print(f'{num_product_reviews} generated')
+        #    selected = fake.random_element(elements=temp)
+        #    userId = selected[0]
+        #    pid = selected[1]
+        #    temp.remove(selected)
+        #    rating = fake.random_int(min=1, max=5)
+        #    description = fake.sentence(nb_words =12)[:-1]
+        #    theDate = fake.date_time()
+        #    theImage = fake.random_element(elements=images)
+        #    upvotes = fake.random_int(min=0, max=num_users)
+        #    writer.writerow([userId, pid, rating, description, theDate, theImage, upvotes])
+        #print(f'{num_product_reviews} generated')
     return 
 
 def gen_seller_reviews(num_seller_reviews, sellers, users):
@@ -200,13 +230,37 @@ def coupons():
 
 
 sellers, users = gen_users(num_users)
-available_pids = gen_products(num_products, sellers)
+available_pids, availableElectronics, availableClothes = gen_products(num_products, sellers)
 gen_purchases(num_purchases, available_pids)
 gen_carts(num_carts, available_pids, users)
+
 
 num_product_reviews = len(available_pids)*len(users)
 num_seller_reviews = len(sellers)*len(users)
 
-gen_product_reviews(num_product_reviews, available_pids, users)
+electronicsReviews = []
+electronicsRatings = []
+clothesReviews = []
+clothesRatings = []
+
+with open("db/data/clothes.csv", 'r') as clothes:
+    csvreader = csv.reader(clothes)
+    #lines = clothes.readlines()
+    for row in csvreader:
+        theReview = row[4]
+        rating = int(float(row[2]))
+        clothesReviews.append([theReview])
+        clothesRatings.append(rating) 
+with open("db/data/electronics.csv", 'r') as electronics:
+    csvreader = csv.reader(electronics)
+    #lines = electronics.readlines()
+    for row in csvreader:
+        theReview = row[4]
+        rating = int(float(row[2]))
+        electronicsReviews.append(theReview)
+        electronicsRatings.append(rating)
+
+
+gen_product_reviews(num_product_reviews, available_pids, users, availableElectronics, availableClothes) 
 gen_seller_reviews(num_seller_reviews, sellers, users)
 coupons()

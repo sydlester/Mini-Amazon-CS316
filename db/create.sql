@@ -54,7 +54,7 @@ CREATE TABLE ProductReviews(
     userId INT NOT NULL REFERENCES Users(id),
     pid INT NOT NULL REFERENCES Products(id),
     rating FLOAT NOT NULL CHECK(rating>0 AND rating <= 5),
-    theDescription varchar(512),
+    theDescription varchar(2048),
     theDate timestamp without time zone NOT NULL DEFAULT (current_timestamp AT TIME ZONE 'UTC'),
     theImage VARCHAR(2048),
     upvotes INT NOT NULL,
