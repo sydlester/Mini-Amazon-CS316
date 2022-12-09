@@ -8,7 +8,6 @@
   }
 
 </style>
-
 <h3>TOP 3 MOST UPVOTED REVIEWS</h3>
 <table class='table table-hover table-bordered container'>
   <thead class="thead-dark">
@@ -27,7 +26,7 @@
         <td><img src={{url_for('static', filename = 'photos/'+review.theImage)}} width = "100" height = "100"></td>
         <th scope="row">{{review.userId}}</th>
         <td>{{review.rating}}</td>
-        <td>{{review.theDescription}}</td>
+        <td><p>{{review.theDescription[2:-2]}}</p></td>
         <td>{{review.theDate}}</td>
         <td> 
           <div> 
@@ -72,7 +71,7 @@
         <td><img src={{url_for('static', filename = 'photos/'+review.theImage)}} width = "100" height = "100"></td>
         <th scope="row">{{review.userId}}</th>
         <td>{{review.rating}}</td>
-        <td>{{review.theDescription}}</td>
+        <td>{{review.theDescription[2:-2]}}</td>
         <td>{{review.theDate}}</td>
         <td> 
           <div> 

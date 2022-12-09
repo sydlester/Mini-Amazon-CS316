@@ -248,6 +248,10 @@ with open("db/data/clothes.csv", 'r') as clothes:
     #lines = clothes.readlines()
     for row in csvreader:
         theReview = row[4]
+        start = theReview.find('.') + 2
+        end = theReview[start:].find('.') + start
+        theReview = theReview[start:end+1]
+        theReview = theReview.strip()
         rating = int(float(row[2]))
         clothesReviews.append([theReview])
         clothesRatings.append(rating) 
@@ -256,6 +260,10 @@ with open("db/data/electronics.csv", 'r') as electronics:
     #lines = electronics.readlines()
     for row in csvreader:
         theReview = row[4]
+        start = theReview.find('.') + 2
+        end = theReview[start:].find('.')
+        theReview = theReview[start:end+1]
+        theReview = theReview.strip()
         rating = int(float(row[2]))
         electronicsReviews.append(theReview)
         electronicsRatings.append(rating)

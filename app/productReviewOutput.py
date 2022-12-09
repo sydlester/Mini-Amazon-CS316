@@ -39,7 +39,7 @@ def productReviewOutput(productId, orderBy):
     
     top3 = ProductReview.getTop3(productId, orderBy)
 
-    return render_template('productReviewOutput.html', top3=top3, product_reviews=product_reviews, activePage = activePage, pages = pages, productId=productId, orderBy=orderBy)
+    return render_template('productReviewOutput.html', top3=top3, product_reviews=product_reviews, activePage = activePage, pages = pages, productId=productId, orderBy=orderBy, type=type(product_reviews[0].theDescription))
 
 
 @bp.route('/addUpvotes/<int:userId>/<int:productId>/<int:orderBy>', methods=["GET", "POST"])
