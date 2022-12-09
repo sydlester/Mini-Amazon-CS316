@@ -26,7 +26,7 @@ from .models.product import Product
 class NewProductForm(FlaskForm):
     name = StringField(label = 'Name')
     description = TextAreaField(label = 'Description')
-    category = SelectField(label = 'Category', choices=[('Food', 'Food'), ('Clothes', 'Clothes'), ('Sports', 'Sports'), ('Appliances', 'Appliances'), ('Random', 'Random')])
+    category = SelectField(label = 'Category', choices=[('electronics', 'electronics'), ('jewelry', 'jewelry'), ("women's clothing", "women's clothing"), ("men's clothing", "mens clothing")])
     price = FloatField(label = 'Price')
     quantity = IntegerField(label = 'Quantity')
     available = BooleanField(label = 'Immediately Available')
@@ -35,7 +35,7 @@ class NewProductForm(FlaskForm):
 class EditProductForm(FlaskForm):
     name = StringField(label = 'Name')
     description = TextAreaField(label = 'Description')
-    category = SelectField(label = 'Category', choices=[('Food', 'Food'), ('Clothes', 'Clothes'), ('Sports', 'Sports'), ('Appliances', 'Appliances'), ('Random', 'Random')])
+    category = SelectField(label = 'Category', choices=[('electronics', 'electronics'), ('jewelry', 'jewelry'), ("women's clothing", "women's clothing"), ("men's clothing", "mens clothing")])
     price = FloatField(label = 'Price')
     quantity = IntegerField(label = 'Quantity')
     available = BooleanField(label = 'Immediately Available')

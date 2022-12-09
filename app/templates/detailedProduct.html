@@ -204,7 +204,11 @@ background-color: #F0ECEB;
     <h5 style="text-align: left;"><b>Category: </b>{{product.category}}</h5> 
     <p style="text-align:left;"><b>Description: </b>{{product.theDescription}}</p> 
     </div>
+    {% if "http" in product.theImage %}
+    <image style="float: left" src={{product.theImage}} width = 200px height = 200px>
+    {% else %}
     <image style="float: left" src={{picture}} width = 200px height = 200px>
+    {% endif %}
     <td><a style="height: 40px; float: left; margin-top: 160px;" class = "btn btn-secondary cartButton" href="{{ url_for('carts.cartAddToCart', productId = productId) }}" role = "button">Add To Cart</a></td> 
     <td><a style="height: 40px; float: left; margin-top: 160px;" class = "btn btn-secondary cartButton" href="{{ url_for('saved.savedSaveForLater', productId = productId) }}" role = "button">Save For Later</a></td> 
 

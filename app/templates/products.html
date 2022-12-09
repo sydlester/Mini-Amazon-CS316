@@ -211,50 +211,38 @@ input[type="range"]:disabled::-webkit-slider-thumb {
 	  <p>500</p>
 	</div>
   </div>
-  <div style="margin-left: 20px"> 
+  <div style="margin-left: 20px">
   <select id="chooseCategory" name="category">
-	{%if category == "Food"%}
-	<option value="Food">Food</option>
-	<option value="Clothes">Clothes</option>
-	<option value="Sports">Sports</option>
-	<option value="Appliances">Appliances</option>
-	<option value="Random">Random</option>
+	{%if category == "electronics"%}
+	<option value="electronics">Electronics</option>
+	<option value="jewelery">Jewelery</option>
+	<option value="men's clothing">Men's Clothing</option>
+	<option value="women's clothing">Women's Clothing</option>
 	<option value="Select">All Categories</option>
-	{%elif category == "Clothes"%}
-	<option value="Clothes">Clothes</option>
-	<option value="Food">Food</option>
-	<option value="Sports">Sports</option>
-	<option value="Appliances">Appliances</option>
-	<option value="Random">Random</option>
+	{%elif category == "Jewelery"%}
+	<option value="jewelery">Jewelery</option>
+	<option value="electronics">Electronics</option>
+	<option value="men's clothing">Men's Clothing</option>
+	<option value="women's clothing">Women's Clothing</option>
 	<option value="Select">All Categories</option>
-	{%elif category == "Sports"%}
-	<option value="Sports">Sports</option>
-	<option value="Food">Food</option>
-	<option value="Clothes">Clothes</option>
-	<option value="Appliances">Appliances</option>
-	<option value="Random">Random</option>
+	{%elif category == "Men's Clothing"%}
+	<option value="men's clothing">Men's Clothing</option>
+	<option value="women's clothing">Women's Clothing</option>
+	<option value="jewelery">Jewelery/option>
+	<option value="electronics">Electronics</option>
 	<option value="Select">All Categories</option>
-	{%elif category == "Appliances"%}
-	<option value="Appliances">Appliances</option>
-	<option value="Sports">Sports</option>
-	<option value="Food">Food</option>
-	<option value="Clothes">Clothes</option>
-	<option value="Random">Random</option>
-	<option value="Select">All Categories</option>
-	{%elif category == "Other"%}
-	<option value="Random">Random</option>
-	<option value="Appliances">Appliances</option>
-	<option value="Sports">Sports</option>
-	<option value="Food">Food</option>
-	<option value="Clothes">Clothes</option>
+	{%elif category == "Women's Clothing"%}
+	<option value="women's clothing">Women's Clothing</option>
+	<option value="men's clothing">Men's Clothing</option>
+	<option value="electronics">Electronics</option>
+	<option value="jewelery">Jewelery</option>
 	<option value="Select">All Categories</option>
 	{%else%}
 	<option value="Select">Select Category</option>
-	<option value="Appliances">Appliances</option>
-	<option value="Sports">Sports</option>
-	<option value="Food">Food</option>
-	<option value="Clothes">Clothes</option>
-	<option value="Random">Random</option>
+	<option value="women's clothing">Women's Clothing</option>
+	<option value="men's clothing">Men's Clothing</option>
+	<option value="electronics">Electronics</option>
+	<option value="jewelery">Jewelery</option>
 	{%endif%}
 
 
@@ -282,8 +270,12 @@ input[type="range"]:disabled::-webkit-slider-thumb {
     <tbody>
       {% for product in avail_products%}
         <tr>
+			{% if "http" in product.theImage %}
+			<td><img src={{product.theImage}} width = "100" height = "100"></td>
+			{% else %}
 			<td><img src={{productDict[product.id]}} width = "100" height = "100"></td>
-        	<td>{{product.category}}</td>
+			{% endif %}
+			<td>{{product.category}}</td>
         	<td>{{product.name}}</td>
         	<td>{{product.price}}</td>
         	<td><a style="background-color: hotpink;" class = "btn btn-secondary" href="{{ url_for('detailedProduct.detailedProduct', productId = product.id, name = product.name, price = product.price, available = product.available, description = product.description, sellerId = product.sellerId, image = product.theImage) }}" role = "button">More Info</a></td> 	
