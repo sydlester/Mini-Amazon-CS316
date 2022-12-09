@@ -252,6 +252,7 @@ with open("db/data/clothes.csv", 'r') as clothes:
         end = theReview[start:].find('.') + start
         theReview = theReview[start:end+1]
         theReview = theReview.strip()
+        theReview = theReview[2:-2]
         rating = int(float(row[2]))
         clothesReviews.append([theReview])
         clothesRatings.append(rating) 
@@ -264,6 +265,7 @@ with open("db/data/electronics.csv", 'r') as electronics:
         end = theReview[start:].find('.')
         theReview = theReview[start:end+1]
         theReview = theReview.strip()
+        theReview = theReview[2:-2]
         rating = int(float(row[2]))
         electronicsReviews.append(theReview)
         electronicsRatings.append(rating)
