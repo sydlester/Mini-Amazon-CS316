@@ -2,10 +2,12 @@
 
 {% block content %}
 
-<h4>Designed and Implemented by Alex Medow, Isabella Swigart, Lauren May, Paige Bernstein & Sydney Lester</h4>
-
-{% if not current_user.is_authenticated %}
-<a class = "btn btn-secondary" href="/products"></i>Shop Products</a>
-{% endif %}
-
+<style>
+    .bg {
+        margin-left: -20px;
+    }
+</style>
+<div class = "bg"> 
+<img style="opacity:.75" src={{url_for('static', filename = 'photos/city.png')}} width = "105%" height = "110%">
+</div>
 {% endblock %}
