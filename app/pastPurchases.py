@@ -7,6 +7,8 @@ from .models.product import Product
 from .models.purchase import Purchase
 from .models.fulfilledPurchase import FulfilledPurchase
 from flask import Blueprint
+from datetime import datetime
+
 bp = Blueprint('pastPurchases', __name__)
 
 @bp.route('/pastPurchases', methods=["GET", "POST"])
