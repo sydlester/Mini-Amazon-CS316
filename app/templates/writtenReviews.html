@@ -22,6 +22,7 @@
     <a style="background-color: hotpink;" id = "sortButton2" class = "btn btn-secondary" role = "button">Written</a> 
 </div>
 
+{% if length > 3 %}
 <h2>TOP 3 MOST UPVOTED REVIEWS</h2>
 <table class='table table-hover table-bordered container'>
   <thead class="thead-dark">
@@ -74,7 +75,7 @@
     {% endfor %}
   </tbody>
 </table>
-
+{% endif %}
 
 
 <table class='table table-hover table-bordered container'>

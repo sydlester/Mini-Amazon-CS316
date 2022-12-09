@@ -13,7 +13,7 @@ bp = Blueprint('writtenReviews', __name__)
 def writtenReviews():
     reviews = ProductReview.getAllByUser(current_user.id)
     top3 = ProductReview.top3All(current_user.id)
-    return render_template('writtenReviews.html', reviewType = "written", reviews = reviews, top3=top3)
+    return render_template('writtenReviews.html', reviewType = "written", reviews = reviews, top3=top3, length = len(reviews))
 
 
     
